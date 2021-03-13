@@ -1,0 +1,144 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using JFInterfaceDef;
+using JFToolKits;
+using JFUI;
+using JFHub;
+
+namespace DLAF_DS
+{
+
+    /// <summary>
+    /// 直线AOI设备的视觉检测工站
+    /// </summary>
+    [JFDisplayName("AOI检测工站")]
+    [JFVersion("1.0.0.0")]
+    public class DLAFDetectStation : JFStationBase
+    {
+        public DLAFDetectStation()
+        {
+            //DeclearMethodFlow("工站归零");//定义归零工作流程
+
+            
+
+            DeclearWorkPosition("检测待机位置");
+            DeclearWorkPosition("Mark1拍照位置");//Mark1拍照的位置
+            DeclearWorkPosition("Mark2拍照位置");//Mark2拍照的位置
+            DeclearDevChn(NamedChnType.Camera, "检测相机");//添加一个本地相机（替身名称）
+            DeclearDevChn(NamedChnType.Light, "同轴光");//添加一个本地光源（替身名称）
+            DeclearDevChn(NamedChnType.Light, "环形光");//添加一个本地光源（替身名称）
+            DeclearDevChn(NamedChnType.Axis, "X轴");//添加一个本地设备（替身名称）
+            DeclearDevChn(NamedChnType.Axis, "Y轴");//添加一个本地设备（替身名称）
+            DeclearDevChn(NamedChnType.Axis, "Z轴");//添加一个本地设备（替身名称）
+
+            DeclearSPItemAlias("出料准备完成", typeof(bool), false);
+            DeclearSPItemAlias("出料个数", typeof(int), 0);
+            DeclearSPItemAlias(" 字符数组测试", typeof(string[]), new string[] { });
+
+
+        }
+        /// <summary>
+        /// 所有可接收的自定义指令ID
+        /// </summary>
+        public override int[] AllCmds 
+        {
+            get { return new int[] { }; }
+        }
+
+        /// <summary>
+        /// 获取自定义指令名称
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        public override string GetCmdName(int cmd)
+        {
+            return "Undefined";
+        }
+
+
+        
+        /// <summary>
+        /// 所有自定义状态ID
+        /// </summary>
+        public override int[] AllCustomStatus
+        {
+            get { return new int[] {}; }
+        }
+
+        /// <summary>
+        /// 获取自定义状态名称
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public override string GetCustomStatusName(int status)
+        {
+            return "Undefined";
+        }
+
+
+        /// <summary>
+        /// 工站主逻辑开始前的准备工作，只是在主流程开始前执行一次
+        /// </summary>
+        protected override void PrepareWhenWorkStart()
+        {
+            return;
+        }
+
+        /// <summary>
+        /// 工站主流程 ，将会在内部循环中不断被调用，直到收到暂停/退出指令，或在RunLoopInWork函数内部调用退出函数时结束
+        /// </summary>
+        protected override void RunLoopInWork()
+        {
+            return;
+        }
+
+
+        /// <summary>
+        /// 工站在退出主流程后会执行一次，然后工作线程关闭
+        /// </summary>
+        protected override void CleanupWhenWorkExit()
+        {
+            return;
+        }
+
+        /// <summary>
+        /// 执行结批动作
+        /// </summary>
+        protected override void ExecuteEndBatch()
+        {
+            return;
+        }
+
+        /// <summary>
+        /// 当工站线程运行时，受到暂停指令会执行OnPause(),然后进入暂停状态
+        /// </summary>
+        protected override void OnPause()
+        {
+            return;
+        }
+
+        /// <summary>
+        /// 当工站线程运行并且当前状态处于暂停时，受到恢复运行指令会执行OnResume()
+        /// </summary>
+        protected override void OnResume()
+        {
+            return;
+        }
+
+        /// <summary>
+        /// 当前工站正在运行（包括暂停状态）收到退出指令会执行OnStop()
+        /// </summary>
+        protected override void OnStop()
+        {
+            return;
+        }
+
+        protected override void ExecuteReset()
+        {
+            
+        }
+    }
+}

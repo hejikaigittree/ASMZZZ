@@ -1,0 +1,165 @@
+﻿using JFInterfaceDef;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace JFHub
+{
+    /// <summary>
+    /// Station继承于Initor接口，Station的管理功能放在InitorManager中
+    /// </summary>
+    public class JFStationManager
+    {
+        internal JFStationManager()
+        {
+
+        }
+        //List<IJFStation> _lstStations = new List<IJFStation>();
+
+        IJFMainStation _mainStation = null; //主工站
+        /// <summary>
+        /// 为应用程序注册一个主工站，在Application.Run()运行之前调用
+        /// </summary>
+        /// <param name=""></param>
+        public void  DeclearMainStation(IJFMainStation mainStation)
+        {
+            if(_mainStation != null)
+                throw new Exception("Main Station is already Registed!");
+            if (null == mainStation)
+                throw new ArgumentNullException("Main Station is null object");
+            _mainStation = mainStation;
+        }
+
+        /// <summary>
+        /// 注册一个工站（不可删除）,建议在Application.Run()运行之前调用
+        /// </summary>
+        /// <param name="station"></param>
+        public void DeclearStation(IJFStation station)
+        {
+
+        }
+
+
+        /// <summary>
+        ///  通过配置界面添加的所有工站名称
+        /// </summary>
+        List<string> _initStationNames
+        {
+            get { return null ; }
+        }
+
+        List<string> _daclearStationNames
+        {
+            get { return null; }
+        }
+        
+
+
+        
+        /// <summary>
+        /// 获取程序中所有可用的工站
+        /// </summary>
+        /// <returns></returns>
+        public string[] AllStationNames()
+        {
+            List<string> ret = new List<string>();
+
+            return ret.ToArray();
+        }
+
+        public IJFStation GetStation(string stationName)
+        {
+            foreach (IJFStation station in _lstStations)
+                if (station.Name == stationName)
+                    return station;
+            return null;
+        }
+
+        
+        internal void AddStation(IJFStation station)
+        {
+            if (null == station)
+                throw new ArgumentNullException("JFStationManager.AddStation(IJFStation station) failed by:station = null");
+            if (station.GetType().IsAbstract)
+                throw new Exception("JFStationManager.AddStation(IJFStation station) failed by:station's type =" + station.GetType().Name + " is Abstract");
+            if (string.IsNullOrEmpty(station.Name))
+                throw new Exception("JFStationManager.AddStation(IJFStation station) failed by:station's name is null or empty");
+            if (AllStationNames().Contains(station.Name))
+                throw new Exception("JFStationManager.AddStation(IJFStation station) failed by:station's name = " + station.Name + " is existed");
+            _lstStations.Add(station);
+        }
+
+        internal void RemoveStation(string stationName)
+        {
+            foreach(IJFStation station in _lstStations)
+                if(stationName == station.Name)
+                {
+                    _lstStations.Remove(station);
+                    return;
+                }
+        }
+        internal void ClearStations()
+        {
+            _lstStations.Clear();
+        }
+
+
+        /// <summary>
+        /// 接收一条工站日志记录
+        /// </summary>
+        /// <param name="info"></param>
+        public void StationLog(IJFStation station, string info, LogMode mode)
+        {
+            
+        }
+
+
+        /// <summary>
+        /// 处理工站状态改变
+        /// </summary>
+        /// <param name="station"></param>
+        /// <param name="currWorkStatus"></param>
+        public void StationWorkStatusChanged(IJFStation station, JFWorkStatus currWorkStatus, string info)
+        {
+            
+        }
+       
+
+        /// <summary>
+        ///  处理工站的业务状态发生改变
+        /// </summary>
+        /// <param name="station"></param>
+        /// <param name="currCustomStatus"></param>
+        public void StationCustomStatusChanged(IJFStation station, int currCustomStatus, string info, object param)
+        {
+
+        }
+
+        /// <summary>
+        /// 产品加工完成消息
+        /// </summary>
+        /// <param name="station">消息发送者</param>
+        /// <param name="PassCount">本次生产完成的成品数量</param>
+        /// <param name="NGCount">本次生产的次品数量</param>
+        /// <param name="NGInfo">次品信息</param>
+        public void StationProductFinished(IJFStation station, int passCount, string[] passIDs, int ngCount, string[] ngIDs, string[] ngInfo)
+        {
+
+        }
+
+        /// <summary>
+        /// 处理工站发来的其他定制化的消息
+        /// </summary>
+        /// <param name="station"></param>
+        /// <param name="msg"></param>
+        public void StationCustomizeMsg(IJFStation station, string msgCategory, object msgParam)
+        {
+
+        }
+
+
+    }
+}

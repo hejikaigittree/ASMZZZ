@@ -1,0 +1,21 @@
+import ctypes
+htm = ctypes.CDLL("HTM_Bsp_Lib.dll")
+print(htm.HTM_Bsp_InitFromFile(b'D:\\13.xml'))
+htm.HTM_Bsp_LoadUI()
+print(htm.HTM_Bsp_Discard())
+
+import time
+from HTM_Bsp_Lib import *
+HTM.InitFromFile(b'D:\\New folder\\13.xml')
+t = time.time()
+interval = 60
+pos = HTM.GetFbkPos(0)
+print('begin...')
+for i in range(int(360.0/interval)):
+    HTM.ASMove(0, pos+interval*i, 1.0)
+    #print(i)
+    HTM.Done(0)
+t = time.time()-t
+print('end. time =', t)
+HTM.LoadUI()
+HTM.Discard()

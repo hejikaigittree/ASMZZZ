@@ -1,0 +1,290 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7FA4E867-6D01-4440-86F2-7F4C4E20BC29}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DLAF</RootNamespace>
+    <AssemblyName>DLAF</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ColorButton">
+      <HintPath>dll\control\ColorButton.dll</HintPath>
+    </Reference>
+    <Reference Include="halcondotnet, Version=12.0.0.0, Culture=neutral, PublicKeyToken=4973bed59ddbf2b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\x64\Debug\halcondotnet.dll</HintPath>
+    </Reference>
+    <Reference Include="HTHalControl, Version=1.0.1.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\x64\Debug\HTHalControl.dll</HintPath>
+    </Reference>
+    <Reference Include="HTMappingControl">
+      <HintPath>dll\HTMappingControl\HTMappingControl.dll</HintPath>
+    </Reference>
+    <Reference Include="htPanel">
+      <HintPath>dll\htcontrol\x64\htPanel.dll</HintPath>
+    </Reference>
+    <Reference Include="HT_Lib.Csharp">
+      <HintPath>dll\HT_Lib\x64\HT_Lib.Csharp.dll</HintPath>
+    </Reference>
+    <Reference Include="JFInterfaceDef, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\x64\Debug\JFInterfaceDef.dll</HintPath>
+    </Reference>
+    <Reference Include="JFMethodCommonLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\x64\Debug\JFMethodCommonLib.dll</HintPath>
+    </Reference>
+    <Reference Include="JFToolKits, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\x64\Debug\JFToolKits.dll</HintPath>
+    </Reference>
+    <Reference Include="JFUI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\x64\Debug\JFUI.dll</HintPath>
+    </Reference>
+    <Reference Include="JFVision">
+      <HintPath>..\bin\x64\Debug\JFVision.dll</HintPath>
+    </Reference>
+    <Reference Include="LFAOIRecipe, Version=1.0.0.8, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\x64\Debug\LFAOIRecipe.dll</HintPath>
+    </Reference>
+    <Reference Include="LFAOIReview, Version=1.0.2.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\x64\Debug\LFAOIReview.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics">
+      <HintPath>dll\MathNet Numerics\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.105.2, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\JFLog\dll\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ToolKitsDll">
+      <HintPath>dll\ToolKitsDll\ToolKitsDll.dll</HintPath>
+    </Reference>
+    <Reference Include="VisionMethonDll, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\x64\Debug\VisionMethonDll.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DLAFDetectResultTransfer.cs" />
+    <Compile Include="DlafFovDetectResult.cs" />
+    <Compile Include="FormDLAFReview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDLAFReview.Designer.cs">
+      <DependentUpon>FormDLAFReview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="主工站\JFUcResultMatrix.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="主工站\JFUcResultMatrix.Designer.cs" />
+    <Compile Include="主工站\UcDLAFMainStation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="主工站\UcDLAFMainStation.Designer.cs">
+      <DependentUpon>UcDLAFMainStation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="大图谱工站\AutoMappingOperation.cs" />
+    <Compile Include="大图谱工站\AutoMappingStation.cs" />
+    <Compile Include="产品\BoxManager.cs" />
+    <Compile Include="大图谱工站\Form_VisionCfgManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="大图谱工站\Form_VisionCfgManager.Designer.cs">
+      <DependentUpon>Form_VisionCfgManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="大图谱工站\UcRtAutoMapping.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="大图谱工站\UcRtAutoMapping.Designer.cs">
+      <DependentUpon>UcRtAutoMapping.cs</DependentUpon>
+    </Compile>
+    <Compile Include="标定工站\CalibOperation.cs" />
+    <Compile Include="标定工站\CalibSearchRange.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="标定工站\CalibSearchRange.designer.cs">
+      <DependentUpon>CalibSearchRange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="标定工站\CalibStation.cs" />
+    <Compile Include="JFDLAFRecipeManager.cs" />
+    <Compile Include="标定工站\FormUV2XY.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="标定工站\FormUV2XY.designer.cs">
+      <DependentUpon>FormUV2XY.cs</DependentUpon>
+    </Compile>
+    <Compile Include="产品\Form_BoxManage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="产品\Form_BoxManage.Designer.cs">
+      <DependentUpon>Form_BoxManage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="大图谱工站\Form_FixMapPos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="大图谱工站\Form_FixMapPos.designer.cs">
+      <DependentUpon>Form_FixMapPos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="产品\Form_InputLotId.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="产品\Form_InputLotId.Designer.cs">
+      <DependentUpon>Form_InputLotId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToolFrame\Form_Wait.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ToolFrame\Form_Wait.designer.cs">
+      <DependentUpon>Form_Wait.cs</DependentUpon>
+    </Compile>
+    <Compile Include="大图谱工站\FrmAutoMapping.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="大图谱工站\FrmAutoMapping.Designer.cs">
+      <DependentUpon>FrmAutoMapping.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToolFrame\FrmCamAxisMotion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ToolFrame\FrmCamAxisMotion.designer.cs">
+      <DependentUpon>FrmCamAxisMotion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="产品\FrmProduct.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="产品\FrmProduct.Designer.cs">
+      <DependentUpon>FrmProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToolFrame\IniDll.cs" />
+    <Compile Include="主工站\MainStation.cs" />
+    <Compile Include="ToolFrame\Model.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToolFrame\Utils.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="标定工站\UcRtCalib.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="标定工站\UcRtCalib.Designer.cs">
+      <DependentUpon>UcRtCalib.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FormDLAFReview.resx">
+      <DependentUpon>FormDLAFReview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="主工站\JFUcResultMatrix.resx" />
+    <EmbeddedResource Include="主工站\UcDLAFMainStation.resx">
+      <DependentUpon>UcDLAFMainStation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="大图谱工站\Form_VisionCfgManager.resx">
+      <DependentUpon>Form_VisionCfgManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="大图谱工站\UcRtAutoMapping.resx">
+      <DependentUpon>UcRtAutoMapping.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="标定工站\CalibSearchRange.resx">
+      <DependentUpon>CalibSearchRange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="标定工站\FormUV2XY.resx">
+      <DependentUpon>FormUV2XY.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="产品\Form_BoxManage.resx">
+      <DependentUpon>Form_BoxManage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="大图谱工站\Form_FixMapPos.resx">
+      <DependentUpon>Form_FixMapPos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="产品\Form_InputLotId.resx">
+      <DependentUpon>Form_InputLotId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ToolFrame\Form_Wait.resx">
+      <DependentUpon>Form_Wait.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="大图谱工站\FrmAutoMapping.resx">
+      <DependentUpon>FrmAutoMapping.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ToolFrame\FrmCamAxisMotion.resx">
+      <DependentUpon>FrmCamAxisMotion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="产品\FrmProduct.resx">
+      <DependentUpon>FrmProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ToolFrame\Utils.resx">
+      <DependentUpon>Utils.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="标定工站\UcRtCalib.resx">
+      <DependentUpon>UcRtCalib.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JFHub\JFHub.csproj">
+      <Project>{416361e1-79b4-461e-b2c4-3e2dadbf30e4}</Project>
+      <Name>JFHub</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

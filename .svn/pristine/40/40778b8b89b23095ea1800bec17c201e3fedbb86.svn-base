@@ -1,0 +1,22 @@
+<root>
+  <MethodFlowName>X轴归零</MethodFlowName>
+  <MethodItems>
+    <MethodItem Name="打开控制卡" Type="JFCM_OpenCloseDev_S">
+      <InitParams>
+        <Param Name="设备ID" Type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;string&gt;景焱运动控制卡&lt;/string&gt;" />
+        <Param Name="开关选项" Type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;boolean&gt;true&lt;/boolean&gt;" />
+      </InitParams>
+    </MethodItem>
+    <MethodItem Name="轴X伺服使能" Type="JFCM_ServoSwitch_S">
+      <InitParams>
+        <Param Name="轴名称" Type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;string&gt;相机X轴&lt;/string&gt;" />
+        <Param Name="伺服使能" Type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;boolean&gt;true&lt;/boolean&gt;" />
+      </InitParams>
+    </MethodItem>
+    <MethodItem Name="轴X开始归零" Type="JFCM_Home_S">
+      <InitParams>
+        <Param Name="轴ID" Type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;string&gt;相机X轴&lt;/string&gt;" />
+      </InitParams>
+    </MethodItem>
+  </MethodItems>
+</root>

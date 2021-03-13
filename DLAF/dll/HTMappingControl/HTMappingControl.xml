@@ -1,0 +1,473 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HTMappingControl</name>
+    </assembly>
+    <members>
+        <member name="T:HTMappingControl.DieInfo">
+            <summary>
+            芯片信息
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.DieInfo.RowIndex">
+            <summary>
+            行序号，从0开始
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.DieInfo.ColumnIndex">
+            <summary>
+            列序号，从0开始
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.DieInfo.DieState">
+            <summary>
+            芯片状态
+            </summary>
+        </member>
+        <member name="T:HTMappingControl.ExampleData">
+            <summary>
+            颜色样例信息
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.ExampleData.VariableX">
+            <summary>
+            坐标X
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.ExampleData.VariableY">
+            <summary>
+            坐标Y
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.ExampleData.Width">
+            <summary>
+            单元格带边框的宽度
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.ExampleData.Height">
+            <summary>
+            单元格带边框的高度
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.ExampleData.FillColor">
+            <summary>
+            单元格填充颜色
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.ExampleData.BorderColor">
+            <summary>
+            边框颜色
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.ExampleData.DieState">
+            <summary>
+            芯片装填
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.ExampleData.Count">
+            <summary>
+            数量
+            </summary>
+        </member>
+        <member name="T:HTMappingControl.Mapping">
+            <summary>
+            Mapping.xaml 的交互逻辑
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.Mapping.MinCellWidth">
+            <summary>
+            单元格最小宽度
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.Mapping.MinCellHeight">
+            <summary>
+            单元格最小高度
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.Mapping.DefaultBorderThickness">
+            <summary>
+            默认边框厚度
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.Mapping.RowCount">
+            <summary>
+            行数
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.Mapping.ColumnCount">
+            <summary>
+            列数
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.Mapping.DefaultBorderColor">
+            <summary>
+            默认边框填充颜色
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.Mapping.DataCollection">
+            <summary>
+            图谱信息集合
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.Mapping.SelectionText">
+            <summary>
+            选择项信息
+            </summary>
+        </member>
+        <member name="F:HTMappingControl.Mapping.SelectedItem">
+            <summary>
+            当前选中个体
+            </summary>
+        </member>
+        <member name="F:HTMappingControl.Mapping.MouseMoveItem">
+            <summary>
+            当前鼠标移动个体
+            </summary>
+        </member>
+        <member name="F:HTMappingControl.Mapping.IsInitialized">
+            <summary>
+            是否经过初始化
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.Mapping.SelectedDieInfo">
+            <summary>
+            选中的芯片信息
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.Mapping.IsShowCount">
+            <summary>
+            是否显示类型计数
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.Mapping.IsShowSelectedInfo">
+            <summary>
+            是否显示选中信息
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.Mapping.IsShowBottomBar">
+            <summary>
+            是否显示选中信息
+            </summary>
+        </member>
+        <member name="M:HTMappingControl.Mapping.Initial(System.Int32,System.Int32,System.Collections.Generic.Dictionary{System.String,System.Windows.Media.Color},System.String)">
+            <summary>
+            图谱初始化 
+            </summary>
+        </member>
+        <member name="M:HTMappingControl.Mapping.InitialDieState">
+            <summary>
+            芯片状态初始化，不改变行列
+            </summary>
+        </member>
+        <member name="M:HTMappingControl.Mapping.Refresh">
+            <summary>
+            刷新图谱，不改变芯片状态
+            </summary>
+        </member>
+        <member name="M:HTMappingControl.Mapping.SetCellSize(System.Int32,System.Int32,System.Double@,System.Double@)">
+            <summary>
+            根据控件大小计算单元格大小，如果单元格宽高度小于预设值，则维持预设值，显示滚动条
+            </summary>
+            <param name="columnCount">列数</param>
+            <param name="rowCount">行数</param>
+            <param name="cellWidth">单元格宽度</param>
+            <param name="cellHeight">单元格高度</param>
+        </member>
+        <member name="M:HTMappingControl.Mapping.Rectangle_MouseMove(System.Object,System.Windows.Input.MouseEventArgs)">
+            <summary>
+            鼠标移动事件，更改移动单元格颜色
+            </summary>
+        </member>
+        <member name="M:HTMappingControl.Mapping.userControl_MouseLeave(System.Object,System.Windows.Input.MouseEventArgs)">
+            <summary>
+            鼠标移出控件，清除鼠标移动个体
+            </summary>
+        </member>
+        <member name="M:HTMappingControl.Mapping.Rectangle_PreviewMouseLeftButtonDown(System.Object,System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            鼠标选中事件，更改选中单元格颜色，调用变化委托
+            </summary>
+        </member>
+        <member name="M:HTMappingControl.Mapping.SetDieState(System.Int32,System.Int32,System.String)">
+            <summary>
+            修改芯片状态
+            </summary>
+            <param name="rowIndex">行序号，从0开始</param>
+            <param name="columnIndex">列序号，从0开始</param>
+            <param name="state">芯片状态</param>
+        </member>
+        <member name="M:HTMappingControl.Mapping.ScrollToView(HTMappingControl.MappingData)">
+            <summary>
+            将单元格移动到视野内
+            </summary>
+        </member>
+        <member name="M:HTMappingControl.Mapping.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:HTMappingControl.MappingData">
+            <summary>
+            图谱信息
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingData.VariableX">
+            <summary>
+            坐标X
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingData.VariableY">
+            <summary>
+            坐标Y
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingData.Width">
+            <summary>
+            单元格带边框的宽度
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingData.Height">
+            <summary>
+            单元格带边框的高度
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingData.BorderThickness">
+            <summary>
+            边框厚度
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingData.FillColor">
+            <summary>
+            单元格填充颜色
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingData.BorderColor">
+            <summary>
+            边框颜色
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingData.RowIndex">
+            <summary>
+            行序号，从0开始
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingData.ColumnIndex">
+            <summary>
+            列序号，从0开始
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingData.NormalFillColor">
+            <summary>
+            正常状态的单元格填充颜色
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingData.MouseMoveFillColor">
+            <summary>
+            鼠标移动时单元格填充颜色
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingData.SelectedFillColor">
+            <summary>
+            选中时单元格填充颜色
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingData.NormalBorderColor">
+            <summary>
+            正常状态的边框填充颜色
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingData.MouseMoveBorderColor">
+            <summary>
+            鼠标移动时边框填充颜色
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingData.SelectedBorderColor">
+            <summary>
+            选中时边框颜色
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingData.DieState">
+            <summary>
+            芯片装填
+            </summary>
+        </member>
+        <member name="M:HTMappingControl.MappingData.ChangeColor">
+            <summary>
+            根据鼠标状态变更颜色，选中状态优先级最高，其次是鼠标移动状态
+            </summary>
+        </member>
+        <member name="M:HTMappingControl.MappingData.ToDarkColor(System.Windows.Media.Color)">
+            <summary>
+            计算加深的颜色
+            </summary>
+        </member>
+        <member name="M:HTMappingControl.MappingData.ToLightColor(System.Windows.Media.Color)">
+            <summary>
+            计算变浅的颜色
+            </summary>
+        </member>
+        <member name="T:HTMappingControl.MappingControl">
+            <summary>
+            Winform搭载WPF，容器控件
+            </summary>
+        </member>
+        <member name="M:HTMappingControl.MappingControl.#ctor">
+            <summary>
+            初始化
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingControl.MinCellWidth">
+            <summary>
+            单元格最小宽度
+            </summary>
+            <exception cref="T:System.ArgumentException">单元格宽度必须大于0</exception>
+        </member>
+        <member name="P:HTMappingControl.MappingControl.MinCellHeight">
+            <summary>
+            单元格最小高度
+            </summary>
+            <exception cref="T:System.ArgumentException">单元格高度必须大于0</exception>
+        </member>
+        <member name="P:HTMappingControl.MappingControl.BorderThickness">
+            <summary>
+            边框厚度
+            </summary>
+            <exception cref="T:System.ArgumentException">边框厚度必须大于0</exception>
+        </member>
+        <member name="P:HTMappingControl.MappingControl.DefaultBorderColor">
+            <summary>
+            默认边框颜色
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingControl.IsShowCount">
+            <summary>
+            是否显示芯片状态的计数
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingControl.IsShowSelectedInfo">
+            <summary>
+            是否显示选中芯片的状态
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingControl.IsShowBottomBar">
+            <summary>
+            是否显示底部栏
+            </summary>
+        </member>
+        <member name="E:HTMappingControl.MappingControl.OnSelectedDieChanged">
+            <summary>
+            选中芯片变更事件，未选中时参数为Null
+            </summary>
+        </member>
+        <member name="P:HTMappingControl.MappingControl.SelectedDieInfo">
+            <summary>
+            选中的芯片信息，未选中时为Null
+            </summary>
+        </member>
+        <member name="M:HTMappingControl.MappingControl.Initial(System.Int32,System.Int32,System.Collections.Generic.Dictionary{System.String,System.Drawing.Color},System.String)">
+            <summary>
+            图谱初始化 
+            </summary>
+            <param name="rowCount">行数</param>
+            <param name="columnCount">列数</param>
+            <param name="dic_DieState_Color">芯片状态-颜色 字典</param>
+            <param name="initialDieState">初始状态</param>
+            <exception cref="T:System.ArgumentNullException">初始状态为空</exception>
+            <exception cref="T:System.ArgumentException">字典中未找到初始状态的键</exception>
+        </member>
+        <member name="M:HTMappingControl.MappingControl.InitaialDieState">
+            <summary>
+            芯片状态初始化，不改变行列
+            </summary>
+        </member>
+        <member name="M:HTMappingControl.MappingControl.RefreshMapping">
+            <summary>
+            刷新图谱，不改变芯片状态
+            </summary>
+        </member>
+        <member name="M:HTMappingControl.MappingControl.SetDieState(System.Int32,System.Int32,System.String)">
+            <summary>
+            修改芯片状态
+            </summary>
+            <param name="rowIndex">行序号，从0开始</param>
+            <param name="columnIndex">列序号，从0开始</param>
+            <param name="state">芯片状态</param>
+            <exception cref="T:System.ArgumentException">行数或者列数超过预设值</exception>
+            <exception cref="T:System.ArgumentException">字典中没有找到指定状态的键</exception>
+        </member>
+        <member name="M:HTMappingControl.MappingControl.SetDieState(HTMappingControl.DieInfo)">
+            <summary>
+            修改芯片状态
+            </summary>
+            <param name="dieInfo">芯片信息</param>
+            <exception cref="T:System.ArgumentException">行数或者列数超过预设值</exception>
+            <exception cref="T:System.ArgumentException">字典中没有找到指定状态的键</exception>
+        </member>
+        <member name="M:HTMappingControl.MappingControl.SetDieState(HTMappingControl.DieInfo,HTMappingControl.DieInfo)">
+            <summary>
+            修改芯片状态
+            </summary>
+            <param name="dieInfo1">芯片1信息</param>
+            <param name="dieInfo2">芯片2信息</param>
+            <exception cref="T:System.ArgumentException">行数或者列数超过预设值</exception>
+            <exception cref="T:System.ArgumentException">字典中没有找到指定状态的键</exception>
+        </member>
+        <member name="M:HTMappingControl.MappingControl.SetDieState(HTMappingControl.DieInfo,HTMappingControl.DieInfo,HTMappingControl.DieInfo)">
+            <summary>
+            修改芯片状态
+            </summary>
+            <param name="dieInfo1">芯片1信息</param>
+            <param name="dieInfo2">芯片2信息</param>
+            <param name="dieInfo3">芯片3信息</param>
+            <exception cref="T:System.ArgumentException">行数或者列数超过预设值</exception>
+            <exception cref="T:System.ArgumentException">字典中没有找到指定状态的键</exception>
+        </member>
+        <member name="M:HTMappingControl.MappingControl.SetDieState(System.Collections.Generic.List{HTMappingControl.DieInfo})">
+            <summary>
+            修改芯片状态
+            </summary>
+            <param name="dieInfos">芯片信息列表</param>
+            <exception cref="T:System.ArgumentException">行数或者列数超过预设值</exception>
+            <exception cref="T:System.ArgumentException">字典中没有找到指定状态的键</exception>
+        </member>
+        <member name="M:HTMappingControl.MappingControl.SetDieState(HTMappingControl.DieInfo[])">
+            <summary>
+            修改芯片状态
+            </summary>
+            <param name="dieInfos">芯片信息</param>
+            <exception cref="T:System.ArgumentException">行数或者列数超过预设值</exception>
+            <exception cref="T:System.ArgumentException">字典中没有找到指定状态的键</exception>
+        </member>
+        <member name="M:HTMappingControl.MappingControl.GetDieState(System.Int32,System.Int32)">
+            <summary>
+            返回指定芯片的状态
+            </summary>
+            <param name="rowIndex">行序号，从0开始</param>
+            <param name="columnIndex">列序号，从0开始</param>
+            <returns>指定芯片的状态</returns>
+            <exception cref="T:System.ArgumentException">行数或者列数超过预设值</exception>
+        </member>
+        <member name="M:HTMappingControl.MappingControl.MappingControl_Resize(System.Object,System.EventArgs)">
+            <summary>
+            容器控件大小变更时刷新图谱
+            </summary>
+        </member>
+        <member name="F:HTMappingControl.MappingControl.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:HTMappingControl.MappingControl.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:HTMappingControl.MappingControl.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+    </members>
+</doc>

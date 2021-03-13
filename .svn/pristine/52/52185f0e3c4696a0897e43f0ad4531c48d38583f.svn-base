@@ -1,0 +1,518 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{416361E1-79B4-461E-B2C4-3E2DADBF30E4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>JFHub</RootNamespace>
+    <AssemblyName>JFHub</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>..\bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="JFInterfaceDef, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\x64\Debug\JFInterfaceDef.dll</HintPath>
+    </Reference>
+    <Reference Include="JFLog, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\x64\Debug\JFLog.dll</HintPath>
+    </Reference>
+    <Reference Include="JFSecurity, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\x64\Debug\JFSecurity.dll</HintPath>
+    </Reference>
+    <Reference Include="JFToolKits, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\x64\Debug\JFToolKits.dll</HintPath>
+    </Reference>
+    <Reference Include="JFUI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\x64\Debug\JFUI.dll</HintPath>
+    </Reference>
+    <Reference Include="JFVision, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\x64\Debug\JFVision.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FormAddFlow2Station.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAddFlow2Station.Designer.cs">
+      <DependentUpon>FormAddFlow2Station.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormAddMChnDev.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAddMChnDev.Designer.cs">
+      <DependentUpon>FormAddMChnDev.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormAddNames.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAddNames.Designer.cs">
+      <DependentUpon>FormAddNames.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStationBaseAioPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStationBaseAioPanel.Designer.cs">
+      <DependentUpon>FormStationBaseAioPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStationBaseAxisPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStationBaseAxisPanel.Designer.cs">
+      <DependentUpon>FormStationBaseAxisPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDeviceCellNameManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDeviceCellNameManager.Designer.cs">
+      <DependentUpon>FormDeviceCellNameManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDevModuleInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDevModuleInfo.Designer.cs">
+      <DependentUpon>FormDevModuleInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStationBaseCmpTrigPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStationBaseCmpTrigPanel.Designer.cs">
+      <DependentUpon>FormStationBaseCmpTrigPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStationBaseCmrPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStationBaseCmrPanel.Designer.cs">
+      <DependentUpon>FormStationBaseCmrPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStationBaseDioPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStationBaseDioPanel.Designer.cs">
+      <DependentUpon>FormStationBaseDioPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormInitorMgr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormInitorMgr.Designer.cs">
+      <DependentUpon>FormInitorMgr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDllMgr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDllMgr.Designer.cs">
+      <DependentUpon>FormDllMgr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMethodCollectionConfigUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMethodCollectionConfigUI.Designer.cs">
+      <DependentUpon>FormMethodCollectionConfigUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMethodFlowTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMethodFlowTest.Designer.cs">
+      <DependentUpon>FormMethodFlowTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMethodUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMethodUI.Designer.cs">
+      <DependentUpon>FormMethodUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSelCfg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelCfg.Designer.cs">
+      <DependentUpon>FormSelCfg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormCreateInitor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCreateInitor.Designer.cs">
+      <DependentUpon>FormCreateInitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSetModuleChnCount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetModuleChnCount.Designer.cs">
+      <DependentUpon>FormSetModuleChnCount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStationBaseDebug.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStationBaseDebug.Designer.cs">
+      <DependentUpon>FormStationBaseDebug.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStationBaseCfg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStationBaseCfg.Designer.cs">
+      <DependentUpon>FormStationBaseCfg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStationBaseLightPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStationBaseLightPanel.Designer.cs">
+      <DependentUpon>FormStationBaseLightPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStationBaseWorkFlowPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStationBaseWorkFlowPanel.Designer.cs">
+      <DependentUpon>FormStationBaseWorkFlowPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStationCfgParam.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStationCfgParam.Designer.cs">
+      <DependentUpon>FormStationCfgParam.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStationWorkFlowCfg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStationWorkFlowCfg.Designer.cs">
+      <DependentUpon>FormStationWorkFlowCfg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSysCfg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSysCfg.Designer.cs">
+      <DependentUpon>FormSysCfg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IJFMethodSB.cs" />
+    <Compile Include="JFCmdWorkBase.cs" />
+    <Compile Include="JFDataPool.cs" />
+    <Compile Include="JFDelegateShowInfo.cs" />
+    <Compile Include="JFMethodBase.cs" />
+    <Compile Include="JFMethodCollectionBase.cs" />
+    <Compile Include="JFMethodBreak.cs" />
+    <Compile Include="JFMethodFlowBox.cs" />
+    <Compile Include="JFMethodFor.cs" />
+    <Compile Include="JFDevCellNameManeger.cs" />
+    <Compile Include="JFInitorManager.cs" />
+    <Compile Include="JFHubCenter.cs" />
+    <Compile Include="JFinitializerHelper.cs" />
+    <Compile Include="JFMethodFlow.cs" />
+    <Compile Include="JFMethodInitParamBase.cs" />
+    <Compile Include="JFMultiAxisPosition.cs" />
+    <Compile Include="JFStationBase.cs" />
+    <Compile Include="JFStationManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UcNamesEditTest_LightCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcNamesEditTest_LightCtrl.Designer.cs">
+      <DependentUpon>UcNamesEditTest_LightCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UcNamesEditTest_TrigCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcNamesEditTest_TrigCtrl.Designer.cs">
+      <DependentUpon>UcNamesEditTest_TrigCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UcSimpleAxisInStation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcSimpleAxisInStation.Designer.cs">
+      <DependentUpon>UcSimpleAxisInStation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UcCommonMethodRtUi.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcCommonMethodRtUi.Designer.cs">
+      <DependentUpon>UcCommonMethodRtUi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UcChnNamesInStation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcChnNamesInStation.Designer.cs">
+      <DependentUpon>UcChnNamesInStation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UcRTMethodCollection.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcRTMethodCollection.Designer.cs">
+      <DependentUpon>UcRTMethodCollection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UcNamesEditTest_Aio.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcNamesEditTest_Aio.Designer.cs">
+      <DependentUpon>UcNamesEditTest_Aio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UcNamesEditTest_Dio.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcNamesEditTest_Dio.Designer.cs">
+      <DependentUpon>UcNamesEditTest_Dio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UcMethodFlow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcMethodFlow.Designer.cs">
+      <DependentUpon>UcMethodFlow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UcMethodNode.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcMethodNode.Designer.cs">
+      <DependentUpon>UcMethodNode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UcNamesEditTest_Motion.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcNamesEditTest_Motion.Designer.cs">
+      <DependentUpon>UcNamesEditTest_Motion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UcNamesEditTest_CmpTrig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcNamesEditTest_CmpTrig.Designer.cs">
+      <DependentUpon>UcNamesEditTest_CmpTrig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UcStationBaseRealtimeUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcStationBaseRealtimeUI.Designer.cs">
+      <DependentUpon>UcStationBaseRealtimeUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UcStationBaseRT.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcStationBaseRT.Designer.cs">
+      <DependentUpon>UcStationBaseRT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UcStandard4AxisPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcStandard4AxisPanel.Designer.cs">
+      <DependentUpon>UcStandard4AxisPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UcStationWorkFlowCfg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcStationWorkFlowCfg.Designer.cs">
+      <DependentUpon>UcStationWorkFlowCfg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UcStationWorkPositionCfg.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcStationWorkPositionCfg.Designer.cs">
+      <DependentUpon>UcStationWorkPositionCfg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UcAxisStatusIS.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcAxisStatusIS.Designer.cs">
+      <DependentUpon>UcAxisStatusIS.cs</DependentUpon>
+    </Compile>
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FormAddFlow2Station.resx">
+      <DependentUpon>FormAddFlow2Station.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAddMChnDev.resx">
+      <DependentUpon>FormAddMChnDev.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAddNames.resx">
+      <DependentUpon>FormAddNames.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStationBaseAioPanel.resx">
+      <DependentUpon>FormStationBaseAioPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStationBaseAxisPanel.resx">
+      <DependentUpon>FormStationBaseAxisPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDeviceCellNameManager.resx">
+      <DependentUpon>FormDeviceCellNameManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDevModuleInfo.resx">
+      <DependentUpon>FormDevModuleInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormInitorMgr.resx">
+      <DependentUpon>FormInitorMgr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDllMgr.resx">
+      <DependentUpon>FormDllMgr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMethodCollectionConfigUI.resx">
+      <DependentUpon>FormMethodCollectionConfigUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMethodFlowTest.resx">
+      <DependentUpon>FormMethodFlowTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMethodUI.resx">
+      <DependentUpon>FormMethodUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelCfg.resx">
+      <DependentUpon>FormSelCfg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCreateInitor.resx">
+      <DependentUpon>FormCreateInitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetModuleChnCount.resx">
+      <DependentUpon>FormSetModuleChnCount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStationBaseDebug.resx">
+      <DependentUpon>FormStationBaseDebug.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStationBaseCfg.resx">
+      <DependentUpon>FormStationBaseCfg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStationBaseCmpTrigPanel.resx">
+      <DependentUpon>FormStationBaseCmpTrigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStationBaseCmrPanel.resx">
+      <DependentUpon>FormStationBaseCmrPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStationBaseDioPanel.resx">
+      <DependentUpon>FormStationBaseDioPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStationBaseLightPanel.resx">
+      <DependentUpon>FormStationBaseLightPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStationBaseWorkFlowPanel.resx">
+      <DependentUpon>FormStationBaseWorkFlowPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStationCfgParam.resx">
+      <DependentUpon>FormStationCfgParam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStationWorkFlowCfg.resx">
+      <DependentUpon>FormStationWorkFlowCfg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSysCfg.resx">
+      <DependentUpon>FormSysCfg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcAxisStatusIS.resx">
+      <DependentUpon>UcAxisStatusIS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcNamesEditTest_LightCtrl.resx">
+      <DependentUpon>UcNamesEditTest_LightCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcNamesEditTest_TrigCtrl.resx">
+      <DependentUpon>UcNamesEditTest_TrigCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcSimpleAxisInStation.resx">
+      <DependentUpon>UcSimpleAxisInStation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcCommonMethodRtUi.resx">
+      <DependentUpon>UcCommonMethodRtUi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcChnNamesInStation.resx">
+      <DependentUpon>UcChnNamesInStation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcRTMethodCollection.resx">
+      <DependentUpon>UcRTMethodCollection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcNamesEditTest_Aio.resx">
+      <DependentUpon>UcNamesEditTest_Aio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcNamesEditTest_Dio.resx">
+      <DependentUpon>UcNamesEditTest_Dio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcMethodFlow.resx">
+      <DependentUpon>UcMethodFlow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcMethodNode.resx">
+      <DependentUpon>UcMethodNode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcNamesEditTest_Motion.resx">
+      <DependentUpon>UcNamesEditTest_Motion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcNamesEditTest_CmpTrig.resx">
+      <DependentUpon>UcNamesEditTest_CmpTrig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcStationBaseRealtimeUI.resx">
+      <DependentUpon>UcStationBaseRealtimeUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcStationBaseRT.resx">
+      <DependentUpon>UcStationBaseRT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcStandard4AxisPanel.resx">
+      <DependentUpon>UcStandard4AxisPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcStationWorkFlowCfg.resx">
+      <DependentUpon>UcStationWorkFlowCfg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcStationWorkPositionCfg.resx">
+      <DependentUpon>UcStationWorkPositionCfg.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\servo_right.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

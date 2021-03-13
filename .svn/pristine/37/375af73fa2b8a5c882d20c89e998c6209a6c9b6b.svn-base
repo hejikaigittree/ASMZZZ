@@ -1,0 +1,11 @@
+<root>
+  <MethodFlowName>未命名方法流</MethodFlowName>
+  <MethodItems>
+    <MethodItem Name="设置X轴运动参数" Type="JFCM_SetMotionParam">
+      <InitParams>
+        <Param Name="轴ID" Type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;string&gt;相机X轴&lt;/string&gt;" />
+        <Param Name="运动参数" Type="JFInterfaceDef.JFMotionParam, JFInterfaceDef, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;JFMotionParam xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;&#xD;&#xA;  &lt;vs&gt;0&lt;/vs&gt;&#xD;&#xA;  &lt;vm&gt;251&lt;/vm&gt;&#xD;&#xA;  &lt;ve&gt;0&lt;/ve&gt;&#xD;&#xA;  &lt;acc&gt;2000&lt;/acc&gt;&#xD;&#xA;  &lt;dec&gt;2000&lt;/dec&gt;&#xD;&#xA;  &lt;curve&gt;1&lt;/curve&gt;&#xD;&#xA;  &lt;jerk&gt;0&lt;/jerk&gt;&#xD;&#xA;&lt;/JFMotionParam&gt;" />
+      </InitParams>
+    </MethodItem>
+  </MethodItems>
+</root>

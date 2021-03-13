@@ -1,0 +1,166 @@
+﻿using JFInterfaceDef;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace JFHub
+{
+    /// <summary>
+    /// 规则工站 ， 主要用于运行一些不需要编程的任务
+    /// </summary>
+    [JFDisplayName("JF规则工站")]
+    [JFVersion("1.0.0.0")]
+    public class JFRuleStation:JFStationBase
+    {
+        static string ResetWFName = "归零动作流程";
+        static string PrepareWFName = "任务开始前准备流程";
+        static string RunLoopWFName = "主工作流程";
+        static string EndBatchWFName = "结批流程";
+        static string CleanWFName = "任务退出前清理流程";
+
+        public JFRuleStation()
+        {
+            DeclearMethodFlow(ResetWFName); //归零动作流程
+            DeclearMethodFlow(PrepareWFName);//主流程运行前的准备
+            DeclearMethodFlow(RunLoopWFName);//主流程
+            DeclearMethodFlow(EndBatchWFName);//结批流程
+            DeclearMethodFlow(CleanWFName);//退出主流程后的清理
+            DeclearCfgParam(JFParamDescribe.Create("工站归零模式", typeof(string), JFValueLimit.Options, _resetModes),"工站通用配置");
+        }
+
+
+        string[] _resetModes = new string[] { "每次运行前必须归零", "程序启动后只运行一次", "运行前不检查是否归零" };
+
+        /// <summary>
+        /// 暂时不接受自定义指令
+        /// 日后添加
+        /// </summary>
+        public override int[] AllCmds { get { return new int[] { }; } }
+        public override string GetCmdName(int cmd)
+        {
+            throw new NotImplementedException();
+        }
+
+        static int CSID_Stop = 0;
+        static int CSID_Resetting = 1;
+        static int CSID_Running = 2;
+        static int CSID_EndBatching = 3;
+        static int[] _customStatus = new int[4] { CSID_Stop, CSID_Resetting, CSID_Running, CSID_EndBatching };
+        static string[] CustomStatusNames = new string[] { "已停止", "正在归零", "正在运行", "正在结批" };
+        /// <summary>
+        /// 自定义状态 0,1,2,3
+        /// </summary>
+        public override int[] AllCustomStatus { get { return _customStatus; } }
+
+
+
+        public override string GetCustomStatusName(int status)
+        {
+
+            if (status > -1 && status < 4)
+                return CustomStatusNames[status];
+            return "未定义状态";
+        }
+
+        int _currCostomStatus = CSID_Stop; //当前自定义工作状态
+        public override int CurrCustomStatus { get { return _currCostomStatus; } }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        int _workMode = 0; //0为正常工作模式，1为归零模式
+
+
+        /// <summary>
+        /// 工站归零指令
+        /// </summary>
+        /// <returns></returns>
+        public override JFWorkCmdResult Reset()
+        {
+            if (CurrWorkStatus == JFWorkStatus.Pausing ||
+               CurrWorkStatus == JFWorkStatus.Interactiving ||
+               CurrWorkStatus == JFWorkStatus.Pausing) // 正在运行时不能执行归零动作
+                return JFWorkCmdResult.StatusError;
+
+            //JFMethodFlow mf = GetWorkFlow("Reset");
+
+            _workMode = 1; //将线程工作模式置为归零模式
+            JFWorkCmdResult ret = Start();
+            return ret;
+
+        }
+
+
+
+        protected override void ExecuteEndBatch()
+        {
+            return;
+        }
+
+        protected override void OnPause()
+        {
+            return;
+        }
+
+        protected override void OnResume()
+        {
+            return;
+        }
+
+        protected override void OnStop()
+        {
+            return;
+        }
+
+        protected override void PrepareWhenWorkStart()
+        {
+            if(_workMode == 0) //正常动作流程
+            {
+                _currCostomStatus = CSID_Running;
+                ChangeCustomStatus(CSID_Running, "", null);
+                JFMethodFlow mf = GetWorkFlow(PrepareWFName);
+                mf.Reset();
+                bool isOK = mf.Action();
+                if (!isOK)
+                {
+                    ChangeCustomStatus(CSID_Stop, "", null);
+                    ExitWork(WorkExitCode.Error, PrepareWFName + " 发生错误:" + mf.ActionErrorInfo());
+                }
+            }
+            else//执行归零动作流程
+            {
+                _currCostomStatus = CSID_Resetting;
+                //什么都不做 ， 归零流程放在RunLoop函数中
+            }
+            return;
+        }
+
+        protected override void RunLoopInWork()
+        {
+            if(_workMode != 0) //工站归零动作流程
+            {
+                JFMethodFlow mf = GetWorkFlow(ResetWFName);
+                
+                _workMode = 0;
+                ExitWork(WorkExitCode.Normal, PrepareWFName + " 完成" );
+                //return；不需要调用return
+            }
+
+            //正常
+
+        }
+
+        protected override void CleanupWhenWorkExit()
+        {
+            JFMethodFlow mfCleanup = GetWorkFlow(CleanWFName);
+            mfCleanup.Reset();//动作流重置（回到动作流的第一步）
+            bool isOK = mfCleanup.Action();
+            if (!isOK)
+                JFHubCenter.Instance.StationMgr.StationLog(this, CleanWFName + "发生错误:" + mfCleanup.ActionErrorInfo(), JFLogLevel.FATAL, LogMode.ShowRecord);
+            return;
+        }
+    }
+}

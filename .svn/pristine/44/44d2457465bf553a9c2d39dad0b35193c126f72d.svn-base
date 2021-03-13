@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace JFInterfaceDef
+{
+    /// <summary>
+    /// 工作站接口类
+    /// </summary>
+    public interface IJFStation : IJFCmdWork,IJFInitializable,IJFRealtimeUIProvider,IJFConfigUIProvider
+    {
+        /// <summary>
+        /// 生成本工站测试窗口，（可为空值） 
+        /// 每调用一次本函数，将生成一个新的窗口对象
+        /// </summary>
+        Form GenForm();
+
+        JFWorkCmdResult EndBatch();//结批操作
+    }
+}

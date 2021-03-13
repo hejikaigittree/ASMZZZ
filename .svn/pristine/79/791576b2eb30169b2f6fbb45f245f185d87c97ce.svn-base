@@ -1,0 +1,242 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using JFHub;
+using JFToolKits;
+using JFUI;
+using JFInterfaceDef;
+
+namespace JFApp
+{
+    public partial class FormMain : Form
+    {
+        public FormMain()
+        {
+            InitializeComponent();
+            IsAutoRunning = true;
+        }
+
+        //当前是否处于自动运行模式
+        public bool IsAutoRunning { get; private set; } 
+        FormAuto _autoForm = null; //
+        FormManual _manualForm = null; //
+        FormCfg _cfgForm = null; //设置窗口
+        FormLog _logForm = null; //日志窗口
+        FormBrief _briefForm = null; //机器简介窗口
+        FormUser _userForm = null; //用户权限管理窗口
+        FormVision _visionForm = null; //视觉调试窗口
+
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+            ///检查APP运行的条件
+            //1.检查主工站是否注册
+            //if(JFHubCenter.Instance.StationMgr.MainStation == null)
+            //{
+            //    MessageBox.Show("Main-Station is not regist ,App will Exit!");
+            //    Application.Exit();
+            //}
+
+
+
+
+            base.OnResize(e);
+
+            //控件根据窗体的大小变化而变化，等比例放大缩小
+            this.Resize += new EventHandler(FormResize);
+            oldX = this.Width;
+            oldY = this.Height;
+            SetTag(this);
+            FormResize(new object(), new EventArgs());
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;//窗体全屏打开
+
+            ////功能窗口初始化
+            _autoForm = new FormAuto();
+            _autoForm.TopLevel = false;
+            _autoForm.Parent = subFormPanel;
+            _autoForm.Dock = DockStyle.Fill;
+
+            _manualForm = new FormManual();
+            _manualForm.Dock = DockStyle.Fill;
+            //_manualForm.Visible = false;
+            _manualForm.TopLevel = false;
+            _manualForm.Parent = subFormPanel;
+            _cfgForm = new FormCfg(); //设置窗口
+            _cfgForm.Dock = DockStyle.Fill;
+            //_cfgForm.Visible = false;
+            _cfgForm.TopLevel = false;
+            _cfgForm.Parent = subFormPanel;
+            _logForm = new FormLog(); //日志窗口
+            _logForm.Dock = DockStyle.Fill;
+            _logForm.TopLevel = false;
+            //_logForm.Visible = false;
+            _logForm.Parent = subFormPanel;
+            _briefForm = new FormBrief(); //机器简介窗口
+            _briefForm.Dock = DockStyle.Fill;
+            _briefForm.TopLevel = false;
+           // _briefForm.Visible = false;
+            _briefForm.Parent = subFormPanel;
+            _userForm = new FormUser(); //用户权限管理窗口
+            _userForm.Dock = DockStyle.Fill;
+           // _userForm.Visible = false;
+            _userForm.TopLevel = false;
+            _userForm.Parent = subFormPanel;
+            _visionForm = new FormVision(); //视觉调试窗口
+            _visionForm.Dock = DockStyle.Fill;
+            //_visionForm.Visible = false;
+            _visionForm.TopLevel = false;
+            _visionForm.Parent = subFormPanel;
+
+            _autoForm.Visible = true;
+            _autoForm.Show();
+        }
+
+        #region 窗体子控件自动缩放功能
+        float oldX = 1;
+        float oldY = 1;
+
+        private void SetTag(Control ctrl)
+        {
+            foreach (Control con in ctrl.Controls)
+            {
+                con.Tag = con.Width + ":" + con.Height + ":" + con.Left + ":" + con.Top + ":" + con.Font.Size;
+                if (con.Controls.Count > 0)
+                {
+                    SetTag(con);
+                }
+            }
+        }
+
+        private void SetControl(float newx, float newy, Control ctrl)
+        {
+            foreach (Control con in ctrl.Controls)
+            {
+                string[] mytag = con.Tag.ToString().Split(new char[] { ':' });
+                float a = Convert.ToSingle(mytag[0]) * newx;
+                con.Width = (int)a;
+                a = Convert.ToSingle(mytag[1]) * newy;
+                con.Height = (int)a;
+                a = Convert.ToSingle(mytag[2]) * newx;
+                con.Left = (int)a;
+                a = Convert.ToSingle(mytag[3]) * newy;
+                con.Top = (int)a;
+                Single currentsize = Convert.ToSingle(mytag[4]) * Math.Min(newx, newy);
+                con.Font = new Font(con.Font.Name, currentsize, con.Font.Style, con.Font.Unit);
+                if (con.Controls.Count > 0)
+                    SetControl(newx, newy, con);
+            }
+        }
+
+        void FormResize(object sender, EventArgs e)
+        {
+            float newx = (this.Width) / oldX;
+            float newy = (this.Height) / oldY;
+            SetControl(newx, newy, this);
+        }
+
+
+        #endregion
+
+        #region  操作按钮/子窗口
+
+        
+
+
+        #endregion
+
+        /// <summary>
+        /// 清除报警信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btAlarm_Click(object sender, EventArgs e) 
+        {
+
+        }
+
+        /// <summary>
+        /// 设备运行
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btStart_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// 设备暂停/恢复
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btPause_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// 设备停止 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btStop_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// 设备结批
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btBatch_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// 用户登录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btUser_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btAuto_Click(object sender, EventArgs e)
+        {
+            _autoForm.Show();
+        }
+
+        private void btManual_Click(object sender, EventArgs e)
+        {
+            _manualForm.Show();
+        }
+
+        private void btBrief_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btLog_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btCfg_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btVision_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+}

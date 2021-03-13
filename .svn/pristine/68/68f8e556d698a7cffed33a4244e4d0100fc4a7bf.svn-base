@@ -1,0 +1,100 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using JFToolKits;
+using JFInterfaceDef;
+
+namespace JFHub
+{
+    /// <summary>
+    /// Initor管理器类
+    /// </summary>
+    public class JFInitorManager
+    {
+        internal JFInitorManager()
+        {
+            dictInitors = new SortedDictionary<string, IJFInitializable>();
+            
+        }
+        /// <summary>
+        /// 获取当前所有已创建Initor对象名称
+        /// </summary>
+        public string[] InitorIDs 
+        {
+            get
+            {
+                return dictInitors.Keys.ToArray();
+            }
+        }
+
+        /// <summary>根据指定的接口类型筛选ID</summary>
+        public string[] GetIDs(Type matchType)
+        {
+            List<string> ret =new List<string>();
+            foreach(KeyValuePair<string,IJFInitializable> kv in dictInitors)
+            {
+                if (matchType.IsAssignableFrom(kv.Value.GetType()))
+                    ret.Add(kv.Key);
+            }
+            return ret.ToArray();
+        }
+
+        public IJFInitializable GetInitor(string ID)
+        {
+            if (string.IsNullOrEmpty(ID))
+                return null;
+            if (!dictInitors.ContainsKey(ID))
+                return null;
+            return dictInitors[ID];
+        }
+
+        public bool ContainID(string ID)
+        {
+
+            return dictInitors.ContainsKey(ID);
+        }
+
+        public IJFInitializable this[string ID]
+        {
+            get
+            {
+                return GetInitor(ID);
+            }
+        }
+
+        /// <summary>
+        /// 获取Initor对象对应的ID
+        /// </summary>
+        /// <param name="initor"></param>
+        /// <returns></returns>
+        public string GetIDByInitor(IJFInitializable initor)
+        {
+            if (!dictInitors.ContainsValue(initor))
+                return null;
+            return  dictInitors.FirstOrDefault(q => q.Value == initor).Key;
+        }
+
+        internal void Add(string id,IJFInitializable dev)
+        {
+            dictInitors.Add(id, dev);
+        }
+
+        internal void Remove(string id)
+        {
+            dictInitors.Remove(id);
+        }
+
+        internal void Clear()
+        {
+            dictInitors.Clear();
+        }
+
+
+        SortedDictionary<string, IJFInitializable> dictInitors;
+        
+
+        
+    }
+}

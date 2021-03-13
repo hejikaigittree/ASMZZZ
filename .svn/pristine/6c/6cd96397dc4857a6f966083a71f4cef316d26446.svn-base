@@ -1,0 +1,148 @@
+﻿using JFInterfaceDef;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace JFHub
+{
+    public class JFMainStationBase:IJFMainStation
+    {
+        public JFMainStationBase()
+        {
+            ///主工站UI面板，这里只是一个简单的演示
+            UcMainStationPanelBase mainStationPanel = new UcMainStationPanelBase();
+            mainStationPanel.SetMainStation(this);
+            UIPanel = mainStationPanel;
+
+            /////简介面板，只是一个简单的演示
+            Panel briefPanel = new Panel();
+            Label lb = new Label();
+            lb.Text = "工站简介面板示例";
+            briefPanel.Controls.Add(lb);
+            BriefPanel = briefPanel;
+            
+
+
+            WorkStatus = JFWorkStatus.UnStart;
+            IsAlarming = false;
+
+
+        }
+
+        /// <summary>
+        /// 人机交互面板，用于在主窗口中显示
+        /// </summary>
+        /// <returns></returns>
+        public Control UIPanel { get; protected set; }
+
+
+
+        /// <summary>
+        /// 设备简介面板,用于显示设备简介，包含图片和文字信息等
+        /// </summary>
+        public Control BriefPanel { get; protected set; }
+
+
+
+        /// <summary>
+        /// 获取当前工作状态
+        /// </summary>
+        public JFWorkStatus WorkStatus { get; protected set; }
+
+        public bool IsAlarming { get; protected set; }
+
+        /// <summary>
+        /// 重置（消除）报警信号
+        /// </summary>
+        public virtual void ClearAlarming()
+        {
+            IsAlarming = false;
+            WorkStatus = JFWorkStatus.UnStart;
+            
+        }
+
+        public virtual bool Start(out string errorInfo)//开始运行
+        {
+            errorInfo = "Unknown Error";
+            return false;
+        }
+
+        /// <summary>停止运行</summary>
+        public virtual bool Stop(out string errorInfo)
+        {
+            errorInfo = "Unknown Error";
+            return false;
+        }
+
+        /// <summary>暂停</summary>
+        public virtual bool Pause(out string errorInfo)
+        {
+            errorInfo = "Unknown Error";
+            return false;
+        }
+
+        /// <summary>从暂停中恢复运行</summary>
+        public virtual bool Resume(out string errorInfo)
+        {
+            errorInfo = "Unknown Error";
+            return false;
+        }
+
+        /// <summary>
+        /// 结批，完成当前工作后退出任务
+        /// </summary>
+        public virtual  bool EndBatch(out string errorInfo)
+        {
+            errorInfo = "Unknown Error";
+            return false;
+        }
+
+
+        /// <summary>
+        /// 处理工站状态改变
+        /// </summary>
+        /// <param name="station"></param>
+        /// <param name="currWorkStatus"></param>
+        public virtual void OnStationWorkStatusChanged(IJFStation station, JFWorkStatus currWorkStatus, string info)
+        {
+
+        }
+        //void HandleStationMsg(IJFStation station,object msg )
+
+        /// <summary>
+        ///  处理工站的业务状态发生改变
+        /// </summary>
+        /// <param name="station"></param>
+        /// <param name="currCustomStatus"></param>
+        public virtual void OnStationCustomStatusChanged(IJFStation station, int currCustomStatus, string info, object param)
+        {
+
+        }
+
+        /// <summary>
+        /// 产品加工完成消息
+        /// </summary>
+        /// <param name="station">消息发送者</param>
+        /// <param name="PassCount">本次生产完成的成品数量</param>
+        /// <param name="NGCount">本次生产的次品数量</param>
+        /// <param name="NGInfo">次品信息</param>
+        public virtual void OnStationProductFinished(IJFStation station, int passCount, string[] passIDs, int ngCount, string[] ngIDs, string[] ngInfo)
+        {
+
+        }
+
+        /// <summary>
+        /// 处理工站发来的其他定制化的消息
+        /// </summary>
+        /// <param name="station"></param>
+        /// <param name="msg"></param>
+        public virtual void OnStationCustomizeMsg(IJFStation station, string msgCategory, object[] msgParams)
+        {
+
+        }
+
+    }
+}

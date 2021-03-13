@@ -1,0 +1,13 @@
+<root>
+  <MethodFlowName>未命名方法流</MethodFlowName>
+  <MethodItems>
+    <MethodItem Name="获取DO状态_S_0" Type="JFCM_GetDO_S">
+      <InitParams>
+        <Param Name="DO通道名称" Type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;string&gt;红灯&lt;/string&gt;" />
+      </InitParams>
+      <OutputNameIDs>
+        <Name-ID Name="DO Status" IDinPool="获取DO状态_S_0.DO Status" />
+      </OutputNameIDs>
+    </MethodItem>
+  </MethodItems>
+</root>

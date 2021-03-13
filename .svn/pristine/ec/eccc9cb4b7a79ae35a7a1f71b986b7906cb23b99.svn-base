@@ -1,0 +1,77 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using JFInterfaceDef;
+using JFHub;
+
+namespace JFMethodCommonLib
+{
+    /// <summary>
+    /// JFCM_GetDI_S 获取一个DI通道的状态
+    /// </summary>
+    [JFCategoryLevels(new string[] { "JF 设备控制", "DIO" })]
+    [JFDisplayName("获取DI状态_S")]
+    public class JFCM_GetDI_S:JFMethodInitParamBase
+    {
+        public JFCM_GetDI_S()
+        {
+            string[] allDiNames = JFHubCenter.Instance.MDCellNameMgr.AllDiNames();
+            DeclearInitParam(JFParamDescribe.Create("DI通道名称", typeof(string), JFValueLimit.Options, allDiNames), "");
+            DeclearOutput("Enabled", typeof(bool), false);
+        }
+
+        public override bool Initialize()
+        {
+            string diName = GetInitParamValue("DI通道名称") as string;
+            if(string.IsNullOrEmpty(diName))
+            {
+                InitErrorInfo = "参数项\"DI通道名称\"未设置/空字串";
+                IsInitOK = false;
+                return false;
+            }
+            if(!JFHubCenter.Instance.MDCellNameMgr.ContainDiName(diName))
+            {
+                InitErrorInfo = "DI通道名称:" + diName + " 在设备命名表中不存在";
+                IsInitOK = false;
+                return false;
+            }
+            InitErrorInfo = "Success";
+            IsInitOK = true;
+            return true;
+        }
+
+        protected  override bool ActionGenuine()
+        {
+            if(!IsInitOK)
+            {
+                ActionErrorInfo = InitErrorInfo;
+                return false;
+            }
+            string diName = GetInitParamValue("DI通道名称") as string;
+            IJFInitializable dev = null;
+            JFDevCellInfo ci = null;
+            string errInfo = null;
+            if(!JFCMFunction.CheckDevCellName(JFCMFunction.DI, diName,out dev,out ci,out errInfo))
+            {
+                ActionErrorInfo = errInfo;
+                return false;
+            }
+
+            bool isTurnOn = false;
+            int errCode = (dev as IJFDevice_MotionDaq).GetDio(ci.ModuleIndex).GetDI(ci.ChannelIndex,out isTurnOn);
+            if (errCode != 0)
+            {
+                ActionErrorInfo = (dev as IJFDevice_MotionDaq).GetDio(ci.ModuleIndex).GetErrorInfo(errCode);
+                return false;
+            }
+
+            ActionErrorInfo = "Success";
+            return true;
+
+        }
+
+
+    }
+}

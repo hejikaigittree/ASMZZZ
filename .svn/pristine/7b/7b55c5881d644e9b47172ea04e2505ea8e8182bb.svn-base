@@ -1,0 +1,1547 @@
+[Project Header]
+Version = 1700
+Pathname = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/binX64/HTM_Bsp_LibX64.prj"
+Project Label = "HTM_Bsp_LibX64"
+CVI Dir = "/c/program files (x86)/national instruments/cvi2017"
+CVI Shared Dir = "/C/Program Files (x86)/National Instruments/Shared/CVI"
+CVI Pub Local Dir = "/C/ProgramData/National Instruments/CVI2017"
+CVI Pub Global Dir = "/C/ProgramData/National Instruments/CVI"
+IVI Standard Root Dir = "/C/Program Files (x86)/IVI Foundation/IVI"
+VXIplug&play Framework Dir = "/C/Program Files (x86)/IVI Foundation/VISA/winnt"
+IVI Standard Root 64-bit Dir = "/C/Program Files/IVI Foundation/IVI"
+VXIplug&play Framework 64-bit Dir = "/C/Program Files/IVI Foundation/VISA/win64"
+Number of Files = 70
+Target Type = "Dynamic Link Library"
+Flags = 2064
+Copied From Locked InstrDrv Directory = False
+Copied from VXIPNP Directory = False
+Locked InstrDrv Name = ""
+Don't Display Deploy InstrDrv Dialog = False
+
+[Folders]
+Include Files Folder Not Added Yet = True
+Instrument Files Folder Not Added Yet = True
+Library Files Folder Not Added Yet = True
+Folder 0 = "BSP_API"
+FolderEx 0 = "BSP_API"
+Folder 1 = "UtilsLib"
+FolderEx 1 = "UtilsLib"
+Folder 2 = "BSPModuleUI"
+FolderEx 2 = "BSPModuleUI"
+Folder 3 = "Main"
+FolderEx 3 = "Main"
+Folder 4 = "RS232"
+FolderEx 4 = "RS232"
+Folder 5 = "EventRecord"
+FolderEx 5 = "EventRecord"
+Folder 6 = "Toolbox"
+FolderEx 6 = "Toolbox"
+Folder 7 = "Analysis"
+FolderEx 7 = "Analysis"
+Folder 8 = "LocalUI"
+FolderEx 8 = "LocalUI"
+
+[File 0001]
+File Type = "Include"
+Res Id = 1
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/AMP_208C/APS168.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/AMP_208C/APS168"
+Path Line0002 = ".h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0002]
+File Type = "Library"
+Res Id = 2
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/AMP_208C/APS168x64.lib"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/AMP_208C/APS168"
+Path Line0002 = "x64.lib"
+Exclude = False
+Project Flags = 1048576
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0003]
+File Type = "Include"
+Res Id = 3
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/AMP_208C/APS_Define.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/AMP_208C/APS_De"
+Path Line0002 = "fine.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0004]
+File Type = "CSource"
+Res Id = 4
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/htm_bsp_lib.c"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/htm_bsp_lib.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0005]
+File Type = "Include"
+Res Id = 5
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/htm_bsp_lib.h"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/htm_bsp_lib.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0006]
+File Type = "CSource"
+Res Id = 6
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/htm_device_lib.c"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/htm_device_lib."
+Path Line0002 = "c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0007]
+File Type = "Include"
+Res Id = 7
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/htm_device_lib.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/htm_device_lib."
+Path Line0002 = "h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0008]
+File Type = "Include"
+Res Id = 8
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/htm_error_code.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/htm_error_code."
+Path Line0002 = "h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0009]
+File Type = "CSource"
+Res Id = 9
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/htm_io_lib.c"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/htm_io_lib.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0010]
+File Type = "Include"
+Res Id = 10
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/htm_io_lib.h"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/htm_io_lib.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0011]
+File Type = "CSource"
+Res Id = 11
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/htm_mc_lib.c"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/htm_mc_lib.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0012]
+File Type = "Include"
+Res Id = 12
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/htm_mc_lib.h"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/htm_mc_lib.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0013]
+File Type = "Include"
+Res Id = 13
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/htm_type_def.h"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/htm_type_def.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0014]
+File Type = "CSource"
+Res Id = 14
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HT_NET/htnet_i_aio/htnet_i_aio.c"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HT_NET/htnet_i_"
+Path Line0002 = "aio/htnet_i_aio.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0015]
+File Type = "Include"
+Res Id = 15
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HT_NET/htnet_i_aio/htnet_i_aio.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HT_NET/htnet_i_"
+Path Line0002 = "aio/htnet_i_aio.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0016]
+File Type = "CSource"
+Res Id = 16
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HT_NET/htnet_i_bonddrive/htnet_i_bonddrive.c"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HT_NET/htnet_i_"
+Path Line0002 = "bonddrive/htnet_i_bonddrive.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0017]
+File Type = "Include"
+Res Id = 17
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HT_NET/htnet_i_bonddrive/htnet_i_bonddrive.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HT_NET/htnet_i_"
+Path Line0002 = "bonddrive/htnet_i_bonddrive.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0018]
+File Type = "CSource"
+Res Id = 18
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HTNET_I_CiA402/htnet_i_CiA402.c"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HTNET_I_CiA402/"
+Path Line0002 = "htnet_i_CiA402.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0019]
+File Type = "Include"
+Res Id = 19
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HTNET_I_CiA402/htnet_i_CiA402.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HTNET_I_CiA402/"
+Path Line0002 = "htnet_i_CiA402.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0020]
+File Type = "Include"
+Res Id = 20
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HTNET_I_CiA402/htnet_i_CiA402_def.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HTNET_I_CiA402/"
+Path Line0002 = "htnet_i_CiA402_def.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0021]
+File Type = "Include"
+Res Id = 21
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HTNET_I_CiA402/htnet_i_CiA402_def_objects.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HTNET_I_CiA402/"
+Path Line0002 = "htnet_i_CiA402_def_objects.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0022]
+File Type = "CSource"
+Res Id = 22
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HT_NET/htnet_i_dc_motor/htnet_i_dc_motor.c"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HT_NET/htnet_i_"
+Path Line0002 = "dc_motor/htnet_i_dc_motor.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0023]
+File Type = "Include"
+Res Id = 23
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HT_NET/htnet_i_dc_motor/htnet_i_dc_motor.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HT_NET/htnet_i_"
+Path Line0002 = "dc_motor/htnet_i_dc_motor.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0024]
+File Type = "Include"
+Res Id = 24
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HT_NET/htnet_i_lib/htnet_i_defs.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HT_NET/htnet_i_"
+Path Line0002 = "lib/htnet_i_defs.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0025]
+File Type = "CSource"
+Res Id = 25
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HT_NET/htnet_i_dio/htnet_i_dio.c"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HT_NET/htnet_i_"
+Path Line0002 = "dio/htnet_i_dio.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0026]
+File Type = "Include"
+Res Id = 26
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HT_NET/htnet_i_dio/htnet_i_dio.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HT_NET/htnet_i_"
+Path Line0002 = "dio/htnet_i_dio.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0027]
+File Type = "CSource"
+Res Id = 27
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HT_NET/htnet_i_hb_dispensehead/htnet_i_hb_dispensehead.c"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HT_NET/htnet_i_"
+Path Line0002 = "hb_dispensehead/htnet_i_hb_dispensehead.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0028]
+File Type = "Include"
+Res Id = 28
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HT_NET/htnet_i_hb_dispensehead/htnet_i_hb_dispensehead.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HT_NET/htnet_i_"
+Path Line0002 = "hb_dispensehead/htnet_i_hb_dispensehead.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0029]
+File Type = "CSource"
+Res Id = 29
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/Node_htDHVD/htnet_i_htDHVD.c"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/Node_htDHVD/htn"
+Path Line0002 = "et_i_htDHVD.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0030]
+File Type = "Include"
+Res Id = 30
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/Node_htDHVD/htnet_i_htDHVD.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/Node_htDHVD/htn"
+Path Line0002 = "et_i_htDHVD.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0031]
+File Type = "CSource"
+Res Id = 31
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/Node_htDHVD_pdo/htnet_i_htDHVD_pdo.c"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/Node_htDHVD_pdo"
+Path Line0002 = "/htnet_i_htDHVD_pdo.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0032]
+File Type = "Include"
+Res Id = 32
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/Node_htDHVD_pdo/htnet_i_htDHVD_pdo.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/Node_htDHVD_pdo"
+Path Line0002 = "/htnet_i_htDHVD_pdo.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0033]
+File Type = "CSource"
+Res Id = 33
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HTNET_I_htMotion/htnet_i_htMotion.c"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HTNET_I_htMotio"
+Path Line0002 = "n/htnet_i_htMotion.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0034]
+File Type = "Include"
+Res Id = 34
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HTNET_I_htMotion/htnet_i_htMotion.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HTNET_I_htMotio"
+Path Line0002 = "n/htnet_i_htMotion.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0035]
+File Type = "Include"
+Res Id = 35
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HTNET_I_htMotion/htnet_i_htMotion_def.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HTNET_I_htMotio"
+Path Line0002 = "n/htnet_i_htMotion_def.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0036]
+File Type = "Include"
+Res Id = 36
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HT_NET/htnet_i_lib/htnet_i_lib.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HT_NET/htnet_i_"
+Path Line0002 = "lib/htnet_i_lib.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0037]
+File Type = "Library"
+Res Id = 37
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HT_NET/htnet_i_lib/x64/htnet_i_lib.lib"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HT_NET/htnet_i_"
+Path Line0002 = "lib/x64/htnet_i_lib.lib"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0038]
+File Type = "CSource"
+Res Id = 38
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HT_NET/htnet_i_light_src/htnet_i_light_src.c"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HT_NET/htnet_i_"
+Path Line0002 = "light_src/htnet_i_light_src.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0039]
+File Type = "Include"
+Res Id = 39
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HT_NET/htnet_i_light_src/htnet_i_light_src.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HT_NET/htnet_i_"
+Path Line0002 = "light_src/htnet_i_light_src.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0040]
+File Type = "CSource"
+Res Id = 40
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HT_NET/htnet_i_pos_trigger_f/htnet_i_pos_trigger.c"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HT_NET/htnet_i_"
+Path Line0002 = "pos_trigger_f/htnet_i_pos_trigger.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0041]
+File Type = "Include"
+Res Id = 41
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HT_NET/htnet_i_pos_trigger_f/htnet_i_pos_trigger.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HT_NET/htnet_i_"
+Path Line0002 = "pos_trigger_f/htnet_i_pos_trigger.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0042]
+File Type = "Include"
+Res Id = 42
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/HT_NET/htnet_i_lib/htnet_i_utils.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/HT_NET/htnet_i_"
+Path Line0002 = "lib/htnet_i_utils.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSP_API"
+Folder Id = 0
+
+[File 0043]
+File Type = "CSource"
+Res Id = 43
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/Utils/bsp_utils.c"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/Utils/bsp_utils"
+Path Line0002 = ".c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "UtilsLib"
+Folder Id = 1
+
+[File 0044]
+File Type = "Include"
+Res Id = 44
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/Utils/bsp_utils.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/Utils/bsp_utils"
+Path Line0002 = ".h"
+Exclude = False
+Project Flags = 0
+Folder = "UtilsLib"
+Folder Id = 1
+
+[File 0045]
+File Type = "Include"
+Res Id = 45
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/Utils/x64/sqlite3.h"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/Utils/x64/sqlit"
+Path Line0002 = "e3.h"
+Exclude = False
+Project Flags = 0
+Folder = "UtilsLib"
+Folder Id = 1
+
+[File 0046]
+File Type = "Library"
+Res Id = 46
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/HTM_Lib/Utils/x64/sqlite3.lib"
+Path Line0001 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/HTM_Lib/Utils/x64/sqlit"
+Path Line0002 = "e3.lib"
+Exclude = False
+Project Flags = 0
+Folder = "UtilsLib"
+Folder Id = 1
+
+[File 0047]
+File Type = "CSource"
+Res Id = 47
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/BSPModule.c"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/BSPModule.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "BSPModuleUI"
+Folder Id = 2
+
+[File 0048]
+File Type = "Include"
+Res Id = 48
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/BSPModule.h"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/BSPModule.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSPModuleUI"
+Folder Id = 2
+
+[File 0049]
+File Type = "CSource"
+Res Id = 49
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/BSPModuleUI.c"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/BSPModuleUI.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "BSPModuleUI"
+Folder Id = 2
+
+[File 0050]
+File Type = "Include"
+Res Id = 50
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/BSPModuleUI.h"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/BSPModuleUI.h"
+Exclude = False
+Project Flags = 0
+Folder = "BSPModuleUI"
+Folder Id = 2
+
+[File 0051]
+File Type = "User Interface Resource"
+Res Id = 51
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/BSPModuleUI.uir"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/BSPModuleUI.uir"
+Exclude = False
+Project Flags = 0
+Folder = "BSPModuleUI"
+Folder Id = 2
+
+[File 0052]
+File Type = "CSource"
+Res Id = 52
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../MainUI/Main.c"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/MainUI/Main.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "Main"
+Folder Id = 3
+
+[File 0053]
+File Type = "Include"
+Res Id = 53
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../MainUI/Main.h"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/MainUI/Main.h"
+Exclude = False
+Project Flags = 0
+Folder = "Main"
+Folder Id = 3
+
+[File 0054]
+File Type = "CSource"
+Res Id = 54
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../MainUI/MainUI.c"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/MainUI/MainUI.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "Main"
+Folder Id = 3
+
+[File 0055]
+File Type = "Include"
+Res Id = 55
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../MainUI/MainUI.h"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/MainUI/MainUI.h"
+Exclude = False
+Project Flags = 0
+Folder = "Main"
+Folder Id = 3
+
+[File 0056]
+File Type = "User Interface Resource"
+Res Id = 56
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../MainUI/MainUI.uir"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/MainUI/MainUI.uir"
+Exclude = False
+Project Flags = 0
+Folder = "Main"
+Folder Id = 3
+
+[File 0057]
+File Type = "CSource"
+Res Id = 57
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../RS232/HTM_RS232.c"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/RS232/HTM_RS232.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "RS232"
+Folder Id = 4
+
+[File 0058]
+File Type = "Include"
+Res Id = 58
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../RS232/HTM_RS232.h"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/RS232/HTM_RS232.h"
+Exclude = False
+Project Flags = 0
+Folder = "RS232"
+Folder Id = 4
+
+[File 0059]
+File Type = "User Interface Resource"
+Res Id = 59
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../RS232/HTM_RS232.uir"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/RS232/HTM_RS232.uir"
+Exclude = False
+Project Flags = 0
+Folder = "RS232"
+Folder Id = 4
+
+[File 0060]
+File Type = "Include"
+Res Id = 60
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../RS232/SerialModule.h"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/RS232/SerialModule.h"
+Exclude = False
+Project Flags = 0
+Folder = "RS232"
+Folder Id = 4
+
+[File 0061]
+File Type = "CSource"
+Res Id = 61
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../EventRecord/EventRecord.c"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/EventRecord/EventRecord.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "EventRecord"
+Folder Id = 5
+
+[File 0062]
+File Type = "Include"
+Res Id = 62
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../EventRecord/EventRecord.h"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/EventRecord/EventRecord.h"
+Exclude = False
+Project Flags = 0
+Folder = "EventRecord"
+Folder Id = 5
+
+[File 0063]
+File Type = "Include"
+Res Id = 63
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../EventRecord/EventRecordUI.h"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/EventRecord/EventRecordUI.h"
+Exclude = False
+Project Flags = 0
+Folder = "EventRecord"
+Folder Id = 5
+
+[File 0064]
+File Type = "User Interface Resource"
+Res Id = 64
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../EventRecord/EventRecordUI.uir"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/EventRecord/EventRecordUI.uir"
+Exclude = False
+Project Flags = 0
+Folder = "EventRecord"
+Folder Id = 5
+
+[File 0065]
+File Type = "CSource"
+Res Id = 65
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../toolbox/cvixml.c"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/toolbox/cvixml.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "Toolbox"
+Folder Id = 6
+
+[File 0066]
+File Type = "Function Panel"
+Res Id = 66
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../toolbox/cvixml.fp"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/toolbox/cvixml.fp"
+Exclude = False
+Project Flags = 0
+Folder = "Toolbox"
+Folder Id = 6
+
+[File 0067]
+File Type = "Include"
+Res Id = 67
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../toolbox/cvixml.h"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/toolbox/cvixml.h"
+Exclude = False
+Project Flags = 0
+Folder = "Toolbox"
+Folder Id = 6
+
+[File 0068]
+File Type = "CSource"
+Res Id = 68
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../Analysis/htm_analysis_lib.c"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/Analysis/htm_analysis_lib.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "Analysis"
+Folder Id = 7
+
+[File 0069]
+File Type = "Include"
+Res Id = 69
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../Analysis/htm_analysis_lib.h"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/Analysis/htm_analysis_lib.h"
+Exclude = False
+Project Flags = 0
+Folder = "Analysis"
+Folder Id = 7
+
+[File 0070]
+File Type = "Function Panel"
+Res Id = 70
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "../HTM_BSP/localui/localui.fp"
+Path = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_BSP/localui/localui.fp"
+Exclude = False
+Project Flags = 0
+Folder = "LocalUI"
+Folder Id = 8
+
+[Custom Build Configs]
+Num Custom Build Configs = 0
+
+[Default Build Config Debug]
+Config Name = "Debug"
+Is 64-Bit = False
+Is Release = False
+Default Calling Convention = "cdecl"
+Optimization Level = "No optimizations"
+Require Prototypes = True
+Show Warning IDs in Build Output = False
+Selected Warning Level = "None"
+Warning List None = "4,9,84,105,106,107,108,109,110,111"
+Warning List Common = ""
+Warning List Extended = ""
+Warning List All = ""
+Warning Mode = 0
+Enable Unreferenced Identifiers Warning = False
+Enable Pointer Mismatch Warning = False
+Enable Unreachable Code Warning = False
+Enable Assignment In Conditional Warning = False
+Uninitialized Locals Compile Warning = "Aggressive"
+Require Return Values = True
+Enable C99 Extensions = True
+Enable OpenMP Extensions = False
+Stack Size = 250000
+Stack Reserve = 1048576
+Stack Commit = 4096
+Image Base Address = 268435456
+Image Base Address x64 = 268435456
+Compiler Defines = "/DWIN32_LEAN_AND_MEAN"
+Sign = False
+Sign Store = ""
+Sign Certificate = ""
+Sign Timestamp URL = ""
+Sign URL = ""
+Manifest Embed = False
+Icon File Is Rel = False
+Icon File = ""
+Application Title = ""
+Use IVI Subdirectories for Import Libraries = False
+Use VXIPNP Subdirectories for Import Libraries = False
+Use Dflt Import Lib Base Name = True
+Where to Copy DLL = "Do not copy"
+Custom Directory to Copy DLL Is Rel = False
+Custom Directory to Copy DLL = ""
+Generate Source Documentation = "None"
+Runtime Support = "Full Runtime Support"
+Runtime Binding = "Shared"
+Embed Project .UIRs = False
+Generate Map File = False
+Embed Timestamp = True
+Create Console Application = False
+Using LoadExternalModule = False
+DLL Exports = "Include File Symbols"
+Export File1 = "bsp_utils.h"
+Export File2 = "htm_device_lib.h"
+Export File3 = "htm_error_code.h"
+Export File4 = "htm_io_lib.h"
+Export File5 = "htm_mc_lib.h"
+Export File6 = "htnet_i_bonddrive.h"
+Export File7 = "htnet_i_CiA402.h"
+Export File8 = "htnet_i_CiA402_def.h"
+Export File9 = "htnet_i_CiA402_def_objects.h"
+Export File10 = "htnet_i_dc_motor.h"
+Export File11 = "htnet_i_defs.h"
+Export File12 = "htnet_i_dio.h"
+Export File13 = "htnet_i_htMotion.h"
+Export File14 = "htnet_i_htMotion_def.h"
+Export File15 = "htnet_i_lib.h"
+Export File16 = "htnet_i_light_src.h"
+Export File17 = "htnet_i_pos_trigger.h"
+Export File18 = "htnet_i_utils.h"
+Export File19 = "Node_htDHVD.h"
+Register ActiveX Server = False
+Numeric File Version = "1,0,0,0"
+Numeric Prod Version = "1,0,0,0"
+Comments = ""
+Comments Ex = ""
+Company Name = ""
+Company Name Ex = "%company"
+File Description = "htm_bsp_lib (Debug x86)"
+File Description Ex = "%application (%rel_dbg %arch)"
+File Version = "1.0"
+File Version Ex = "%f1.%f2"
+Internal Name = "htm_bsp_lib"
+Internal Name Ex = "%basename"
+Legal Copyright = "Copyright ? 2018"
+Legal Copyright Ex = "Copyright © %company %Y"
+Legal Trademarks = ""
+Legal Trademarks Ex = ""
+Original Filename = "htm_bsp_lib.dll"
+Original Filename Ex = "%filename"
+Private Build = ""
+Private Build Ex = ""
+Product Name = " htm_bsp_lib"
+Product Name Ex = "%company %application"
+Product Version = "1.0"
+Product Version Ex = "%p1.%p2"
+Special Build = ""
+Special Build Ex = ""
+Add Type Lib To DLL = False
+Include Type Lib Help Links = False
+TLB Help Style = "HLP"
+Type Lib FP File Is Rel = False
+Type Lib FP File = ""
+
+[Default Build Config Release]
+Config Name = "Release"
+Is 64-Bit = False
+Is Release = True
+Default Calling Convention = "cdecl"
+Optimization Level = "No optimizations"
+Require Prototypes = True
+Show Warning IDs in Build Output = False
+Selected Warning Level = "None"
+Warning List None = "4,9,84,105,106,107,108,109,110,111"
+Warning List Common = ""
+Warning List Extended = ""
+Warning List All = ""
+Warning Mode = 0
+Enable Unreferenced Identifiers Warning = False
+Enable Pointer Mismatch Warning = False
+Enable Unreachable Code Warning = False
+Enable Assignment In Conditional Warning = False
+Uninitialized Locals Compile Warning = "Aggressive"
+Require Return Values = True
+Enable C99 Extensions = True
+Enable OpenMP Extensions = False
+Stack Size = 250000
+Stack Reserve = 1048576
+Stack Commit = 4096
+Image Base Address = 268435456
+Image Base Address x64 = 268435456
+Compiler Defines = "/DWIN32_LEAN_AND_MEAN"
+Sign = False
+Sign Store = ""
+Sign Certificate = ""
+Sign Timestamp URL = ""
+Sign URL = ""
+Manifest Embed = False
+Icon File Is Rel = False
+Icon File = ""
+Application Title = ""
+Use IVI Subdirectories for Import Libraries = False
+Use VXIPNP Subdirectories for Import Libraries = False
+Use Dflt Import Lib Base Name = True
+Where to Copy DLL = "Do not copy"
+Custom Directory to Copy DLL Is Rel = False
+Custom Directory to Copy DLL = ""
+Generate Source Documentation = "None"
+Runtime Support = "Full Runtime Support"
+Runtime Binding = "Shared"
+Embed Project .UIRs = True
+Generate Map File = False
+Embed Timestamp = True
+Create Console Application = False
+Using LoadExternalModule = False
+DLL Exports = "Include File Symbols"
+Export File1 = "APS168.h"
+Export File2 = "bsp_utils.h"
+Export File3 = "BSPModule.h"
+Export File4 = "BSPModuleUI.h"
+Export File5 = "EventRecord.h"
+Export File6 = "EventRecordUI.h"
+Export File7 = "htm_bsp_config.h"
+Export File8 = "htm_bsp_lib.h"
+Export File9 = "htm_device_lib.h"
+Export File10 = "htm_error_code.h"
+Export File11 = "htm_io_lib.h"
+Export File12 = "htm_mc_lib.h"
+Export File13 = "htm_type_def.h"
+Export File14 = "htnet_i_bonddrive.h"
+Export File15 = "htnet_i_CiA402.h"
+Export File16 = "htnet_i_CiA402_def.h"
+Export File17 = "htnet_i_CiA402_def_objects.h"
+Export File18 = "htnet_i_dc_motor.h"
+Export File19 = "htnet_i_dio.h"
+Export File20 = "htnet_i_hb_dispensehead.h"
+Export File21 = "htnet_i_htDHVD.h"
+Export File22 = "htnet_i_htDHVD_pdo.h"
+Export File23 = "htnet_i_htDLVD.h"
+Export File24 = "htnet_i_htMotion.h"
+Export File25 = "htnet_i_htMotion_def.h"
+Export File26 = "htnet_i_light_src.h"
+Export File27 = "htnet_i_pos_trigger.h"
+Export File28 = "Node_htDHVD.h"
+Export File29 = "serial.h"
+Export File30 = "SerialModule.h"
+Export File31 = "sqlite3.h"
+Register ActiveX Server = False
+Numeric File Version = "3,0,2,0"
+Numeric Prod Version = "3,0,2,0"
+Comments = ""
+Comments Ex = ""
+Company Name = "HT Tech"
+Company Name Ex = "HT Tech"
+File Description = "HTM_BSP (Release x86)"
+File Description Ex = "HTM_BSP (%rel_dbg %arch)"
+File Version = "3.0"
+File Version Ex = "%f1.%f2"
+Internal Name = "htm_bsp_lib"
+Internal Name Ex = "%basename"
+Legal Copyright = "Copyright: CTQ, 2018"
+Legal Copyright Ex = "Copyright: CTQ, %Y"
+Legal Trademarks = ""
+Legal Trademarks Ex = ""
+Original Filename = "htm_bsp_lib.dll"
+Original Filename Ex = "%filename"
+Private Build = ""
+Private Build Ex = ""
+Product Name = " htm_bsp_lib"
+Product Name Ex = "%company %application"
+Product Version = "3.0"
+Product Version Ex = "%p1.%p2"
+Special Build = ""
+Special Build Ex = ""
+Add Type Lib To DLL = False
+Include Type Lib Help Links = False
+TLB Help Style = "HLP"
+Type Lib FP File Is Rel = False
+Type Lib FP File = ""
+
+[Default Build Config Debug64]
+Config Name = "Debug64"
+Is 64-Bit = True
+Is Release = False
+Default Calling Convention = "cdecl"
+Optimization Level = "No optimizations"
+Require Prototypes = True
+Show Warning IDs in Build Output = False
+Selected Warning Level = "None"
+Warning List None = "4,9,84,105,106,107,108,109,110,111"
+Warning List Common = ""
+Warning List Extended = ""
+Warning List All = ""
+Warning Mode = 0
+Enable Unreferenced Identifiers Warning = False
+Enable Pointer Mismatch Warning = False
+Enable Unreachable Code Warning = False
+Enable Assignment In Conditional Warning = False
+Uninitialized Locals Compile Warning = "Aggressive"
+Require Return Values = True
+Enable C99 Extensions = True
+Enable OpenMP Extensions = False
+Stack Size = 250000
+Stack Reserve = 1048576
+Stack Commit = 4096
+Image Base Address = 268435456
+Image Base Address x64 = 268435456
+Compiler Defines = "/DWIN32_LEAN_AND_MEAN"
+Sign = False
+Sign Store = ""
+Sign Certificate = ""
+Sign Timestamp URL = ""
+Sign URL = ""
+Manifest Embed = False
+Icon File Is Rel = False
+Icon File = ""
+Application Title = ""
+Use IVI Subdirectories for Import Libraries = False
+Use VXIPNP Subdirectories for Import Libraries = False
+Use Dflt Import Lib Base Name = True
+Where to Copy DLL = "Do not copy"
+Custom Directory to Copy DLL Is Rel = False
+Custom Directory to Copy DLL = ""
+Generate Source Documentation = "None"
+Runtime Support = "Full Runtime Support"
+Runtime Binding = "Shared"
+Embed Project .UIRs = True
+Generate Map File = False
+Embed Timestamp = True
+Create Console Application = False
+Using LoadExternalModule = False
+DLL Exports = "Include File Symbols"
+Export File1 = "BSPModule.h"
+Export File2 = "BSPModuleUI.h"
+Register ActiveX Server = False
+Numeric File Version = "1,0,0,0"
+Numeric Prod Version = "1,0,0,0"
+Comments = ""
+Comments Ex = ""
+Company Name = ""
+Company Name Ex = "%company"
+File Description = "HTM_Bsp_Lib (Debug x64)"
+File Description Ex = "%application (%rel_dbg %arch)"
+File Version = "1.0"
+File Version Ex = "%f1.%f2"
+Internal Name = "HTM_Bsp_Lib"
+Internal Name Ex = "%basename"
+Legal Copyright = "Copyright ? 2018"
+Legal Copyright Ex = "Copyright © %company %Y"
+Legal Trademarks = ""
+Legal Trademarks Ex = ""
+Original Filename = "HTM_Bsp_Lib.dll"
+Original Filename Ex = "%filename"
+Private Build = ""
+Private Build Ex = ""
+Product Name = " HTM_Bsp_Lib"
+Product Name Ex = "%company %application"
+Product Version = "1.0"
+Product Version Ex = "%p1.%p2"
+Special Build = ""
+Special Build Ex = ""
+Add Type Lib To DLL = False
+Include Type Lib Help Links = False
+TLB Help Style = "HLP"
+Type Lib FP File Is Rel = False
+Type Lib FP File = ""
+
+[Default Build Config Release64]
+Config Name = "Release64"
+Is 64-Bit = True
+Is Release = True
+Default Calling Convention = "cdecl"
+Optimization Level = "No optimizations"
+Require Prototypes = True
+Show Warning IDs in Build Output = False
+Selected Warning Level = "None"
+Warning List None = "4,9,84,105,106,107,108,109,110,111"
+Warning List Common = ""
+Warning List Extended = ""
+Warning List All = ""
+Warning Mode = 0
+Enable Unreferenced Identifiers Warning = False
+Enable Pointer Mismatch Warning = False
+Enable Unreachable Code Warning = False
+Enable Assignment In Conditional Warning = False
+Uninitialized Locals Compile Warning = "Aggressive"
+Require Return Values = True
+Enable C99 Extensions = True
+Enable OpenMP Extensions = False
+Stack Size = 250000
+Stack Reserve = 1048576
+Stack Commit = 4096
+Image Base Address = 268435456
+Image Base Address x64 = 268435456
+Compiler Defines = "/DWIN32_LEAN_AND_MEAN"
+Sign = False
+Sign Store = ""
+Sign Certificate = ""
+Sign Timestamp URL = ""
+Sign URL = ""
+Manifest Embed = False
+Icon File Is Rel = False
+Icon File = ""
+Application Title = ""
+Use IVI Subdirectories for Import Libraries = False
+Use VXIPNP Subdirectories for Import Libraries = False
+Use Dflt Import Lib Base Name = True
+Where to Copy DLL = "Do not copy"
+Custom Directory to Copy DLL Is Rel = False
+Custom Directory to Copy DLL = ""
+Generate Source Documentation = "None"
+Runtime Support = "Full Runtime Support"
+Runtime Binding = "Shared"
+Embed Project .UIRs = True
+Generate Map File = False
+Embed Timestamp = True
+Create Console Application = False
+Using LoadExternalModule = False
+DLL Exports = "Include File Symbols"
+Export File1 = "bsp_utils.h"
+Export File2 = "BSPModule.h"
+Export File3 = "BSPModuleUI.h"
+Export File4 = "EventRecord.h"
+Export File5 = "EventRecordUI.h"
+Export File6 = "htm_analysis_lib.h"
+Export File7 = "htm_bsp_lib.h"
+Export File8 = "htm_device_lib.h"
+Export File9 = "htm_io_lib.h"
+Export File10 = "htm_mc_lib.h"
+Export File11 = "htm_type_def.h"
+Export File12 = "htnet_i_bonddrive.h"
+Export File13 = "htnet_i_CiA402.h"
+Export File14 = "htnet_i_CiA402_def.h"
+Export File15 = "htnet_i_CiA402_def_objects.h"
+Export File16 = "htnet_i_dc_motor.h"
+Export File17 = "htnet_i_dio.h"
+Export File18 = "htnet_i_hb_dispensehead.h"
+Export File19 = "htnet_i_htDHVD.h"
+Export File20 = "htnet_i_htDHVD_pdo.h"
+Export File21 = "htnet_i_htMotion.h"
+Export File22 = "htnet_i_htMotion_def.h"
+Export File23 = "htnet_i_light_src.h"
+Export File24 = "htnet_i_pos_trigger.h"
+Export File25 = "Node_htDHVD.h"
+Export File26 = "serial.h"
+Export File27 = "SerialModule.h"
+Register ActiveX Server = False
+Numeric File Version = "4,0,5,64"
+Numeric Prod Version = "4,0,5,64"
+Comments = ""
+Comments Ex = ""
+Company Name = ""
+Company Name Ex = "%company"
+File Description = "HTM_Bsp_Lib (Release x64)"
+File Description Ex = "%application (%rel_dbg %arch)"
+File Version = "4.0.5"
+File Version Ex = "%f1.%f2.%f3"
+Internal Name = "HTM_Bsp_Lib"
+Internal Name Ex = "%basename"
+Legal Copyright = "Copyright ? 2018"
+Legal Copyright Ex = "Copyright © %company %Y"
+Legal Trademarks = ""
+Legal Trademarks Ex = ""
+Original Filename = "HTM_Bsp_Lib.dll"
+Original Filename Ex = "%filename"
+Private Build = ""
+Private Build Ex = ""
+Product Name = " HTM_Bsp_Lib"
+Product Name Ex = "%company %application"
+Product Version = "4.0.5"
+Product Version Ex = "%p1.%p2.%p3"
+Special Build = ""
+Special Build Ex = ""
+Add Type Lib To DLL = False
+Include Type Lib Help Links = False
+TLB Help Style = "HLP"
+Type Lib FP File Is Rel = False
+Type Lib FP File = ""
+
+[Compiler Options]
+Default Calling Convention = "cdecl"
+Require Prototypes = True
+Require Return Values = True
+Enable Pointer Mismatch Warning = False
+Enable Unreachable Code Warning = False
+Enable Unreferenced Identifiers Warning = False
+Enable Assignment In Conditional Warning = False
+Enable C99 Extensions = True
+Uninitialized Locals Compile Warning = "Aggressive"
+Precompile Prefix Header = False
+Prefix Header File = ""
+
+[Run Options]
+Stack Size = 250000
+Stack Commit = 4096
+Image Base Address = 268435456
+Image Base Address x64 = 268435456
+
+[Compiler Defines]
+Compiler Defines = "/DWIN32_LEAN_AND_MEAN"
+
+[Include Paths]
+Include Path 1 Is Rel = True
+Include Path 1 Rel To = "Project"
+Include Path 1 Rel Path = "../../../HTM/Utils_Lib"
+Include Path 1 = "/d/HT-Tech/HTM/Utils_Lib"
+Include Path 2 Is Rel = True
+Include Path 2 Rel To = "Project"
+Include Path 2 Rel Path = "../HTM_Lib/HT_NET1/htnet_i_lib"
+Include Path 2 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_Lib/HT_NET1/htnet_i_lib"
+Include Path 3 Is Rel = True
+Include Path 3 Rel To = "Project"
+Include Path 3 Rel Path = "../HTM_Lib/HT_NET1"
+Include Path 3 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_Lib/HT_NET1"
+Include Path 4 Is Rel = True
+Include Path 4 Rel To = "Project"
+Include Path 4 Rel Path = "../HTM_Lib"
+Include Path 4 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/HTM_Lib"
+
+[Create Executable]
+Executable File_Debug Is Rel = True
+Executable File_Debug Rel To = "Project"
+Executable File_Debug Rel Path = "../htm_bsp_lib.dll"
+Executable File_Debug = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/htm_bsp_lib.dll"
+Executable File_Release Is Rel = True
+Executable File_Release Rel To = "Project"
+Executable File_Release Rel Path = "../htm_bsp_lib.dll"
+Executable File_Release = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/htm_bsp_lib.dll"
+Executable File_Debug64 Is Rel = True
+Executable File_Debug64 Rel To = "Project"
+Executable File_Debug64 Rel Path = "HTM_Bsp_Lib.dll"
+Executable File_Debug64 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/binX64/HTM_Bsp_Lib.dll"
+Executable File_Release64 Is Rel = True
+Executable File_Release64 Rel To = "Project"
+Executable File_Release64 Rel Path = "HTM_Bsp_Lib.dll"
+Executable File_Release64 = "/d/HT-Tech/01 BSP/HTM_BSP_SourceCode_V4_20180410/binX64/HTM_Bsp_Lib.dll"
+Icon File Is Rel = False
+Icon File = ""
+Application Title = ""
+Numeric File Version = "3,0,2,0"
+Numeric Prod Version = "3,0,2,0"
+Comments = ""
+Comments Ex = ""
+Company Name = "HT Tech"
+Company Name Ex = "HT Tech"
+File Description = "HTM_BSP (Release x86)"
+File Description Ex = "HTM_BSP (%rel_dbg %arch)"
+File Version = "3.0"
+File Version Ex = "%f1.%f2"
+Internal Name = "htm_bsp_lib"
+Internal Name Ex = "%basename"
+Legal Copyright = "Copyright: CTQ, 2018"
+Legal Copyright Ex = "Copyright: CTQ, %Y"
+Legal Trademarks = ""
+Legal Trademarks Ex = ""
+Original Filename = "htm_bsp_lib.dll"
+Original Filename Ex = "%filename"
+Private Build = ""
+Private Build Ex = ""
+Product Name = " htm_bsp_lib"
+Product Name Ex = "%company %application"
+Product Version = "3.0"
+Product Version Ex = "%p1.%p2"
+Special Build = ""
+Special Build Ex = ""
+DLL Exports = "Include File Symbols"
+Export File1 = "APS168.h"
+Export File2 = "bsp_utils.h"
+Export File3 = "BSPModule.h"
+Export File4 = "BSPModuleUI.h"
+Export File5 = "EventRecord.h"
+Export File6 = "EventRecordUI.h"
+Export File7 = "htm_bsp_config.h"
+Export File8 = "htm_bsp_lib.h"
+Export File9 = "htm_device_lib.h"
+Export File10 = "htm_error_code.h"
+Export File11 = "htm_io_lib.h"
+Export File12 = "htm_mc_lib.h"
+Export File13 = "htm_type_def.h"
+Export File14 = "htnet_i_bonddrive.h"
+Export File15 = "htnet_i_CiA402.h"
+Export File16 = "htnet_i_CiA402_def.h"
+Export File17 = "htnet_i_CiA402_def_objects.h"
+Export File18 = "htnet_i_dc_motor.h"
+Export File19 = "htnet_i_dio.h"
+Export File20 = "htnet_i_hb_dispensehead.h"
+Export File21 = "htnet_i_htDHVD.h"
+Export File22 = "htnet_i_htDHVD_pdo.h"
+Export File23 = "htnet_i_htDLVD.h"
+Export File24 = "htnet_i_htMotion.h"
+Export File25 = "htnet_i_htMotion_def.h"
+Export File26 = "htnet_i_light_src.h"
+Export File27 = "htnet_i_pos_trigger.h"
+Export File28 = "Node_htDHVD.h"
+Export File29 = "serial.h"
+Export File30 = "SerialModule.h"
+Export File31 = "sqlite3.h"
+Use IVI Subdirectories for Import Libraries = False
+Use VXIPNP Subdirectories for Import Libraries = False
+Use Dflt Import Lib Base Name = True
+Where to Copy DLL = "Do not copy"
+Custom Directory to Copy DLL Is Rel = False
+Custom Directory to Copy DLL = ""
+Generate Source Documentation = "None"
+Add Type Lib To DLL = False
+Include Type Lib Help Links = False
+TLB Help Style = "HLP"
+Type Lib FP File Is Rel = False
+Type Lib FP File = ""
+Type Lib Guid = ""
+Runtime Support = "Full Runtime Support"
+Instrument Driver Support Only = False
+Embed Project .UIRs = True
+Generate Map File = False
+
+[External Compiler Support]
+UIR Callbacks File Option = 0
+Using LoadExternalModule = False
+Create Project Symbols File = True
+UIR Callbacks Obj File Is Rel = False
+UIR Callbacks Obj File = ""
+Project Symbols H File Is Rel = False
+Project Symbols H File = ""
+Project Symbols Obj File Is Rel = False
+Project Symbols Obj File = ""
+
+[Modules Forced Into Executable]
+Module 0001 Is Rel = False
+Module 0001 = "APS168x64.lib"
+
+[ActiveX Server Options]
+Specification File Is Rel = False
+Specification File = ""
+Source File Is Rel = False
+Source File = ""
+Include File Is Rel = False
+Include File = ""
+IDL File Is Rel = False
+IDL File = ""
+Register ActiveX Server = False
+
+[Signing Info]
+Sign = False
+Sign Debug Build = False
+Store = ""
+Certificate = ""
+Timestamp URL = ""
+URL = ""
+
+[Manifest Info]
+Embed = False
+
+[tpcSection]
+tpcEnabled = 0
+tpcOverrideEnvironment = 0
+tpcEnabled x64 = 0
+tpcOverrideEnvironment x64 = 0
+

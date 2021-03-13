@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="LFAOIRecipe.Page_AddSubRegion"
+             x:ClassModifier="internal"
+             x:Name="userControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"   
+             xmlns:local="clr-namespace:LFAOIRecipe"
+             mc:Ignorable="d" 
+             Background="White"
+             MinWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel x:Name="dockPanel">
+        <StackPanel DockPanel.Dock="Top">
+            <materialDesign:Card Margin="5,5,5,0">
+                <StackPanel>
+                    <TextBlock Text="{Binding DisplayName}"
+                               FontSize="16"
+                               Margin="10"
+                               Foreground="DarkBlue"/>
+                    <TextBlock Margin="10,0,10,10"
+                       Text="【重点检测区域，位于检测区域内部。（框架模板为框架检测区域）】"
+                       TextWrapping="Wrap">
+                    </TextBlock>
+                </StackPanel>
+            </materialDesign:Card>
+            <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    Margin="0,20,0,0">
+                <TextBlock Text="显示通道图"
+                       VerticalAlignment="Center" Margin="10,0,0,0"/>
+                <ComboBox Width="70"  Name="comboBox_addSubRegion"
+                      ItemsSource="{Binding ChannelNames}"
+                          DisplayMemberPath="Name"
+                          Margin="10,0,0,0"
+                          materialDesign:ComboBoxAssist.ClassicMode="true"
+                          SelectedIndex="{Binding ImageIndex, Mode=TwoWay}">
+                </ComboBox>
+                <Button Command="{Binding LoadUserRegionCommond}"
+                                    Style="{StaticResource MaterialDesignFloatingActionButton}"
+                                    Margin="20,0,0,0"
+                                    Width="26" Height="26">
+                    <materialDesign:PackIcon Kind="Folder" />
+                </Button>
+                <Button Content="添加区域"
+                    Margin="20,0,0,0"
+                    Command="{Binding AddUserRegionCommand}"/>
+                <Button Content="删除区域"
+                    Margin="20,0,0,0"
+                    Command="{Binding RemoveUserRegionCommand}"/>
+                <Button Content="修改区域"  Margin="20,0,0,0" Height="Auto" ToolTip="区域修改完，鼠标右键确认！"
+                        Command="{Binding ModifyRegionCommand}"/>
+                <Button Content="默认区域"  Margin="20,0,0,0" Height="Auto" ToolTip="默认区域为整个检测区"
+                        Command="{Binding DefaultRegionCommand}"/>
+            </StackPanel>
+        </StackPanel>
+        <materialDesign:Card Margin="5,10,5,5">
+            <StackPanel>
+                <DataGrid Margin="0,5,0,0" IsReadOnly="False"
+                  ItemsSource="{Binding SubUserRegions}" Background="White">
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn Binding="{Binding IsSelected}" 
+                                        ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"/>
+                        <materialDesign:MaterialDataGridTextColumn Header="序号" 
+                                                           Binding="{Binding Index}" 
+                                                           IsReadOnly="True"/>
+                        <DataGridTemplateColumn  Header="启用">
+                            <DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate >
+                                    <CheckBox IsChecked="{Binding IsEnable,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"         
+                                      Command="{Binding DataContext.UserRegionEnableChangedCommand, ElementName=userControl}"
+                                      CommandParameter="{Binding}"
+                                      Style="{StaticResource MaterialDesignCheckBox}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn  Header="类型">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ComboBox 
+                                Style="{StaticResource MaterialDesignDataGridComboBox}"
+                                SelectedIndex="{Binding IsAccept, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanToComboBoxIndexConverter}}"
+                                materialDesign:ComboBoxAssist.ClassicMode="true" HorizontalContentAlignment="Center">
+                                        <ComboBoxItem Content="接受区"/>
+                                        <ComboBoxItem Content="拒绝区"/>
+                                    </ComboBox>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <materialDesign:MaterialDataGridTextColumn Header="形状" 
+                                                           Binding="{Binding RegionType}" 
+                                                           IsReadOnly="True"/>
+                        <materialDesign:MaterialDataGridTextColumn Header="参数" 
+                                                           Binding="{Binding}" 
+                                                           IsReadOnly="True"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </materialDesign:Card>
+    </DockPanel>
+</UserControl>

@@ -1,0 +1,48 @@
+<root>
+  <MethodFlowName>For算子测试</MethodFlowName>
+  <MethodItems>
+    <MethodItem Name="循环起始值" Type="JFMethod_IntSrc">
+      <InitParams>
+        <Param Name="SrcValue" Type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;int&gt;0&lt;/int&gt;" />
+      </InitParams>
+      <OutputNameIDs>
+        <Name-ID Name="output" IDinPool="循环起始值.output" />
+      </OutputNameIDs>
+    </MethodItem>
+    <MethodItem Name="循环结束值" Type="JFMethod_IntSrc">
+      <InitParams>
+        <Param Name="SrcValue" Type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;int&gt;999&lt;/int&gt;" />
+      </InitParams>
+      <OutputNameIDs>
+        <Name-ID Name="output" IDinPool="循环结束值.output" />
+      </OutputNameIDs>
+    </MethodItem>
+    <MethodItem Name="循环增量" Type="JFMethod_IntSrc">
+      <InitParams>
+        <Param Name="SrcValue" Type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;int&gt;1&lt;/int&gt;" />
+      </InitParams>
+      <OutputNameIDs>
+        <Name-ID Name="output" IDinPool="循环增量.output" />
+      </OutputNameIDs>
+    </MethodItem>
+    <MethodItem Name="包含循环结束值" Type="JFMathod_BoolSrc">
+      <InitParams>
+        <Param Name="SrcValue" Type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;boolean&gt;false&lt;/boolean&gt;" />
+      </InitParams>
+      <OutputNameIDs>
+        <Name-ID Name="output" IDinPool="包含循环结束值.output" />
+      </OutputNameIDs>
+    </MethodItem>
+    <MethodItem Name="FOR_0" Type="JFMethodFor">
+      <InitParams>
+        <Param Name="InnerMethodFlowText" Type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;string&gt;&amp;lt;MethodFlowName&amp;gt;&amp;lt;/MethodFlowName&amp;gt;&amp;lt;MethodItems&amp;gt;&amp;lt;MethodItem Name=&quot;加法算子演示_0&quot; Type=&quot;JFMethod_Add&quot;&amp;gt;&amp;lt;InputNameIDs&amp;gt;&amp;lt;Name-ID Name=&quot;num1&quot; IDinPool=&quot;For_Value&quot; /&amp;gt;&amp;lt;Name-ID Name=&quot;num2&quot; IDinPool=&quot;For_Value&quot; /&amp;gt;&amp;lt;/InputNameIDs&amp;gt;&amp;lt;OutputNameIDs&amp;gt;&amp;lt;Name-ID Name=&quot;result&quot; IDinPool=&quot;加法算子演示_0.result&quot; /&amp;gt;&amp;lt;/OutputNameIDs&amp;gt;&amp;lt;/MethodItem&amp;gt;&amp;lt;/MethodItems&amp;gt;&lt;/string&gt;" />
+      </InitParams>
+      <InputNameIDs>
+        <Name-ID Name="初始值" IDinPool="循环起始值.output" />
+        <Name-ID Name="结束值" IDinPool="循环结束值.output" />
+        <Name-ID Name="增量值" IDinPool="循环增量.output" />
+        <Name-ID Name="包含结束" IDinPool="包含循环结束值.output" />
+      </InputNameIDs>
+    </MethodItem>
+  </MethodItems>
+</root>

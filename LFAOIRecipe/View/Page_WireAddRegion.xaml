@@ -1,0 +1,1106 @@
+﻿<UserControl xmlns:HalconDotNet="clr-namespace:HalconDotNet;assembly=halcondotnet"  
+             x:Class="LFAOIRecipe.Page_WireAddRegion"
+             x:ClassModifier="internal"
+             x:Name="userControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"   
+             xmlns:local="clr-namespace:LFAOIRecipe"
+             mc:Ignorable="d" 
+             Background="White"
+             MinWidth="400">
+    <!--    MinWidth="400"    -->
+    <UserControl.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel x:Name="dockPanel">
+        <StackPanel DockPanel.Dock="Top">
+            <materialDesign:Card Margin="5,5,5,0">
+                <StackPanel>
+                    <TextBlock Text="{Binding DisplayName}"
+                               FontSize="16"
+                               Margin="10"
+                               Foreground="DarkBlue" HorizontalAlignment="Left"/>
+                    <TextBlock Margin="10,0,10,10"  
+                       Text="【选择焊点起始区域、结束区域，添加焊点区域组，设置区域带算法参数】"
+                       TextWrapping="Wrap" HorizontalAlignment="Left">
+                    </TextBlock>
+                </StackPanel>
+            </materialDesign:Card>
+        </StackPanel>
+        <StackPanel
+            Margin="0,20,0,0" Orientation="Horizontal" DockPanel.Dock="Top">
+            <Button x:Name="button_load" Content="加载自动生成的金线模板区域" ToolTip="从自动生成的Wire区域加载到当前页面！"
+                    Margin="5,-1,0,0"
+                    Command="{Binding LoadAutoWireRegionCommand}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,10,0,0">
+            <!-- materialDesign:HintAssist.Hint="模板匹配方式"  
+                 Text="{Binding CreateModelType}" Width="194" HorizontalAlignment="Left" Opacity="0.5"
+-->
+            <DockPanel>
+                <Label Content="选择图像通道" Width="120" HorizontalContentAlignment="Right"/>
+                <ComboBox Name="comboBox_BondMatchVerify"                                    
+                    ItemsSource="{Binding ChannelNames}"
+                    DisplayMemberPath="Name"
+                    Margin="0,0,0,0"
+                    materialDesign:ComboBoxAssist.ClassicMode="true"
+                    SelectedIndex="{Binding ImageIndex, Mode=TwoWay}"  Padding="4,5" Foreground="#FF555555" HorizontalAlignment="Left" Width="120" FontSize="14" >
+                </ComboBox>
+            </DockPanel>
+            <materialDesign:Chip  Content="{Binding WireParameter.UserRegionForCutOutIndex}"  Icon="Die" Margin="20,0,0,0" Width="60" FontSize="14" />
+        </StackPanel>
+        <StackPanel x:Name="stackPanelMain">
+            <StackPanel DockPanel.Dock="Top" MinWidth="600"
+                    Margin="20,10,20,0" Panel.ZIndex="400">
+                <StackPanel DockPanel.Dock="Top"
+                    Margin="0">
+                    <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center" Height="32">
+                        <Button Width="32"
+                        Height="Auto"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                        DockPanel.Dock="Right"
+                        ToolTip="添加新的焊点金线组合"
+                        Margin="0,0,5,0"
+                        Command="{Binding AddGroupCommand}">
+                            <materialDesign:PackIcon Kind="Plus" />
+                        </Button>
+                        <TextBlock Text="添加焊点金线组" VerticalAlignment="Center" Foreground="#FF555555"/>
+                        <TextBlock Text="{Binding CurrentGroup.Index}" VerticalAlignment="Center"   Margin="5,0"/>
+                        <Button Width="32" Height="Auto"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                            DockPanel.Dock="Right"
+                            ToolTip="删除当前焊点金线组合"
+                            Margin="5,0"
+                            Command="{Binding RemoveGroupCommand}">
+                            <materialDesign:PackIcon Kind="Minus" />
+                        </Button>
+                        <TextBlock Text="删除焊点金线组" VerticalAlignment="Center"/>
+                        <TextBlock Text="切换组"
+                           Margin="15,0,0,0"
+                           VerticalAlignment="Center"/>
+                        <ComboBox Width="56"
+                          ItemsSource="{Binding Groups}"
+                          DisplayMemberPath="Index"
+                          SelectedItem="{Binding CurrentGroup, Mode=TwoWay}"
+                          materialDesign:ComboBoxAssist.ClassicMode="true" Margin="0,2" FontSize="14"/>
+                    </StackPanel>
+                    <materialDesign:Card Margin="5,10,5,0" >
+                        <StackPanel Margin="10">
+                            <StackPanel Margin="0,30,0,0" Background="#FFFAFAFA">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Button Content="添加起始区域"
+                                            Command="{Binding AddBondOnFrameUserRegionCommand}"
+                                            HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <!--<StackPanel Orientation="Horizontal" Margin="0" VerticalAlignment="Center">
+                                        <TextBlock Text="起始焊点属于" Margin="5,0,0,0"/>
+                                        <ComboBox Width="120" Margin="5,0,0,0"  materialDesign:ComboBoxAssist.ClassicMode="true" 
+                                                x:Name="WireOnWhat" 
+                                                ItemsSource="{Binding WireParameter.OnRecipesIndexs,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedIndex="{Binding WireParameter.OnStartRecipesIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Center" />
+                                    </StackPanel>-->
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                            Margin="0,10,0,0">
+                                    <TextBlock Text="类型："/>
+                                    <TextBlock materialDesign:HintAssist.Hint="Cirle"
+                                Text="{Binding CurrentGroup.BondOnFrameUserRegions.RegionType}" Width="37"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                            Margin="0,10,0,0">
+                                    <TextBlock Text="参数：" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding CurrentGroup.BondOnFrameUserRegions}" VerticalAlignment="Center"/>
+                                    <Button Content="修改区域"  Margin="5,0,0,0" Height="Auto" ToolTip="区域修改完，鼠标右键确认！"
+                        Command="{Binding ModifyBondOnFrameRegionCommand}" Padding="10,4" HorizontalContentAlignment="Center" FontSize="12"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Margin="0,30,0,0" Background="#FFFAFAFA">
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="添加结束区域"
+                                         Command="{Binding AddBondOnICUserRegionCommand}" HorizontalAlignment="Left"/>
+                                    <!--<TextBlock Text="终止焊点属于" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0"/>-->
+                                    <!--<ComboBox Width="119" Margin="5,0,0,0"  materialDesign:ComboBoxAssist.ClassicMode="true" 
+                                                x:Name="Wire2OnWhat" 
+                                                ItemsSource="{Binding WireParameter.OnRecipesIndexs}"
+                                                SelectedIndex="{Binding WireParameter.OnStopRecipesIndex}" HorizontalContentAlignment="Center" />-->
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                    <TextBlock Text="类型："/>
+                                    <TextBlock Text="{Binding CurrentGroup.BondOnICUserRegions.RegionType}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                            Margin="0,10,0,0">
+                                    <TextBlock Text="参数：" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding CurrentGroup.BondOnICUserRegions}" VerticalAlignment="Center"/>
+                                    <Button Content="修改区域"  Margin="5,0,0,0" Height="Auto" ToolTip="区域修改完，鼠标右键确认！"
+                        Command="{Binding ModifyBondOnICRegionCommand}" Padding="10,4" HorizontalContentAlignment="Center" FontSize="12"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <!--
+                    <StackPanel Margin="0,30,0,0" Background="#FFFAFAFA">
+                        <StackPanel>
+                            <Button Content="添加框架上引线检测区域"
+                            Command="{Binding AddLeadWireOnFrameUserRegionCommand}"
+                            HorizontalAlignment="Left"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                            Margin="0,10,0,0">
+                            <TextBlock Text="类型：" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding CurrentGroup.LeadWireOnFrameUserRegions.RegionType}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Right"
+                                         ToolTip="设置生成的带方向矩形的宽度" Margin="10,0,0,0">                                
+                                <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <TextBlock Text="框宽"  />
+                                        <TextBlock Text="{Binding WireParameter.Rectangle2Width}"/>
+                                        <TextBlock Text="pixel" />
+                                    </StackPanel>
+                                    <Slider Orientation="Horizontal" 
+                                            TickFrequency="2"
+                                            TickPlacement="BottomRight"
+                                            Minimum="1"
+                                            Maximum="20"
+                                            Value="{Binding WireParameter.Rectangle2Width}"                                    
+                                            IsSelectionRangeEnabled="True" Width="162" 
+                                            AutoToolTipPlacement="BottomRight" Margin="5,0,0,0" />
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                            Margin="0,10,0,0">
+                            <TextBlock Text="参数：" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding CurrentGroup.LeadWireOnFrameUserRegions}" VerticalAlignment="Center"/>
+                            <Button Content="修改区域"  Margin="5,0,0,0" Height="Auto" ToolTip="区域修改完，鼠标右键确认！"
+                        Command="{Binding ModifyLeadWireOnFrameRegionCommand}" Padding="10,4" HorizontalContentAlignment="Center" FontSize="12"/>
+                        </StackPanel>                                             
+                    </StackPanel>
+                    <StackPanel Margin="0,30,0,0" Background="#FFFAFAFA">
+                        <StackPanel>
+                            <Button Content="添加芯片上引线检测区域"
+                        Command="{Binding AddLeadWireOnICUserRegionCommand}"
+                        HorizontalAlignment="Left"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                            Margin="0,10,0,0">
+                            <TextBlock Text="类型：" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding CurrentGroup.LeadWireOnICUserRegions.RegionType}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Right"
+                                         ToolTip="设置生成的带方向矩形的宽度" Margin="10,0,0,0">
+                                <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <TextBlock Text="框宽"  />
+                                        <TextBlock Text="{Binding WireParameter.Rectangle2Width}"/>
+                                        <TextBlock Text="pixel" />
+                                    </StackPanel>
+                                    <Slider Orientation="Horizontal" 
+                                            TickFrequency="2"
+                                            TickPlacement="BottomRight"
+                                            Minimum="1"
+                                            Maximum="20"
+                                            Value="{Binding WireParameter.Rectangle2Width}"                                    
+                                            IsSelectionRangeEnabled="True" Width="162" 
+                                            AutoToolTipPlacement="BottomRight" Margin="5,0,0,0" />
+                                </StackPanel>
+                            </StackPanel>
+
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                            Margin="0,10,0,0">
+                            <TextBlock Text="参数：" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding CurrentGroup.LeadWireOnICUserRegions}" VerticalAlignment="Center"/>
+                            <Button Content="修改区域"  Margin="5,0,0,0" Height="Auto" ToolTip="区域修改完，鼠标右键确认！"
+                        Command="{Binding ModifyLeadWireOnICRegionCommand}" Padding="10,4" HorizontalContentAlignment="Center" FontSize="12"/>
+                        </StackPanel>
+                    </StackPanel>
+                    -->
+                            <!--
+                            <StackPanel Margin="0,30,0,0" Background="#FFFAFAFA">
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="自动生成金线区域"
+                                Width="160"
+                                Command="{Binding AddRefWireUserRegionCommand}"
+                                HorizontalAlignment="Left"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal"
+                            Margin="0,10,0,0">
+                                    <TextBlock Text="类型："/>
+                                    <TextBlock Text="{Binding CurrentGroup.RefLineUserRegions.RegionType}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                            Margin="0,10,0,0">
+                                    <TextBlock Text="参数：" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding CurrentGroup.RefLineUserRegions}" VerticalAlignment="Center"/>
+                                    <Button Content="修改区域"  Margin="5,0,0,0" Height="Auto" ToolTip="区域修改完，鼠标右键确认！"
+                        Command="{Binding ModifyRefLineRegionCommand}" Padding="10,4" HorizontalContentAlignment="Center" FontSize="12"/>
+                                </StackPanel>
+                            </StackPanel>
+                            -->
+                        </StackPanel>
+                    </materialDesign:Card>
+                    <StackPanel Margin="0,20,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button Content="显示所有区域" ToolTip="显示所有的焊点金线组区域！"
+                        Width="160"
+                        Command="{Binding DisplayAllRegionCommand}"
+                        HorizontalAlignment="Left" Margin="0,0,0,5"/>
+                    </StackPanel>
+                    <materialDesign:Card Margin="5,30,5,0" >
+                        <StackPanel Margin="10">
+                            <StackPanel Margin="0" Background="#FFFAFAFA">
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="添加金线检测区域"
+                                Width="160"
+                                Command="{Binding AddMultiWireRegionsCommand}"
+                                HorizontalAlignment="Left"/>
+                                    <Button Content="删除区域"
+                                Margin="20,0,0,0"
+                                Command="{Binding RemoveMultiWireRegionsCommand}"/>
+                                    <Button Content="修改区域"  Margin="20,0,0,0" Height="Auto" ToolTip="区域修改完，鼠标右键确认！"
+                                    Command="{Binding ModifyMultiWireRegionsCommand}"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <materialDesign:Card Margin="5,10,5,5">
+                                <StackPanel>
+                                    <DataGrid   Margin="0,5,0,0" IsReadOnly="False" 
+                                        ItemsSource="{Binding CurrentGroup.LineUserRegions}"                             
+                                        SelectedItem="{Binding SelectedUserRegion}" 
+                                        AlternatingRowBackground="#D1DFE7"
+                                        IsSynchronizedWithCurrentItem="True" Background="White">
+                                        <DataGrid.Columns>
+                                            <DataGridTemplateColumn>
+                                                <DataGridTemplateColumn.HeaderTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="选择"  FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                            <CheckBox  IsChecked="{Binding DataContext.IsCheckAll,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,ElementName=userControl}" 
+                                                                Command="{Binding DataContext.IsCheckAllCommand,  ElementName=userControl}" IsThreeState="True"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.HeaderTemplate>
+                                                <DataGridTemplateColumn.CellTemplate >
+                                                    <DataTemplate >
+                                                        <CheckBox IsChecked="{Binding IsSelected,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                                           Command="{Binding DataContext.IsCheckCommand,ElementName=userControl}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <materialDesign:MaterialDataGridTextColumn Header="序号" 
+                                                           Binding="{Binding Index}" 
+                                                           IsReadOnly="True"/>
+
+                                            <DataGridTemplateColumn  Header="启用">
+                                                <DataGridTemplateColumn.CellTemplate >
+                                                    <DataTemplate >
+                                                        <CheckBox IsChecked="{Binding IsEnable,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"         
+                                      Command="{Binding DataContext.UserRegionEnableChangedCommand, ElementName=userControl}"
+                                      CommandParameter="{Binding}"
+                                      Style="{StaticResource MaterialDesignCheckBox}" />
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+
+                                            <!--
+                                            <DataGridTemplateColumn  Header="类型">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <ComboBox 
+                                                Style="{StaticResource MaterialDesignDataGridComboBox}"
+                                                SelectedIndex="{Binding IsAccept, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanToComboBoxIndexConverter}}"
+                                                    materialDesign:ComboBoxAssist.ClassicMode="true" HorizontalContentAlignment="Center">
+                                                            <ComboBoxItem Content="接受区"/>
+                                                            <ComboBoxItem Content="拒绝区"/>
+                                                        </ComboBox>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            -->
+                                            <materialDesign:MaterialDataGridTextColumn Header="形状" 
+                                                           Binding="{Binding RegionType}" 
+                                                           IsReadOnly="True"/>
+
+                                            <DataGridTemplateColumn  Header="检测金线算法选择">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <ComboBox 
+                                                            Style="{StaticResource MaterialDesignDataGridComboBox}"
+                                                            SelectedIndex="{Binding AlgoParameterIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                            materialDesign:ComboBoxAssist.ClassicMode="true" HorizontalContentAlignment="Center">
+                                                            <ComboBoxItem Content="Threshold"/>
+                                                            <ComboBoxItem Content="High Efficiency"/>
+                                                            <ComboBoxItem Content="High Performance"/>
+                                                        </ComboBox>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </StackPanel>
+                            </materialDesign:Card>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,30,0,0">
+                                <Expander x:Name="Exp1" HorizontalAlignment="Left" HorizontalContentAlignment="Left" AutomationProperties.IsColumnHeader="True" ExpandDirection="Right" Background="White" IsExpanded="{Binding WireParameter.IsGroupBatchParasSet}" >
+                                    <Expander.Header>
+                                        <TextBlock Text="启用算法参数  【按方法】 批量修改 ">
+                                            <TextBlock.LayoutTransform>
+                                                <RotateTransform Angle="-270"/>
+                                            </TextBlock.LayoutTransform>
+                                        </TextBlock>
+                                    </Expander.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,10,0">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <TextBlock Text="选择批量修改组" VerticalAlignment="Center" Foreground="#FF607D8B" FontWeight="Bold"></TextBlock>
+                                            </StackPanel>
+                                            <materialDesign:Card Height="318" Margin="0,28,0,0" HorizontalAlignment="Center">
+                                                <StackPanel HorizontalAlignment="Center">
+                                                    <DataGrid IsReadOnly="False" VerticalScrollBarVisibility="Auto"
+                                                ItemsSource="{Binding Groups}"                          
+                                                IsSynchronizedWithCurrentItem="True" Background="White" Height="319" HorizontalAlignment="Center" FontSize="12" MinColumnWidth="5">
+                                                        <DataGrid.Columns>
+
+                                                            <materialDesign:MaterialDataGridTextColumn Header="序号" 
+                                                           Binding="{Binding Index}" 
+                                                           IsReadOnly="True" MinWidth="0"/>
+
+                                                            <DataGridTemplateColumn MinWidth="0">
+
+                                                                <DataGridTemplateColumn.HeaderTemplate>
+                                                                    <DataTemplate>
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <TextBlock Text="全选"  FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                                            <CheckBox IsChecked="{Binding DataContext.IsCheckAllGroup,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,ElementName=userControl}" 
+                                                                                  Command="{Binding DataContext.IsCheckAllGroupCommand,  ElementName=userControl}" IsThreeState="True"/>
+                                                                        </StackPanel>
+                                                                    </DataTemplate>
+                                                                </DataGridTemplateColumn.HeaderTemplate>
+
+                                                                <DataGridTemplateColumn.CellTemplate>
+                                                                    <DataTemplate >
+                                                                        <CheckBox IsChecked="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                                              Command="{Binding DataContext.IsCheckGroupCommand,ElementName=userControl}"></CheckBox>
+                                                                    </DataTemplate>
+                                                                </DataGridTemplateColumn.CellTemplate>
+
+                                                            </DataGridTemplateColumn>
+
+                                                        </DataGrid.Columns>
+                                                    </DataGrid>
+                                                </StackPanel>
+                                            </materialDesign:Card>
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <Button Content="批量修改参数" 
+                                                             Command="{Binding ModifyParametersBatchCommand}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <Button Content="默认值" Style="{DynamicResource MaterialDesignFlatButton}"
+                                                             Command="{Binding SetDefaultParasCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30,0,0,0" FontSize="12"/>
+                                                <Button Content="清空参数" Style="{DynamicResource MaterialDesignFlatButton}"
+                                                             Command="{Binding ClearParasCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30,0,0,0" FontSize="12"/>
+                                            </StackPanel>                                         
+                                            <TabControl x:Name="tabContro0" HorizontalAlignment="Center" DockPanel.Dock="Top" VerticalAlignment="Bottom" BorderBrush="#FFACACAC"                               
+                                                materialDesign:ColorZoneAssist.Mode="PrimaryLight"  Background="#DDFFFFFF" Margin="0,10,0,0">
+                                                <TabControl.Resources>
+                                                    <Style TargetType="TabItem">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="TabItem">
+                                                                    <Border Name="Border" BorderThickness="1,1,1,0" 
+                                                            BorderBrush="Gainsboro" 
+                                                            CornerRadius="4,4,0,0" Margin="0.5,0">
+                                                                        <ContentPresenter x:Name="ContentSite"
+                                                            VerticalAlignment="Center"
+                                                            HorizontalAlignment="Center"
+                                                            ContentSource="Header"                                                                          
+                                                            Margin="12,6,12,6"/>
+                                                                    </Border>
+                                                                    <ControlTemplate.Triggers>
+                                                                        <Trigger Property="IsSelected" Value="True">
+                                                                            <Setter TargetName="Border" Property="Background" Value="#FFD6DDE0" />
+                                                                        </Trigger>
+                                                                        <Trigger Property="IsSelected" Value="False">
+                                                                            <Setter TargetName="Border" Property="Background" Value="white" />
+                                                                        </Trigger>
+                                                                    </ControlTemplate.Triggers>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </TabControl.Resources>
+                                                <TabItem  x:Name="TabItem_1" Header="Threshold" Height="28" VerticalAlignment="Top" >
+                                                    <StackPanel Margin="20,20,20,10" >
+                                                        <DockPanel Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                            <Label Content="分割阈值" Width="100"
+                                                HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding ThreshGray[0]}"  Width="50"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <TextBox Text="{Binding ThreshGray[1]}"  Width="50"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="闭运算大小"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="闭操作尺寸" Width="100" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding ClosingSize}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip=" "  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="测量宽" Width="100" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding  WireWidth[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                            <TextBox Text="{Binding  WireWidth[1]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip=" "  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="测量长" Width="100" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding WireLength[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                            <TextBox Text="{Binding WireLength[1]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="检测面积"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="测量面积" Width="100" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding WireArea[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                            <TextBox Text="{Binding WireArea[1]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="焊点至金线法线距离阈值判断，为0则不启用"  Margin="0,5" HorizontalAlignment="Center">
+                                                            <Label Content="焊点至金线距离" Width="100" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding DistTh}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                    </StackPanel>
+                                                </TabItem>
+                                                <TabItem  x:Name="TabItem2_2" Header="High Efficiency" Background="{x:Null}"    >
+                                                    <StackPanel Margin="20,0,20,10" >
+                                                        <DockPanel Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                            <Label Content="检测线宽" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding WireWidth_Gause }" Width="100"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="测量边界处的对比度，大于该值时才能测量出边界位置"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="线目标对比度"  Width="118"  HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding WireContrast_Gause}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="亮暗系数设置"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="亮暗系数" Width="118"  HorizontalContentAlignment="Right"/>
+                                                            <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                                  SelectedValuePath="Content"
+                                                                  Text="{Binding  LightOrDark_Gause}" Width="100" HorizontalAlignment="Left">
+                                                                <ComboBoxItem Content="dark"/>
+                                                                <ComboBoxItem Content="light"/>
+                                                            </ComboBox>
+                                                        </DockPanel>
+                                                        <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <StackPanel>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Label Content="筛选目标时的特征量" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                                    <TextBox Text="{Binding SelMetric_Gause[0]}"  Width="100"  HorizontalAlignment="Left"/>
+                                                                </StackPanel>
+                                                                <TextBox Text="{Binding SelMetric_Gause[1]}"  Width="100"  HorizontalAlignment="Left" Margin="118,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip=" "  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="筛选特征最小值" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding  SelMin_Gause[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                            <TextBox Text="{Binding  SelMin_Gause[1], StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RadConverter}}"  Width="50"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip=" "  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="筛选特征最大值" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding  SelMax_Gause[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                            <TextBox Text="{Binding  SelMax_Gause[1], StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RadConverter}}"  Width="50"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+
+                                                        <DockPanel ToolTip="检测过程允许的最大线形方向偏差"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="最大线形方向偏差" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding LinePhiDiff_Gause, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RadConverter}}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="检测过程允许的最大断线间隔"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="最大断线间隔" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding  MaxWireGap_Gause}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="焊点至金线法线距离阈值判断，为0则不启用"  Margin="0,5" HorizontalAlignment="Center">
+                                                            <Label Content="焊点至金线距离阈值" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding DistTh_Gause}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                    </StackPanel>
+                                                </TabItem>
+                                                <TabItem  x:Name="TabItem3_3" Header="High performance" Background="{x:Null}" Width="132"    >
+                                                    <StackPanel Margin="20,0,20,10" >
+                                                        <DockPanel Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                            <Label Content="检测线宽" Width="118"
+                                                HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding WireWidth_GauseAll }" Width="100"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="测量边界处的对比度，大于该值时才能测量出边界位置"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="线目标对比度"  Width="118"  HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding WireContrast_GauseAll}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="亮暗系数设置"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="亮暗系数" Width="118"  HorizontalContentAlignment="Right"/>
+                                                            <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                SelectedValuePath="Content"
+                                                Text="{Binding LightOrDark_GauseAll}" Width="100" HorizontalAlignment="Left">
+                                                                <ComboBoxItem Content="dark"/>
+                                                                <ComboBoxItem Content="light"/>
+                                                                <ComboBoxItem Content="all"/>
+                                                            </ComboBox>
+                                                        </DockPanel>
+                                                        <DockPanel Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <StackPanel>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Label Content="筛选目标时的特征量" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                                    <TextBox Text="{Binding SelMetric_GauseAll[0]}"  Width="100"  HorizontalAlignment="Left"/>
+                                                                </StackPanel>
+                                                                <TextBox Text="{Binding SelMetric_GauseAll[1]}"  Width="100"  HorizontalAlignment="Left" Margin="118,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="第二个参数的单位是角度"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="筛选特征最小值" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelMin_GauseAll[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                            <TextBox Text="{Binding SelMin_GauseAll[1], StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RadConverter}}"  Width="50"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="第二个参数的单位是角度"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="筛选特征最大值" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelMax_GauseAll[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                            <TextBox Text="{Binding SelMax_GauseAll[1], StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RadConverter}}"  Width="50"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+
+                                                        <DockPanel ToolTip="检测过程允许的最大线形方向偏差"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="最大线形方向偏差" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding LinePhiDiff_GauseAll, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RadConverter}}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="检测过程允许的最大断线间隔"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="最大断线间隔" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding MaxWireGap_GauseAll}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="是否双线预处理"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="是否双线预处理" Width="118"  HorizontalContentAlignment="Right"/>
+                                                            <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                            SelectedIndex="{Binding IsDoubleLines_GauseAll, Converter={StaticResource BooleanToComboBoxIndexConverterUpdate}}" Width="100" HorizontalAlignment="Left">
+                                                                <ComboBoxItem Content="否"/>
+                                                                <ComboBoxItem Content="是"/>
+                                                            </ComboBox>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="双线类型"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="双线类型" Width="118"  HorizontalContentAlignment="Right"/>
+                                                            <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                            SelectedValuePath="Content"
+                                                            Text="{Binding DoubleLinesType_GauseAll}" Width="100" HorizontalAlignment="Left">
+                                                                <ComboBoxItem Content="light_dark_light"/>
+                                                                <ComboBoxItem Content="dark_light_dark"/>
+                                                            </ComboBox>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="中间线线宽"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="中间线线宽" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding MiddleLineWidth_GauseAll}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="焊点至金线法线距离阈值判断，为0则不启用"  Margin="0,10" HorizontalAlignment="Center">
+                                                            <Label Content="焊点至金线距离阈值" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding DistTh_GauseAll}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                    </StackPanel>
+                                                </TabItem>
+                                            </TabControl>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Expander>
+                                <Expander x:Name="Exp2" HorizontalAlignment="Left" HorizontalContentAlignment="Left" AutomationProperties.IsColumnHeader="True" ExpandDirection="Right" Background="White" IsExpanded="{Binding WireParameter.IsWireBatchParasSet,Mode=TwoWay}">
+                                    <Expander.Header>
+                                        <TextBlock Text="启用算法参数  【按金线模板】 批量修改 ">
+                                            <TextBlock.LayoutTransform>
+                                                <RotateTransform Angle="-270"/>
+                                            </TextBlock.LayoutTransform>
+                                        </TextBlock>
+                                    </Expander.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,0,10,0">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <TextBlock Text="选择批量修改组" VerticalAlignment="Center" Foreground="#FF607D8B" FontWeight="Bold"></TextBlock>
+                                            </StackPanel>
+                                            <materialDesign:Card Height="318" Margin="0,28,0,0" HorizontalAlignment="Center">
+                                                <StackPanel HorizontalAlignment="Center">
+                                                    <DataGrid IsReadOnly="False" VerticalScrollBarVisibility="Auto"
+                                                ItemsSource="{Binding Groups}"                          
+                                                IsSynchronizedWithCurrentItem="True" Background="White" Height="319" HorizontalAlignment="Center" FontSize="12" MinColumnWidth="5">
+                                                        <DataGrid.Columns>
+                                                            <materialDesign:MaterialDataGridTextColumn Header="序号" 
+                                                           Binding="{Binding Index}" 
+                                                           IsReadOnly="True" MinWidth="0"/>
+
+                                                            <DataGridTemplateColumn MinWidth="0">
+
+                                                                <DataGridTemplateColumn.HeaderTemplate>
+                                                                    <DataTemplate>
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <TextBlock Text="全选"  FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                                            <CheckBox IsChecked="{Binding DataContext.IsCheckAllWire,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,ElementName=userControl}" 
+                                                                                  Command="{Binding DataContext.IsCheckAllWireCommand,  ElementName=userControl}" IsThreeState="True"/>
+                                                                        </StackPanel>
+                                                                    </DataTemplate>
+                                                                </DataGridTemplateColumn.HeaderTemplate>
+
+                                                                <DataGridTemplateColumn.CellTemplate>
+                                                                    <DataTemplate >
+                                                                        <CheckBox IsChecked="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                                              Command="{Binding DataContext.IsCheckWireCommand,ElementName=userControl}"></CheckBox>
+                                                                    </DataTemplate>
+                                                                </DataGridTemplateColumn.CellTemplate>
+
+                                                            </DataGridTemplateColumn>
+
+                                                        </DataGrid.Columns>
+                                                    </DataGrid>
+                                                </StackPanel>
+                                            </materialDesign:Card>
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <TextBlock Text="选择模板金线" VerticalAlignment="Center" Foreground="#FF607D8B" FontWeight="Bold"></TextBlock>
+                                                <ComboBox Width="56"
+                                                  ItemsSource="{Binding Groups}"
+                                                  DisplayMemberPath="Index"
+                                                  SelectedItem="{Binding CurrentGroup, Mode=TwoWay}"
+                                                  materialDesign:ComboBoxAssist.ClassicMode="true"/>
+                                                <Button Content="批量修改参数" 
+                                                             Command="{Binding ModifyParametersModelBatchCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                                            </StackPanel>
+                                            <TabControl x:Name="tabControl" HorizontalAlignment="Center" DockPanel.Dock="Top" VerticalAlignment="Bottom" BorderBrush="#FFACACAC"                               
+                                            SelectedIndex="{Binding SelectedUserRegion.AlgoParameterIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            materialDesign:ColorZoneAssist.Mode="PrimaryLight"  Background="{x:Null}" Margin="0,10,0,0">
+                                                <TabControl.Resources>
+                                                    <Style TargetType="TabItem">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="TabItem">
+                                                                    <Border Name="Border" BorderThickness="1,1,1,0" 
+                                                            BorderBrush="Gainsboro" 
+                                                            CornerRadius="4,4,0,0" Margin="0.5,0">
+                                                                        <ContentPresenter x:Name="ContentSite"
+                                                            VerticalAlignment="Center"
+                                                            HorizontalAlignment="Center"
+                                                            ContentSource="Header"                                                                          
+                                                            Margin="12,6,12,6"/>
+                                                                    </Border>
+                                                                    <ControlTemplate.Triggers>
+                                                                        <Trigger Property="IsSelected" Value="True">
+                                                                            <Setter TargetName="Border" Property="Background" Value="#FFD6DDE0" />
+                                                                        </Trigger>
+                                                                        <Trigger Property="IsSelected" Value="False">
+                                                                            <Setter TargetName="Border" Property="Background" Value="white" />
+                                                                        </Trigger>
+                                                                    </ControlTemplate.Triggers>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </TabControl.Resources>
+
+                                                <TabItem  x:Name="TabItem1" Header="Threshold" >
+                                                    <StackPanel Margin="20,20,20,10" >
+                                                        <DockPanel Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                            <Label Content="分割阈值" Width="100"
+                                                HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.ThreshGray[0]}"  Width="50"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.ThreshGray[1]}"  Width="50"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="闭运算大小"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="闭操作尺寸" Width="100" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.ClosingSize}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip=" "  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="测量宽" Width="100" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.WireWidth[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.WireWidth[1]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip=" "  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="测量长" Width="100" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.WireLength[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.WireLength[1]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="检测面积"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="测量面积" Width="100" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.WireArea[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.WireArea[1]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="焊点至金线法线距离阈值判断，为0则不启用"  Margin="0,5" HorizontalAlignment="Center">
+                                                            <Label Content="焊点至金线距离" Width="100" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.DistTh}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                    </StackPanel>
+                                                </TabItem>
+                                                <TabItem  x:Name="TabItem2" Header="High Efficiency" Background="{x:Null}"    >
+                                                    <StackPanel Margin="20,0,20,10" >
+                                                        <DockPanel Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                            <Label Content="检测线宽" Width="118"
+                                    HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.WireWidth }" Width="100"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="测量边界处的对比度，大于该值时才能测量出边界位置"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="线目标对比度"  Width="118"  HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.WireContrast}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="亮暗系数设置"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="亮暗系数" Width="118"  HorizontalContentAlignment="Right"/>
+                                                            <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                          SelectedValuePath="Content"
+                                Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.LightOrDark}" Width="100" HorizontalAlignment="Left">
+                                                                <ComboBoxItem Content="dark"/>
+                                                                <ComboBoxItem Content="light"/>
+                                                            </ComboBox>
+                                                        </DockPanel>
+                                                        <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <StackPanel>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Label Content="筛选目标时的特征量" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.SelMetric[0]}"  Width="100"  HorizontalAlignment="Left"/>
+                                                                </StackPanel>
+                                                                <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.SelMetric[1]}"  Width="100"  HorizontalAlignment="Left" Margin="118,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip=" "  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="筛选特征最小值" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.SelMin[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.SelMin[1], StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RadConverter}}"  Width="50"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip=" "  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="筛选特征最大值" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.SelMax[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.SelMax[1], StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RadConverter}}"  Width="50"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+
+                                                        <DockPanel ToolTip="检测过程允许的最大线形方向偏差"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="最大线形方向偏差" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.LinePhiDiff, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RadConverter}}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="检测过程允许的最大断线间隔"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="最大断线间隔" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.MaxWireGap}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="焊点至金线法线距离阈值判断，为0则不启用"  Margin="0,5" HorizontalAlignment="Center">
+                                                            <Label Content="焊点至金线距离阈值" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.DistTh}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                    </StackPanel>
+                                                </TabItem>
+                                                <TabItem  x:Name="TabItem3" Header="High performance" Background="{x:Null}"    >
+                                                    <StackPanel Margin="20,0,20,10" >
+                                                        <DockPanel Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                            <Label Content="检测线宽" Width="118"
+                                                HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.WireWidth }" Width="100"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="测量边界处的对比度，大于该值时才能测量出边界位置"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="线目标对比度"  Width="118"  HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.WireContrast}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="亮暗系数设置"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="亮暗系数" Width="118"  HorizontalContentAlignment="Right"/>
+                                                            <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                SelectedValuePath="Content"
+                                                Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.LightOrDark}" Width="100" HorizontalAlignment="Left">
+                                                                <ComboBoxItem Content="dark"/>
+                                                                <ComboBoxItem Content="light"/>
+                                                                <ComboBoxItem Content="all"/>
+                                                            </ComboBox>
+                                                        </DockPanel>
+                                                        <DockPanel Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <StackPanel>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Label Content="筛选目标时的特征量" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.SelMetric[0]}"  Width="100"  HorizontalAlignment="Left"/>
+                                                                </StackPanel>
+                                                                <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.SelMetric[1]}"  Width="100"  HorizontalAlignment="Left" Margin="118,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="第二个参数的单位是角度"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="筛选特征最小值" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.SelMin[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.SelMin[1], StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RadConverter}}"  Width="50"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="第二个参数的单位是角度"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="筛选特征最大值" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.SelMax[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.SelMax[1], StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RadConverter}}"  Width="50"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+
+                                                        <DockPanel ToolTip="检测过程允许的最大线形方向偏差"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="最大线形方向偏差" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.LinePhiDiff, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RadConverter}}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="检测过程允许的最大断线间隔"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="最大断线间隔" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.MaxWireGap}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="是否双线预处理"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="是否双线预处理" Width="118"  HorizontalContentAlignment="Right"/>
+                                                            <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                            SelectedIndex="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.IsDoubleLines, Converter={StaticResource BooleanToComboBoxIndexConverterUpdate}}"
+                                                                      Width="100" HorizontalAlignment="Left">       
+                                                                <ComboBoxItem Content="否"/>
+                                                                <ComboBoxItem Content="是"/>
+                                                            </ComboBox>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="双线类型"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="双线类型" Width="118"  HorizontalContentAlignment="Right"/>
+                                                            <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                            SelectedValuePath="Content"
+                                                            Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.DoubleLinesType}" Width="100" HorizontalAlignment="Left">
+                                                                <ComboBoxItem Content="light_dark_light"/>
+                                                                <ComboBoxItem Content="dark_light_dark"/>
+                                                            </ComboBox>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="中间线线宽"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                            <Label Content="中间线线宽" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.MiddleLineWidth}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                        <DockPanel ToolTip="焊点至金线法线距离阈值判断，为0则不启用"  Margin="0,10" HorizontalAlignment="Center">
+                                                            <Label Content="焊点至金线距离阈值" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.DistTh}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </DockPanel>
+                                                    </StackPanel>
+                                                </TabItem>
+                                            </TabControl>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Expander>
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <TextBlock Text="区域" VerticalAlignment="Center"></TextBlock>
+                                        <TextBlock Text="{Binding SelectedUserRegion.Index}"  VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5,0"/>
+                                        <TextBlock Text="检测金线算法参数设置" VerticalAlignment="Center"></TextBlock>
+                                    </StackPanel>
+                                    <TabControl x:Name="tabControl4" HorizontalAlignment="Center" DockPanel.Dock="Top" VerticalAlignment="Bottom" BorderBrush="#FFACACAC"                               
+                                SelectedIndex="{Binding SelectedUserRegion.AlgoParameterIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                materialDesign:ColorZoneAssist.Mode="PrimaryLight"  Background="{x:Null}" Margin="30,24,0,0">
+                                        <TabControl.Resources>
+                                            <Style TargetType="TabItem">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="TabItem">
+                                                            <Border Name="Border" BorderThickness="1,1,1,0" 
+                                                            BorderBrush="Gainsboro" 
+                                                            CornerRadius="4,4,0,0" Margin="0.5,0">
+                                                                <ContentPresenter x:Name="ContentSite"
+                                                            VerticalAlignment="Center"
+                                                            HorizontalAlignment="Center"
+                                                            ContentSource="Header"                                                                          
+                                                            Margin="12,6,12,6"/>
+                                                            </Border>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsSelected" Value="True">
+                                                                    <Setter TargetName="Border" Property="Background" Value="#FFD6DDE0" />
+                                                                </Trigger>
+                                                                <Trigger Property="IsSelected" Value="False">
+                                                                    <Setter TargetName="Border" Property="Background" Value="white" />
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </TabControl.Resources>
+
+                                        <TabItem  x:Name="TabItem14" Header="Threshold" >
+                                            <StackPanel Margin="20,20,20,10" >
+                                                <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <Label Content="选择检测图层"  Width="100"  HorizontalContentAlignment="Right"/>
+                                                    <ComboBox Name="comboBox_Tresh"                                    
+                                                    ItemsSource="{Binding SelectedUserRegion.ChannelNames}"
+                                                    DisplayMemberPath="Name"
+                                                    Margin="0,0,0,0"
+                                                    materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                    SelectedIndex="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.ImageIndex, Mode=TwoWay}"  Padding="4,5" Foreground="#FF555555" HorizontalAlignment="Left" Width="100">
+                                                    </ComboBox>
+                                                </DockPanel>
+                                                <DockPanel Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <Label Content="分割阈值" Width="100"
+                                                HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.ThreshGray[0]}"  Width="50"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.ThreshGray[1]}"  Width="50"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                                </DockPanel>
+                                                <DockPanel ToolTip="闭运算大小"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <Label Content="闭操作尺寸" Width="100" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.ClosingSize}"  Width="100"  HorizontalAlignment="Left"/>
+                                                </DockPanel>
+                                                <DockPanel ToolTip=" "  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <Label Content="测量宽" Width="100" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.WireWidth[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.WireWidth[1]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                </DockPanel>
+                                                <DockPanel ToolTip=" "  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <Label Content="测量长" Width="100" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.WireLength[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.WireLength[1]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                </DockPanel>
+                                                <DockPanel ToolTip="检测面积"  Margin="0,5" HorizontalAlignment="Center">
+                                                    <Label Content="测量面积" Width="100" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.WireArea[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.WireArea[1]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                </DockPanel>
+                                                <DockPanel ToolTip="焊点至金线法线距离阈值判断，为0则不启用"  Margin="0,5" HorizontalAlignment="Center">
+                                                    <Label Content="焊点至金线距离" Width="100" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireThresAlgoPara.DistTh}"  Width="100"  HorizontalAlignment="Left"/>
+                                                </DockPanel>
+                                            </StackPanel>
+                                        </TabItem>
+                                        <TabItem  x:Name="TabItem4" Header="High Efficiency" Background="{x:Null}"    >
+                                            <StackPanel Margin="20,0,20,10" >
+                                                <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <Label Content="选择检测图层"  Width="118"  HorizontalContentAlignment="Right"/>
+                                                    <ComboBox Name="comboBox_Sort"                                    
+                                                    ItemsSource="{Binding SelectedUserRegion.ChannelNames}"
+                                                    DisplayMemberPath="Name"
+                                                    Margin="0,0,0,0"
+                                                    materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                    SelectedIndex="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.ImageIndex, Mode=TwoWay}"  Padding="4,5" Foreground="#FF555555" HorizontalAlignment="Left" Width="100">
+                                                    </ComboBox>
+                                                </DockPanel>
+                                                <DockPanel Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <Label Content="检测线宽" Width="118"
+                                    HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.WireWidth }" Width="100"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                                </DockPanel>
+                                                <DockPanel ToolTip="测量边界处的对比度，大于该值时才能测量出边界位置"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <Label Content="线目标对比度"  Width="118"  HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.WireContrast}"  Width="100"  HorizontalAlignment="Left"/>
+                                                </DockPanel>
+                                                <DockPanel ToolTip="亮暗系数设置"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <Label Content="亮暗系数" Width="118"  HorizontalContentAlignment="Right"/>
+                                                    <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                          SelectedValuePath="Content"
+                                Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.LightOrDark}" Width="100" HorizontalAlignment="Left">
+                                                        <ComboBoxItem Content="dark"/>
+                                                        <ComboBoxItem Content="light"/>
+                                                    </ComboBox>
+                                                </DockPanel>
+                                                <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Label Content="筛选目标时的特征量" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.SelMetric[0]}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </StackPanel>
+                                                        <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.SelMetric[1]}"  Width="100"  HorizontalAlignment="Left" Margin="118,5,0,0"/>
+                                                    </StackPanel>
+                                                </DockPanel>
+                                                <DockPanel ToolTip=" "  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <Label Content="筛选特征最小值" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.SelMin[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.SelMin[1], StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RadConverter}}"  Width="50"  HorizontalAlignment="Left"/>
+                                                </DockPanel>
+                                                <DockPanel ToolTip=" "  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <Label Content="筛选特征最大值" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.SelMax[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.SelMax[1], StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RadConverter}}"  Width="50"  HorizontalAlignment="Left"/>
+                                                </DockPanel>
+
+                                                <DockPanel ToolTip="检测过程允许的最大线形方向偏差"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <Label Content="最大线形方向偏差" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.LinePhiDiff, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RadConverter}}"  Width="100"  HorizontalAlignment="Left"/>
+                                                </DockPanel>
+                                                <DockPanel ToolTip="检测过程允许的最大断线间隔"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <Label Content="最大断线间隔" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.MaxWireGap}"  Width="100"  HorizontalAlignment="Left"/>
+                                                </DockPanel>
+                                                <DockPanel ToolTip="焊点至金线法线距离阈值判断，为0则不启用"  Margin="0,5" HorizontalAlignment="Center">
+                                                    <Label Content="焊点至金线距离阈值" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoPara.DistTh}"  Width="100"  HorizontalAlignment="Left"/>
+                                                </DockPanel>
+                                            </StackPanel>
+                                        </TabItem>
+                                        <TabItem Header="High performance" Background="{x:Null}"    >
+                                            <StackPanel Margin="20,0,20,10" >
+                                                <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <Label Content="选择检测图层"  Width="118"  HorizontalContentAlignment="Right"/>
+                                                    <ComboBox Name="comboBox_Pro"                                    
+                                                    ItemsSource="{Binding SelectedUserRegion.ChannelNames}"
+                                                    DisplayMemberPath="Name"
+                                                    Margin="0,0,0,0"
+                                                    materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                    SelectedIndex="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.ImageIndex, Mode=TwoWay}"  Padding="4,5" Foreground="#FF555555" HorizontalAlignment="Left" Width="100">
+                                                    </ComboBox>
+                                                </DockPanel>
+                                                <DockPanel Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <Label Content="检测线宽" Width="118"
+                                                HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.WireWidth }" Width="100"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                                </DockPanel>
+                                                <DockPanel ToolTip="测量边界处的对比度，大于该值时才能测量出边界位置"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <Label Content="线目标对比度"  Width="118"  HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.WireContrast}"  Width="100"  HorizontalAlignment="Left"/>
+                                                </DockPanel>
+                                                <DockPanel ToolTip="亮暗系数设置"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <Label Content="亮暗系数" Width="118"  HorizontalContentAlignment="Right"/>
+                                                    <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                SelectedValuePath="Content"
+                                                Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.LightOrDark}" Width="100" HorizontalAlignment="Left">
+                                                        <ComboBoxItem Content="dark"/>
+                                                        <ComboBoxItem Content="light"/>
+                                                        <ComboBoxItem Content="all"/>
+                                                    </ComboBox>
+                                                </DockPanel>
+                                                <DockPanel Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Label Content="筛选目标时的特征量" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                            <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.SelMetric[0]}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </StackPanel>
+                                                        <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.SelMetric[1]}"  Width="100"  HorizontalAlignment="Left" Margin="118,5,0,0"/>
+                                                    </StackPanel>
+                                                </DockPanel>
+                                                <DockPanel ToolTip="第二个参数的单位是角度"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <Label Content="筛选特征最小值" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.SelMin[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.SelMin[1], StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RadConverter}}"  Width="50"  HorizontalAlignment="Left"/>
+                                                </DockPanel>
+                                                <DockPanel ToolTip="第二个参数的单位是角度"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <Label Content="筛选特征最大值" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.SelMax[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.SelMax[1], StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RadConverter}}"  Width="50"  HorizontalAlignment="Left"/>
+                                                </DockPanel>
+
+                                                <DockPanel ToolTip="检测过程允许的最大线形方向偏差"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <Label Content="最大线形方向偏差" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.LinePhiDiff, StringFormat={}{0:F1}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RadConverter}}"  Width="100"  HorizontalAlignment="Left"/>
+                                                </DockPanel>
+                                                <DockPanel ToolTip="检测过程允许的最大断线间隔"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <Label Content="最大断线间隔" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.MaxWireGap}"  Width="100"  HorizontalAlignment="Left"/>
+                                                </DockPanel>
+                                                <DockPanel ToolTip="是否双线预处理"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <Label Content="是否双线预处理" Width="118"  HorizontalContentAlignment="Right"/>
+                                                    <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                SelectedIndex="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.IsDoubleLines, Converter={StaticResource BooleanToComboBoxIndexConverterUpdate}}" 
+                                                              Width="100" HorizontalAlignment="Left">
+                                                        <ComboBoxItem Content="否"/>
+                                                        <ComboBoxItem Content="是"/>
+                                                    </ComboBox>
+                                                </DockPanel>
+                                                <DockPanel ToolTip="双线类型"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <Label Content="双线类型" Width="118"  HorizontalContentAlignment="Right"/>
+                                                    <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                SelectedValuePath="Content"
+                                                Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.DoubleLinesType}" Width="100" HorizontalAlignment="Left">
+                                                        <ComboBoxItem Content="light_dark_light"/>
+                                                        <ComboBoxItem Content="dark_light_dark"/>
+                                                    </ComboBox>
+                                                </DockPanel>
+                                                <DockPanel ToolTip="中间线线宽"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <Label Content="中间线线宽" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.MiddleLineWidth}"  Width="100"  HorizontalAlignment="Left"/>
+                                                </DockPanel>
+                                                <DockPanel ToolTip="焊点至金线法线距离阈值判断，为0则不启用"  Margin="0,10" HorizontalAlignment="Center">
+                                                    <Label Content="焊点至金线距离阈值" Width="118" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                    <TextBox Text="{Binding SelectedUserRegion.WireRegionWithPara.WireLineGauseAlgoParaAll.DistTh}"  Width="100"  HorizontalAlignment="Left"/>
+                                                </DockPanel>
+                                            </StackPanel>
+                                        </TabItem>
+                                    </TabControl>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </materialDesign:Card>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </DockPanel>
+</UserControl>

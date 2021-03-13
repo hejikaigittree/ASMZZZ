@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{991C5085-02E1-411B-B4D4-E5F7CFF07A82}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JFToolKits</RootNamespace>
+    <AssemblyName>JFToolKits</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>..\bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ConvertExt\ArrayExt.cs" />
+    <Compile Include="ConvertExt\ArrayExt.Fill.cs" />
+    <Compile Include="ConvertExt\CharExt.cs" />
+    <Compile Include="ConvertExt\Collections\ArrayAdapter`1.cs" />
+    <Compile Include="ConvertExt\Collections\BitList.cs" />
+    <Compile Include="ConvertExt\Collections\BitListEqualityComparer.cs" />
+    <Compile Include="ConvertExt\Collections\CharSet.cs" />
+    <Compile Include="ConvertExt\Collections\CollectionDebugView`1.cs" />
+    <Compile Include="ConvertExt\Collections\DictionaryExt.cs" />
+    <Compile Include="ConvertExt\Collections\ListEqualityComparer`1.cs" />
+    <Compile Include="ConvertExt\Collections\ListExt.cs" />
+    <Compile Include="ConvertExt\Collections\ListQueue`1.cs" />
+    <Compile Include="ConvertExt\Collections\ListStack`1.cs" />
+    <Compile Include="ConvertExt\Collections\ObjectModel\CollectionBase`1.cs" />
+    <Compile Include="ConvertExt\Collections\ObjectModel\CollectionHelper.cs" />
+    <Compile Include="ConvertExt\Collections\ObjectModel\IteratorBase`1.cs" />
+    <Compile Include="ConvertExt\Collections\ObjectModel\KeyedCollectionBase`2.cs" />
+    <Compile Include="ConvertExt\Collections\ObjectModel\KeyedListBase`2.cs" />
+    <Compile Include="ConvertExt\Collections\ObjectModel\ListBase`1.cs" />
+    <Compile Include="ConvertExt\Collections\ObjectModel\ReadOnlyCollection`1.cs" />
+    <Compile Include="ConvertExt\Collections\ObjectModel\ReadOnlyKeyedCollectionBase`2.cs" />
+    <Compile Include="ConvertExt\Collections\ObjectModel\ReadOnlyList`1.cs" />
+    <Compile Include="ConvertExt\Collections\ObjectModel\ReadOnlySet`1.cs" />
+    <Compile Include="ConvertExt\Collections\ObjectModel\SetBase`1.cs" />
+    <Compile Include="ConvertExt\Collections\SetEqualityComparer`1.cs" />
+    <Compile Include="ConvertExt\CommonExceptions.cs" />
+    <Compile Include="ConvertExt\Configurations\ConfigurationElementCollection`1.cs" />
+    <Compile Include="ConvertExt\Configurations\ConfigurationElementCollection`2.cs" />
+    <Compile Include="ConvertExt\ConversionCache.cs" />
+    <Compile Include="ConvertExt\ConversionMethod.cs" />
+    <Compile Include="JFBytesBuff.cs" />
+    <Compile Include="JFConvertExt.cs" />
+    <Compile Include="ConvertExt\DelegateBuilder.cs" />
+    <Compile Include="ConvertExt\DoubleComparer.cs" />
+    <Compile Include="ConvertExt\EnumerableExt.cs" />
+    <Compile Include="ConvertExt\EnumExt.cs" />
+    <Compile Include="ConvertExt\ExceptionResources.Designer.cs" />
+    <Compile Include="ConvertExt\ExpressionHelper.cs" />
+    <Compile Include="ConvertExt\FloatComparer.cs" />
+    <Compile Include="ConvertExt\IntegerExt.Byte.cs" />
+    <Compile Include="ConvertExt\IntegerExt.Int32.cs" />
+    <Compile Include="ConvertExt\IntegerExt.Int64.cs" />
+    <Compile Include="ConvertExt\IntegerExt.UInt32.cs" />
+    <Compile Include="ConvertExt\IntegerExt.UInt64.cs" />
+    <Compile Include="ConvertExt\IO\AggregateSourceException.cs" />
+    <Compile Include="ConvertExt\IO\DirectoryExt.cs" />
+    <Compile Include="ConvertExt\IO\FileExt.cs" />
+    <Compile Include="ConvertExt\IO\ISourceFileLocatable.cs" />
+    <Compile Include="ConvertExt\IO\ISourceLocatable.cs" />
+    <Compile Include="ConvertExt\IO\PathExt.cs" />
+    <Compile Include="ConvertExt\IO\SourceException.cs" />
+    <Compile Include="ConvertExt\IO\SourceFileRange.cs" />
+    <Compile Include="ConvertExt\IO\SourceLocatableExt.cs" />
+    <Compile Include="ConvertExt\IO\SourceLocator.cs" />
+    <Compile Include="ConvertExt\IO\SourcePosition.cs" />
+    <Compile Include="ConvertExt\IO\SourceRange.cs" />
+    <Compile Include="ConvertExt\IO\SourceReader.cs" />
+    <Compile Include="ConvertExt\MemberAccessor`1.cs" />
+    <Compile Include="ConvertExt\MemberAccessor`2.cs" />
+    <Compile Include="ConvertExt\MethodExt.cs" />
+    <Compile Include="ConvertExt\MethodSwitcher.cs" />
+    <Compile Include="ConvertExt\MethodSwitcherManual`1.cs" />
+    <Compile Include="ConvertExt\PowerBinder.cs" />
+    <Compile Include="ConvertExt\ProcessorAttribute.cs" />
+    <Compile Include="ConvertExt\RandomExt.cs" />
+    <Compile Include="ConvertExt\ResDescriptionAttribute.cs" />
+    <Compile Include="ConvertExt\Resources.Designer.cs" />
+    <Compile Include="ConvertExt\StringExt.cs" />
+    <Compile Include="ConvertExt\TextValuePair.cs" />
+    <Compile Include="ConvertExt\TextValuePairCollection.cs" />
+    <Compile Include="ConvertExt\TextValuePairCollection`1.cs" />
+    <Compile Include="ConvertExt\TextValuePair`1.cs" />
+    <Compile Include="ConvertExt\Text\CharsReader.cs" />
+    <Compile Include="ConvertExt\Text\TokenParser`1.cs" />
+    <Compile Include="ConvertExt\Text\TokenReader`1.cs" />
+    <Compile Include="ConvertExt\Text\Token`1.cs" />
+    <Compile Include="ConvertExt\Tristate.cs" />
+    <Compile Include="JFTypeExt.cs" />
+    <Compile Include="ConvertExt\UniqueValue`1.cs" />
+    <Compile Include="ConvertExt\Utility\CacheDefaultEventArgs.cs" />
+    <Compile Include="ConvertExt\Utility\CacheElement.cs" />
+    <Compile Include="ConvertExt\Utility\CacheElementCollection.cs" />
+    <Compile Include="ConvertExt\Utility\CacheFactory.cs" />
+    <Compile Include="ConvertExt\Utility\CacheResolveEventArgs.cs" />
+    <Compile Include="ConvertExt\Utility\CacheSection.cs" />
+    <Compile Include="ConvertExt\Utility\Hash.cs" />
+    <Compile Include="ConvertExt\Utility\ICache`2.cs" />
+    <Compile Include="ConvertExt\Utility\LruCacheNoSync`2.cs" />
+    <Compile Include="ConvertExt\Utility\LruCache`2.cs" />
+    <Compile Include="ConvertExt\Utility\LruNodeNoSync`2.cs" />
+    <Compile Include="ConvertExt\Utility\LruNode`2.cs" />
+    <Compile Include="ConvertExt\Utility\LruNormalNode`2.cs" />
+    <Compile Include="ConvertExt\Utility\SimplyCache`2.cs" />
+    <Compile Include="CsvOperator.cs" />
+    <Compile Include="IniFileOperator.cs" />
+    <Compile Include="JFFunctions.cs" />
+    <Compile Include="JFSerializer.cs" />
+    <Compile Include="JFXCfg.cs" />
+    <Compile Include="SXDictionary.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XmlSerializerFile.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="ConvertExt\ExceptionResources.resx" />
+    <EmbeddedResource Include="ConvertExt\ExceptionResources.zh-CN.resx" />
+    <EmbeddedResource Include="ConvertExt\Resources.resx" />
+    <EmbeddedResource Include="ConvertExt\Resources.zh-CN.resx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

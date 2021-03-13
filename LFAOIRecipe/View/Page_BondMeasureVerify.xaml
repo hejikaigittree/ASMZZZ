@@ -1,0 +1,910 @@
+﻿<UserControl x:Name="userControl" x:Class="LFAOIRecipe.Page_BondMeasureVerify"
+             x:ClassModifier="internal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:local="clr-namespace:LFAOIRecipe"
+             mc:Ignorable="d" 
+             Background="White"
+             MinWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel x:Name="dockPanel">
+        <StackPanel DockPanel.Dock="Top">
+            <materialDesign:Card Margin="5,5,5,0">
+                <StackPanel>
+                    <TextBlock Text="{Binding DisplayName}"
+                               FontSize="16"
+                               Margin="10"
+                               Foreground="DarkBlue"/>
+                    <TextBlock Margin="10,0,10,10"
+                       Text="【用创建的焊点测量模板对图集中的图像进行检测验证，保存数据】"
+                       TextWrapping="Wrap">
+                    </TextBlock>
+                </StackPanel>
+            </materialDesign:Card>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Top"  Margin="0">
+
+            <GroupBox Header="生成焊盘区域参数设置" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="100,10,0,0">
+                <StackPanel Margin="10,0,10,10">
+                    <DockPanel ToolTip="焊盘区域半长"  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Label Content="焊盘区域半长与半宽" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="126"/>
+                        <TextBox Text="{Binding BondMeasureParameter.GenPadRegionsSize[0]}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBox Text="{Binding BondMeasureParameter.GenPadRegionsSize[1]}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </DockPanel>
+                </StackPanel>
+            </GroupBox>
+
+            <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Left"
+                                Margin="0,10,0,0" Width="648">
+                <TextBlock VerticalAlignment="Center" Margin="0,0,0,0" ><Run Text="D"/><Run Text="ie图"/><Run Text=""/></TextBlock>
+                <Button Content="自动生成焊盘区域" ToolTip="从自动生成的焊点生成焊盘区域！"
+                                Command="{Binding AutoGenPadUserRegionsCommand}"
+                                HorizontalAlignment="Left" Margin="10,0,0,0" Background="#FF607D8B"/>
+
+                <Button Content="添加区域"
+                                Margin="10,0,0,0"
+                                Command="{Binding AddPadUserRegionCommand}" Padding="10,4"/>
+                <Button Content="删除区域"
+                                Margin="10,0,0,0"
+                                Command="{Binding RemovePadUserRegionCommand}" Padding="10,4"/>
+                <Button Content="修改区域"  Margin="5,0,0,0" Height="Auto" ToolTip="区域修改完，鼠标右键确认！"
+                        Command="{Binding ModifyPadUserRegionCommand}" Padding="10,4"/>
+                <Button Content="变更区域"  Margin="10,0,0,0" Height="Auto" ToolTip="区域变更完，鼠标右键确认！"
+                        Command="{Binding AlterPadUserRegionCommand}" Padding="10,4"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                    Command="{Binding}"
+                                    IsChecked="{Binding BondMeasureParameter.IsPadRegionPickUp}" Margin="5,0,5,0" Height="32" />
+                    <TextBlock Text="拾取"/>
+                </StackPanel>
+
+                <Button Height="32" Command="{Binding DisplayPadRegionsCommand}" 
+                                Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Width="32" Margin="10,0,0,0">
+                    <materialDesign:PackIcon  Kind="Eye"  Height="21"  Width="21" />
+                </Button>
+            </StackPanel>
+
+            <Expander  ExpandDirection="Down" Background="#FF607D8B" Padding="2" IsExpanded="True" Margin="0,10,0,0" Foreground="White" HorizontalContentAlignment="Stretch" Height="329" >
+                <Expander.Header >
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="焊盘区域生成列表 " Foreground="White" FontSize="14" FontWeight="Bold"/>
+                        <Label Content="焊盘内焊点检测算法选择"  Width="170"  HorizontalContentAlignment="Right" Foreground="#DD991414" FontSize="14"/>
+                        <ComboBox x:Name="SelectBondMethod"
+                            Style="{StaticResource MaterialDesignDataGridComboBox}"
+                            SelectedIndex="{Binding BondMeasureParameter.AlgoParameterIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Padding="4,5" Foreground="#FF555555" HorizontalAlignment="Left" Width="93"
+                            materialDesign:ComboBoxAssist.ClassicMode="true" HorizontalContentAlignment="Center" SelectionChanged="ComboBox_SelectionChanged_SelectMethod">
+                            <ComboBoxItem Content="Threshold"/>
+                            <ComboBoxItem Content="Measure"/>
+                            <ComboBoxItem Content="Match"/>
+                        </ComboBox>
+                    </StackPanel>
+
+                </Expander.Header>
+                <materialDesign:Card Height="279">
+                    <StackPanel Margin="0,0,0,0">
+                        <DataGrid Margin="0" IsReadOnly="False"
+                                         ItemsSource="{Binding PadUserRegions}" 
+                                         SelectedItem="{Binding SelectedPadRegion}"                                
+                                  AlternatingRowBackground="#D1DFE7" Height="278">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.HeaderTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="选择"  FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                <CheckBox  IsChecked="{Binding DataContext.IsPadRegionCheckAll,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,ElementName=userControl}" 
+                                                                Command="{Binding DataContext.IsPadRegionCheckAllCommand,  ElementName=userControl}" IsThreeState="True"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.HeaderTemplate>
+                                    <DataGridTemplateColumn.CellTemplate >
+                                        <DataTemplate >
+                                            <CheckBox IsChecked="{Binding IsSelected,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                                           Command="{Binding DataContext.IsPadRegionCheckCommand,ElementName=userControl}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <materialDesign:MaterialDataGridTextColumn Header="序号" 
+                                                           Binding="{Binding Index}" 
+                                                           IsReadOnly="True"/>
+
+                                <!--<DataGridTemplateColumn Header="序号" >
+                                    <DataGridTemplateColumn.CellTemplate >
+                                        <DataTemplate >
+                                            <TextBox Text="{Binding Index,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>-->
+
+                                <DataGridTemplateColumn  Header="显示">
+                                    <DataGridTemplateColumn.CellTemplate >
+                                        <DataTemplate >
+                                            <CheckBox IsChecked="{Binding IsEnable,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"     
+                                          Command="{Binding DataContext.PadRegionEnableChangedCommand, ElementName=userControl}"
+                                          CommandParameter="{Binding}"
+                                          Style="{StaticResource MaterialDesignCheckBox}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <materialDesign:MaterialDataGridTextColumn Header="形状" 
+                                                           Binding="{Binding RegionType}" 
+                                                           IsReadOnly="True"/>
+                                <materialDesign:MaterialDataGridTextColumn Header="参数" 
+                                                           Binding="{Binding}"                                                                                    
+                                                           IsReadOnly="True"/>
+                                <DataGridTemplateColumn  Header="区域内焊点检测算法选择">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox 
+                                                 Style="{StaticResource MaterialDesignDataGridComboBox}"
+                                                 SelectedIndex="{Binding AlgoParameterIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                 materialDesign:ComboBoxAssist.ClassicMode="true" HorizontalContentAlignment="Center">
+                                                <ComboBoxItem Content="Threshold"/>
+                                                <ComboBoxItem Content="Measure"/>
+                                                <ComboBoxItem Content="Match"/>
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+
+                </materialDesign:Card>
+            </Expander>
+
+
+            <StackPanel Margin="0,25,0,0" Width="653">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="焊盘区域内焊点检测算法参数设置" VerticalAlignment="Center" Foreground="#FFE81545" FontSize="16" Height="25" Width="261" Background="#FFF0F3F5"/>
+                </StackPanel>
+                <TabControl x:Name="tabControl4" HorizontalAlignment="Center" DockPanel.Dock="Top" BorderBrush="#FFACACAC"                               
+                                SelectedIndex="{Binding SelectedPadRegion.AlgoParameterIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                materialDesign:ColorZoneAssist.Mode="PrimaryLight"  Background="{x:Null}" Margin="10,12,10,5" Width="633">
+                    <TabControl.Resources>
+                        <Style TargetType="TabItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="TabItem">
+                                        <Border Name="Border" BorderThickness="1,1,1,0" 
+                                                            BorderBrush="Gainsboro" 
+                                                            CornerRadius="4,4,0,0" Margin="0.5,0">
+                                            <ContentPresenter x:Name="ContentSite"
+                                                            VerticalAlignment="Center"
+                                                            HorizontalAlignment="Center"
+                                                            ContentSource="Header"                                                                          
+                                                            Margin="12,6,12,6"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFD6DDE0" />
+                                            </Trigger>
+                                            <Trigger Property="IsSelected" Value="False">
+                                                <Setter TargetName="Border" Property="Background" Value="white" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </TabControl.Resources>
+
+                    <TabItem  x:Name="TabItem14" Header="Threshold" >
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <materialDesign:Card  materialDesign:ShadowAssist.ShadowDepth="Depth2" 
+                                  UniformCornerRadius="6" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" Margin="5" Padding="32" Width="289">
+                                <UniformGrid >
+                                    <Grid >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition Height="3*"/>
+                                        </Grid.RowDefinitions>
+                                        <!--
+                                        <materialDesign:Card  UniformCornerRadius="6" Background="White" VerticalAlignment="Center" Margin="5" Padding="10,0"  >
+                                            <StackPanel Orientation="Horizontal"   VerticalAlignment="Center" HorizontalAlignment="Center" >
+                                                <TextBlock Text="每个修改" VerticalAlignment="Center" FontSize="14"/>
+                                                <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                              IsChecked="{Binding IsSetAllParas}" Margin="5,0" Height="32" />
+                                                <TextBlock Text="批量修改" FontSize="14"/>
+                                            </StackPanel>
+                                        </materialDesign:Card>
+                                        -->
+                                        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+
+                                            <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="17*"/>
+                                                    <ColumnDefinition Width="57*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2">
+                                                    <Button Content="多个区域 修改参数" 
+                                                 Command="{Binding BatchModifyVerifyParasCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                                                </StackPanel>
+                                            </Grid>
+
+                                            <!--
+                            <Grid Grid.Row="1">
+                                <StackPanel Orientation="Horizontal" IsEnabled="False">
+                                    <TextBlock Text="1" HorizontalAlignment="Center" Width="60"/>
+                                    <TextBlock Text="腐蚀" HorizontalAlignment="Center" Width="100"/>
+                                    <TextBox Text="{Binding ErosionRadius}"  HorizontalAlignment="Center" Width="100"/>
+                                </StackPanel>
+                            </Grid>
+                            -->
+                                            <Grid Grid.Row="1" Margin="0,0,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Label Content="选择检测图层"  Width="82"  HorizontalContentAlignment="Right"/>
+                                                        <ComboBox Name="comboBox_Tresh"                                    
+                                                            ItemsSource="{Binding ChannelNames}"
+                                                            DisplayMemberPath="Name"
+                                                            Margin="0,0,0,0"
+                                                            materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                            SelectedIndex="{Binding ImageIndex, Mode=TwoWay}"  Padding="4,5" Foreground="#FF555555" HorizontalAlignment="Left" Width="93">
+                                                        </ComboBox>
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </Grid>
+
+                                            <Grid Grid.Row="2" Margin="0,5,0,0">
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true" IsReadOnly="True"
+                                                        SelectedIndex="{Binding BondVerifyModelPara.IsCircleBond, Converter={StaticResource BooleanToComboBoxIndexConverterUpdate}}" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Width="80" VerticalAlignment="Center">
+                                                        <ComboBoxItem Content="椭圆焊点"/>
+                                                        <ComboBoxItem Content="圆形焊点"/>
+                                                    </ComboBox>
+                                                    <DockPanel ToolTip="椭圆的焊点半径大小"  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                        Visibility="{Binding BondVerifyModelPara.IsCircleBond ,Converter={StaticResource InverseBoolToVisConverter}}">
+                                                        <TextBox Text="{Binding BondVerifyModelPara.EllipsBondSize[0]}" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                        <TextBox Text="{Binding BondVerifyModelPara.EllipsBondSize[1]}" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </DockPanel>
+                                                    <DockPanel ToolTip="圆的焊点半径大小"  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                        Visibility="{Binding BondVerifyModelPara.IsCircleBond ,Converter={StaticResource BoolToVis}}">
+                                                        <TextBox Text="{Binding BondVerifyModelPara.BondSize}" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid Grid.Row="3" Margin="0,5,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <DockPanel Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Label Content="分割阈值" Width="75"
+                                                            HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                        <TextBox Text="{Binding BondVerifyModelPara.ThreshGray[0]}"  Width="50"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                                        <TextBox Text="{Binding BondVerifyModelPara.ThreshGray[1]}"  Width="50"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid Grid.Row="4" Margin="0,5,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label Content="闭操作尺寸" HorizontalAlignment="Center" Width="82" HorizontalContentAlignment="Right"/>
+                                                    <TextBox Text="{Binding BondVerifyModelPara.ClosingSize}"  HorizontalAlignment="Center" Width="93"/>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid Grid.Row="5" Margin="0,5,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Label Content="焊点过大比例系数" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="107"/>
+                                                        <TextBox Text="{Binding BondVerifyModelPara.BondOverSizeFactor}" Width="68" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid Grid.Row="6" Margin="0,5,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Label Content="焊点过小比例系数" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="107"/>
+                                                        <TextBox Text="{Binding BondVerifyModelPara.BondUnderSizeFactor}" Width="68" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                            <!--<Grid Grid.Row="7" Margin="0,5,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label Content="边缘点选择" HorizontalAlignment="Center" Width="70" HorizontalContentAlignment="Right"/>
+                                                    <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                            SelectedValuePath="Content"
+                                                            Text="{Binding MearsureSelect}" Width="100" HorizontalAlignment="Left">
+                                                        <ComboBoxItem Content="all"/>
+                                                        <ComboBoxItem Content="first"/>
+                                                        <ComboBoxItem Content="last"/>
+                                                    </ComboBox>
+                                                </StackPanel>
+                                            </Grid>-->
+                                        </Grid>
+                                    </Grid>
+                                </UniformGrid>
+                            </materialDesign:Card>
+                            <materialDesign:Card  UniformCornerRadius="6" Background="White" VerticalAlignment="Center" Margin="20,5,5,5" Padding="10,2" Height="298" Width="301"  >
+                                <StackPanel HorizontalAlignment="Center" Margin="0,20" >
+                                    <materialDesign:Card  UniformCornerRadius="6" Background="#FF607D8B" VerticalAlignment="Center" Margin="5" Padding="10,2" Height="35"  >
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0">
+                                            <TextBlock Text="选择区域 修改参数"
+                           Margin="10,0,0,0"
+                           VerticalAlignment="Center" Foreground="#FFFBFBFB"/>
+                                            <ComboBox Width="88"
+                                  ItemsSource="{Binding PadUserRegions}"
+                                  DisplayMemberPath="Index"
+                                  SelectedItem="{Binding SelectedPadRegion, Mode=TwoWay}"
+                                  materialDesign:ComboBoxAssist.ClassicMode="true" Foreground="White" BorderBrush="#89FFFFFF" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </materialDesign:Card>
+
+                                    <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Label Content="选择检测图层"  Width="82"  HorizontalContentAlignment="Right"/>
+                                        <ComboBox x:Name="comboBox_Tresh1"                                    
+                                                            ItemsSource="{Binding SelectedPadRegion.ChannelNames}"
+                                                            DisplayMemberPath="Name"
+                                                            Margin="0,0,0,0"
+                                                            materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                            SelectedIndex="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondThresAlgoPara.ImageIndex, Mode=TwoWay}"  Padding="4,5" Foreground="#FF555555" HorizontalAlignment="Left" Width="93"/>
+                                    </DockPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true" IsReadOnly="True"
+                                            SelectedIndex="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondThresAlgoPara.IsCircleBond, Converter={StaticResource BooleanToComboBoxIndexConverterUpdate}}" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Width="80" VerticalAlignment="Center">
+                                            <ComboBoxItem Content="椭圆焊点"/>
+                                            <ComboBoxItem Content="圆形焊点"/>
+                                        </ComboBox>
+                                        <DockPanel ToolTip="椭圆的焊点半径大小"  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                            Visibility="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondThresAlgoPara.IsCircleBond ,Converter={StaticResource InverseBoolToVisConverter}}">
+                                            <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondThresAlgoPara.EllipsBondSize[0]}" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondThresAlgoPara.EllipsBondSize[1]}" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </DockPanel>
+                                        <DockPanel ToolTip="圆的焊点半径大小"  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                Visibility="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondThresAlgoPara.IsCircleBond ,Converter={StaticResource BoolToVis}}">
+                                            <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondThresAlgoPara.BondSize}" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </DockPanel>
+                                    </StackPanel>
+                                    <DockPanel Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Label Content="分割阈值" Width="75"
+                                                            HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                        <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondThresAlgoPara.ThreshGray[0]}"  Width="50"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondThresAlgoPara.ThreshGray[1]}"  Width="50"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                    </DockPanel>
+                                    <DockPanel ToolTip="闭操作尺寸"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                        <Label Content="闭操作尺寸" Width="70" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                        <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondThresAlgoPara.ClosingSize}"  Width="100"  HorizontalAlignment="Left"/>
+                                    </DockPanel>
+                                    <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Label Content="焊点过大比例系数" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="107"/>
+                                        <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondThresAlgoPara.BondOverSizeFactor}" Width="68" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DockPanel>
+                                    <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Label Content="焊点过小比例系数" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="107"/>
+                                        <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondThresAlgoPara.BondUnderSizeFactor}" Width="68" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DockPanel>
+                                </StackPanel>
+                            </materialDesign:Card>
+                        </StackPanel>
+
+                        <!--<StackPanel Margin="268,20,20,10" >
+
+                            <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Label Content="选择检测图层"  Width="100"  HorizontalContentAlignment="Right"/>
+                                <ComboBox Name="comboBox_Tresh"                                    
+                                                    ItemsSource="{Binding SelectedModelRegion.ChannelNames}"
+                                                    DisplayMemberPath="Name"
+                                                    Margin="0,0,0,0"
+                                                    materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                    SelectedIndex="{Binding SelectedModelRegion.WireRegionWithPara.WireThresAlgoPara.ImageIndex, Mode=TwoWay}"  Padding="4,5" Foreground="#FF555555" HorizontalAlignment="Left" Width="100">
+                                </ComboBox>
+                            </DockPanel>
+                            <DockPanel Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Label Content="分割阈值" Width="100"
+                                                HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                <TextBox Text="{Binding SelectedModelRegion.WireRegionWithPara.WireThresAlgoPara.ThreshGray[0]}"  Width="50"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                <TextBox Text="{Binding SelectedModelRegion.WireRegionWithPara.WireThresAlgoPara.ThreshGray[1]}"  Width="50"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                            </DockPanel>
+                            <DockPanel ToolTip="闭运算大小"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                <Label Content="闭操作尺寸" Width="100" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                <TextBox Text="{Binding SelectedModelRegion.WireRegionWithPara.WireThresAlgoPara.ClosingSize}"  Width="100"  HorizontalAlignment="Left"/>
+                            </DockPanel>
+                            <DockPanel ToolTip=" "  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                <Label Content="测量宽" Width="100" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                <TextBox Text="{Binding SelectedModelRegion.WireRegionWithPara.WireThresAlgoPara.WireWidth[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                <TextBox Text="{Binding SelectedModelRegion.WireRegionWithPara.WireThresAlgoPara.WireWidth[1]}"  Width="50"  HorizontalAlignment="Left"/>
+                            </DockPanel>
+                            <DockPanel ToolTip=" "  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                <Label Content="测量长" Width="100" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                <TextBox Text="{Binding SelectedModelRegion.WireRegionWithPara.WireThresAlgoPara.WireLength[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                <TextBox Text="{Binding SelectedModelRegion.WireRegionWithPara.WireThresAlgoPara.WireLength[1]}"  Width="50"  HorizontalAlignment="Left"/>
+                            </DockPanel>
+                            <DockPanel ToolTip="检测面积"  Margin="0,5" HorizontalAlignment="Center">
+                                <Label Content="测量面积" Width="100" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                <TextBox Text="{Binding SelectedModelRegion.WireRegionWithPara.WireThresAlgoPara.WireArea[0]}"  Width="50"  HorizontalAlignment="Left"/>
+                                <TextBox Text="{Binding SelectedModelRegion.WireRegionWithPara.WireThresAlgoPara.WireArea[1]}"  Width="50"  HorizontalAlignment="Left"/>
+                            </DockPanel>
+                        </StackPanel>-->
+                    </TabItem>
+                    <TabItem  x:Name="TabItem4" Header="Mearsure" Background="{x:Null}" RenderTransformOrigin="0.938,0.607" Margin="72,0,-72,0"    >
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <materialDesign:Card  materialDesign:ShadowAssist.ShadowDepth="Depth2" 
+                                  UniformCornerRadius="6" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" Margin="5" Padding="32" Width="291">
+                                <UniformGrid >
+                                    <Grid >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition Height="3*"/>
+                                        </Grid.RowDefinitions>
+                                        <!--
+                                        <materialDesign:Card  UniformCornerRadius="6" Background="White" VerticalAlignment="Center" Margin="5" Padding="10,0"  >
+                                            <StackPanel Orientation="Horizontal"   VerticalAlignment="Center" HorizontalAlignment="Center" >
+                                                <TextBlock Text="每个修改" VerticalAlignment="Center" FontSize="14"/>
+                                                <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                              IsChecked="{Binding IsSetAllParas}" Margin="5,0" Height="32" />
+                                                <TextBlock Text="批量修改" FontSize="14"/>
+                                            </StackPanel>
+                                        </materialDesign:Card>
+                                        -->
+                                        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+
+                                            <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="17*"/>
+                                                    <ColumnDefinition Width="57*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2">
+                                                    <Button Content="多个区域 修改参数" 
+                                                 Command="{Binding BatchModifyVerifyParasCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                                                </StackPanel>
+                                            </Grid>
+
+                                            <!--
+                            <Grid Grid.Row="1">
+                                <StackPanel Orientation="Horizontal" IsEnabled="False">
+                                    <TextBlock Text="1" HorizontalAlignment="Center" Width="60"/>
+                                    <TextBlock Text="腐蚀" HorizontalAlignment="Center" Width="100"/>
+                                    <TextBox Text="{Binding ErosionRadius}"  HorizontalAlignment="Center" Width="100"/>
+                                </StackPanel>
+                            </Grid>
+                            -->
+                                            <Grid Grid.Row="1" Margin="0,0,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Label Content="选择检测图层"  Width="82"  HorizontalContentAlignment="Right"/>
+                                                        <ComboBox Name="comboBox_Measure"                                    
+                                                            ItemsSource="{Binding ChannelNames}"
+                                                            DisplayMemberPath="Name"
+                                                            Margin="0,0,0,0"
+                                                            materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                            SelectedIndex="{Binding ImageIndex, Mode=TwoWay}"  Padding="4,5" Foreground="#FF555555" HorizontalAlignment="Left" Width="93">
+                                                        </ComboBox>
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </Grid>
+
+                                            <!--<Grid Grid.Row="2" Margin="0,5,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label Content="焊点区域类别" HorizontalAlignment="Center"/>
+                                                    <TextBox Text="{Binding MeasureContrast}"  HorizontalAlignment="Center" Width="93"/>
+                                                </StackPanel>
+                                            </Grid>-->
+                                            <!--<Grid Grid.Row="3" Margin="0,5,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <DockPanel Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Label Content="分割阈值" Width="75"
+                                                            HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                        <TextBox Text="{Binding SelectedModelRegion.WireRegionWithPara.WireThresAlgoPara.ThreshGray[0]}"  Width="50"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                                        <TextBox Text="{Binding SelectedModelRegion.WireRegionWithPara.WireThresAlgoPara.ThreshGray[1]}"  Width="50"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </Grid>-->
+                                            <Grid Grid.Row="2" Margin="0,5,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Label Content="焊点过大比例系数" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="107"/>
+                                                        <TextBox Text="{Binding BondVerifyModelPara.BondOverSizeFactor}" Width="68" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid Grid.Row="3" Margin="0,5,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Label Content="焊点过小比例系数" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="107"/>
+                                                        <TextBox Text="{Binding BondVerifyModelPara.BondUnderSizeFactor}" Width="68" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                            <!--<Grid Grid.Row="4" Margin="0,5,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <DockPanel ToolTip="边缘点距离"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                        <Label Content="边缘点距离" Width="70" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                        <TextBox Text="{Binding BondVerifyModelPara.DistanceThreshold}"  Width="100"  HorizontalAlignment="Left"/>
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </Grid>-->
+                                            <Grid Grid.Row="4" Margin="0,5,0,0">
+                                                <materialDesign:Card  Background="White" Margin="0,5,0,0" Foreground="#FF555555" HorizontalAlignment="Center" Width="240">
+                                                    <Expander IsExpanded="{Binding BondVerifyModelPara.PreJudgeEnable}" Background="White" >
+                                                        <Expander.Header>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
+                                                                <Label Content="是否预判断"/>
+                                                                <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true" IsReadOnly="True"
+                                                                    SelectedIndex="{Binding BondVerifyModelPara.PreJudgeEnable}" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Width="60">
+                                                                    <ComboBoxItem Content="否"/>
+                                                                    <ComboBoxItem Content="是"/>
+                                                                </ComboBox>
+                                                            </StackPanel>
+                                                        </Expander.Header>
+                                                        <StackPanel Margin="0,0,0,20">
+
+                                                            <DockPanel Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                                <StackPanel>
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <Label Content="焊点分割阈值" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="88"/>
+                                                                        <TextBox Text="{Binding BondVerifyModelPara.SegThreshGray[0]}"  Width="100"  HorizontalAlignment="Left"/>
+                                                                    </StackPanel>
+                                                                    <TextBox Text="{Binding BondVerifyModelPara.SegThreshGray[1]}"  Width="100"  HorizontalAlignment="Left" Margin="88,5,0,0"/>
+                                                                </StackPanel>
+                                                            </DockPanel>
+
+                                                            <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                                <Label Content="分割区域面积占比系数" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="134"/>
+                                                                <TextBox Text="{Binding BondVerifyModelPara.SegRegAreaFactor}" Width="70" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                            </DockPanel>
+
+                                                        </StackPanel>
+
+
+                                                    </Expander>
+                                                </materialDesign:Card>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </UniformGrid>
+                            </materialDesign:Card>
+                            <materialDesign:Card  UniformCornerRadius="6" Background="White" VerticalAlignment="Center" Margin="20,5,5,5" Padding="10,2" Height="354" Width="299"  >
+                                <StackPanel HorizontalAlignment="Center" Margin="0,20" >
+                                    <materialDesign:Card  UniformCornerRadius="6" Background="#FF607D8B" VerticalAlignment="Center" Margin="0" Padding="10,2" Height="35"  >
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0">
+                                            <TextBlock Text="选择区域 修改参数"
+                                                Margin="10,0,0,0"
+                                                VerticalAlignment="Center" Foreground="#FFFBFBFB"/>
+                                            <ComboBox Width="88"
+                                                ItemsSource="{Binding PadUserRegions}"
+                                                DisplayMemberPath="Index"
+                                                SelectedItem="{Binding SelectedPadRegion, Mode=TwoWay}"
+                                                materialDesign:ComboBoxAssist.ClassicMode="true" Foreground="White" BorderBrush="#89FFFFFF" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </materialDesign:Card>
+
+                                    <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Label Content="选择检测图层"  Width="82"  HorizontalContentAlignment="Right"/>
+                                        <ComboBox Name="comboBox_Measure1"                                    
+                                                            ItemsSource="{Binding SelectedPadRegion.ChannelNames}"
+                                                            DisplayMemberPath="Name"
+                                                            Margin="0,0,0,0"
+                                                            materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                            SelectedIndex="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMeasureAlgoPara.ImageIndex, Mode=TwoWay}"  Padding="4,5" Foreground="#FF555555" HorizontalAlignment="Left" Width="93">
+                                        </ComboBox>
+                                    </DockPanel>
+                                    <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Label Content="焊点过大比例系数" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="107"/>
+                                        <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMeasureAlgoPara.BondOverSizeFactor}" Width="68" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DockPanel>
+                                    <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Label Content="焊点过小比例系数" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="107"/>
+                                        <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMeasureAlgoPara.BondUnderSizeFactor}" Width="68" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DockPanel>
+                                    <materialDesign:Card  Background="White" Margin="0,5,0,0" Foreground="#FF555555" HorizontalAlignment="Center" Width="240">
+                                        <Expander IsExpanded="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMeasureAlgoPara.PreJudgeEnable}" Background="White" >
+                                            <Expander.Header>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
+                                                    <Label Content="是否预判断"/>
+                                                    <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true" IsReadOnly="True"
+                                                                    SelectedIndex="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMeasureAlgoPara.PreJudgeEnable}" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Width="60">
+                                                        <ComboBoxItem Content="否"/>
+                                                        <ComboBoxItem Content="是"/>
+                                                    </ComboBox>
+                                                </StackPanel>
+                                            </Expander.Header>
+                                            <StackPanel Margin="0,0,0,20">
+
+                                                <DockPanel Margin="0,5,0,0" HorizontalAlignment="Center">
+                                                    <StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Label Content="焊点分割阈值" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="88"/>
+                                                            <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMeasureAlgoPara.SegThreshGray[0]}"  Width="100"  HorizontalAlignment="Left"/>
+                                                        </StackPanel>
+                                                        <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMeasureAlgoPara.SegThreshGray[1]}"  Width="100"  HorizontalAlignment="Left" Margin="88,5,0,0"/>
+                                                    </StackPanel>
+                                                </DockPanel>
+
+                                                <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <Label Content="分割区域面积占比系数" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="134"/>
+                                                    <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMeasureAlgoPara.SegRegAreaFactor}" Width="70" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </DockPanel>
+                                            </StackPanel>
+                                        </Expander>
+                                    </materialDesign:Card>
+                                </StackPanel>
+                            </materialDesign:Card>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Match" Background="{x:Null}" Margin="0,-1,-97,1" RenderTransformOrigin="0.619,0.429" HorizontalAlignment="Right" Width="63" >
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <materialDesign:Card  materialDesign:ShadowAssist.ShadowDepth="Depth2" 
+                                  UniformCornerRadius="6" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" Margin="5" Padding="32" Width="294">
+                                <UniformGrid >
+                                    <Grid >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition Height="3*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+
+                                            <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="17*"/>
+                                                    <ColumnDefinition Width="57*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2">
+                                                    <Button Content="多个区域 修改参数" 
+                                                 Command="{Binding BatchModifyVerifyParasCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                                                </StackPanel>
+                                            </Grid>
+
+                                            <Grid Grid.Row="1" Margin="0,0,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Label Content="选择检测图层"  Width="82"  HorizontalContentAlignment="Right"/>
+                                                        <ComboBox Name="comboBox_Match"                                    
+                                                            ItemsSource="{Binding ChannelNames}"
+                                                            DisplayMemberPath="Name"
+                                                            Margin="0,0,0,0"
+                                                            materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                            SelectedIndex="{Binding ImageIndex, Mode=TwoWay}"  Padding="4,5" Foreground="#FF555555" HorizontalAlignment="Left" Width="93">
+                                                        </ComboBox>
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </Grid>
+
+                                            <Grid Grid.Row="2" Margin="0,5,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <DockPanel ToolTip="最小匹配分数" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Label Content="最小匹配分数" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                        <TextBox Text="{Binding BondVerifyModelPara.MinMatchScore}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid Grid.Row="3" Margin="0,5,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <DockPanel ToolTip="匹配角度范围"  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Label Content="匹配角度范围" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="82"/>
+                                                        <TextBox Text="{Binding BondVerifyModelPara.AngleExt ,StringFormat={}{0:F1}, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RadConverter}}" 
+                                                        Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid Grid.Row="4" Margin="0,5,0,0">
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true" IsReadOnly="True"
+                                                        SelectedIndex="{Binding BondVerifyModelPara.IsCircleBond, Converter={StaticResource BooleanToComboBoxIndexConverterUpdate}}" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Width="80" VerticalAlignment="Center">
+                                                        <ComboBoxItem Content="椭圆焊点"/>
+                                                        <ComboBoxItem Content="圆形焊点"/>
+                                                    </ComboBox>
+                                                    <DockPanel ToolTip="椭圆的焊点半径大小"  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                        Visibility="{Binding BondVerifyModelPara.IsCircleBond ,Converter={StaticResource InverseBoolToVisConverter}}">
+                                                        <TextBox Text="{Binding BondVerifyModelPara.EllipsBondSize[0]}" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                        <TextBox Text="{Binding BondVerifyModelPara.EllipsBondSize[1]}" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </DockPanel>
+                                                    <DockPanel ToolTip="圆的焊点半径大小"  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                        Visibility="{Binding BondVerifyModelPara.IsCircleBond ,Converter={StaticResource BoolToVis}}">
+                                                        <TextBox Text="{Binding BondVerifyModelPara.BondSize}" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid Grid.Row="5" Margin="0,5,0,0">
+                                                <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                    <Label Content="焊点匹配优化" Width="90" HorizontalContentAlignment="Right"/>
+                                                    <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"                         
+                                                        SelectedIndex="{Binding BondVerifyModelPara.IsBondRegRefine, Converter={StaticResource BooleanToComboBoxIndexConverterUpdate}}" 
+                                                        HorizontalAlignment="Left" Width="60" HorizontalContentAlignment="Center">
+                                                        <ComboBoxItem Content="否"/>
+                                                        <ComboBoxItem Content="是"/>
+                                                    </ComboBox>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid Grid.Row="6" Margin="0,5,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <DockPanel ToolTip="增加匹配数目" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Label Content="   增加匹配数目" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                        <TextBox Text="{Binding BondVerifyModelPara.AddBallNum}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid Grid.Row="7" Margin="0,5,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <DockPanel ToolTip="结果最大重合度" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Label Content="结果最大重合度" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                        <TextBox Text="{Binding BondVerifyModelPara.MaxOverlap}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid Grid.Row="8" Margin="0,5,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <DockPanel ToolTip="最小相似性分数" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Label Content="最小相似性分数" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                                        <TextBox Text="{Binding BondVerifyModelPara.MinHistScore}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </UniformGrid>
+                            </materialDesign:Card>
+                            <materialDesign:Card  UniformCornerRadius="6" Background="White" VerticalAlignment="Center" Margin="20,5,5,5" Padding="10,2" Height="362" Width="298"  >
+                                <StackPanel HorizontalAlignment="Center" Margin="0,20" >
+                                    <materialDesign:Card  UniformCornerRadius="6" Background="#FF607D8B" VerticalAlignment="Center" Margin="5" Padding="10,2" Height="35"  >
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0">
+                                            <TextBlock Text="选择区域 修改参数"
+                                                Margin="10,0,0,0"
+                                                VerticalAlignment="Center" Foreground="#FFFBFBFB"/>
+                                            <ComboBox Width="88"
+                                                ItemsSource="{Binding PadUserRegions}"
+                                                DisplayMemberPath="Index"
+                                                SelectedItem="{Binding SelectedPadRegion, Mode=TwoWay}"
+                                                materialDesign:ComboBoxAssist.ClassicMode="true" Foreground="White" BorderBrush="#89FFFFFF" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </materialDesign:Card>
+
+                                    <DockPanel  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Label Content="选择检测图层"  Width="82"  HorizontalContentAlignment="Right"/>
+                                        <ComboBox Name="comboBox_Match1"                                    
+                                                            ItemsSource="{Binding SelectedPadRegion.ChannelNames}"
+                                                            DisplayMemberPath="Name"
+                                                            Margin="0,0,0,0"
+                                                            materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                            SelectedIndex="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMatchAlgoPara.ImageIndex, Mode=TwoWay}"  Padding="4,5" Foreground="#FF555555" HorizontalAlignment="Left" Width="93">
+                                        </ComboBox>
+                                    </DockPanel>
+                                    <DockPanel ToolTip="最小匹配分数" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Label Content="最小匹配分数" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                        <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMatchAlgoPara.MinMatchScore}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DockPanel>
+                                    <DockPanel ToolTip="匹配角度范围"  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Label Content="匹配角度范围" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="82"/>
+                                        <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMatchAlgoPara.AngleExt ,StringFormat={}{0:F1}, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RadConverter}}" 
+                                         Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DockPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true" IsReadOnly="True"
+                                            SelectedIndex="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMatchAlgoPara.IsCircleBond, Converter={StaticResource BooleanToComboBoxIndexConverterUpdate}}" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Width="80" VerticalAlignment="Center">
+                                            <ComboBoxItem Content="椭圆焊点"/>
+                                            <ComboBoxItem Content="圆形焊点"/>
+                                        </ComboBox>
+                                        <DockPanel ToolTip="椭圆的焊点半径大小"  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                            Visibility="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMatchAlgoPara.IsCircleBond ,Converter={StaticResource InverseBoolToVisConverter}}">
+                                            <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMatchAlgoPara.EllipsBondSize[0]}" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMatchAlgoPara.EllipsBondSize[1]}" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </DockPanel>
+                                        <DockPanel ToolTip="圆的焊点半径大小"  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                Visibility="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMatchAlgoPara.IsCircleBond ,Converter={StaticResource BoolToVis}}">
+                                            <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMatchAlgoPara.BondSize}" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </DockPanel>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <Label Content="焊点匹配优化" Width="90" HorizontalContentAlignment="Right"/>
+                                        <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"                         
+                                           SelectedIndex="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMatchAlgoPara.IsBondRegRefine, Converter={StaticResource BooleanToComboBoxIndexConverterUpdate}}" 
+                                          HorizontalAlignment="Left" Width="60" HorizontalContentAlignment="Center">
+                                            <ComboBoxItem Content="否"/>
+                                            <ComboBoxItem Content="是"/>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <DockPanel ToolTip="增加匹配数目" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Label Content="   增加匹配数目" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                        <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMatchAlgoPara.AddBallNum}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DockPanel>
+                                    <DockPanel ToolTip="结果最大重合度" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Label Content="结果最大重合度" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                        <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMatchAlgoPara.MaxOverlap}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DockPanel>
+                                    <DockPanel ToolTip="最小相似性分数" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Label Content="最小相似性分数" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                        <TextBox Text="{Binding SelectedPadRegion.BondVerifyRegionWithPara.BondMatchAlgoPara.MinHistScore}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DockPanel>
+                                </StackPanel>
+                            </materialDesign:Card>
+                        </StackPanel>
+
+                    </TabItem>
+                </TabControl>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,40,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="检测验证图像路径  " VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" FontSize="12"/>
+                <TextBlock Text="{Binding PImageIndexPath}"
+                            Margin="10,0,0,0"
+                            TextWrapping="Wrap"
+                            VerticalAlignment="Center" FontSize="12" MaxWidth="600"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0,20" VerticalAlignment="Center">
+                <Button Content="检测验证图集"
+                        Width="130"
+                        Command="{Binding ImagesSetVerifyCommand}" Margin="5,0,0,0"/>
+                <Button Background="{x:Null}" BorderBrush="{x:Null}" Padding="0"
+                                Command="{Binding PreviousCommand}" Foreground="{x:Null}" Margin="30,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button.Content>
+                        <Viewbox>
+                            <Canvas Width="24" Height="24">
+                                <Path Fill="#FF7A7A7A" Data="M6,18V6H8V18H6M9.5,12L18,6V18L9.5,12Z" />
+                            </Canvas>
+                        </Viewbox>
+                    </Button.Content>
+                </Button>
+                <Button Content="检测验证"
+                        Width="130"
+                        Command="{Binding VerifyCommand}" Margin="0"/>
+                <Button Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Padding="0"
+                                Command="{Binding NextCommand}">
+                    <Button.Content>
+                        <Viewbox>
+                            <Canvas Width="24" Height="24">
+                                <Path Fill="#FF7A7A7A" Data="M16,18H18V6H16M6,18L14.5,12L6,6V18Z" />
+                            </Canvas>
+                        </Viewbox>
+                    </Button.Content>
+                </Button>
+                <Button Content="保存参数"
+                        Width="130"
+                        Margin="30,0,5,0"
+                        Command="{Binding SaveCommand}"/>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Top" Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Width="32"
+                        ToolTip="用现有图集！"
+                        Command="{Binding RefreshImagesSet}"
+                            Height="32"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Margin="10,0,20,0">
+                    <materialDesign:PackIcon Kind="Refresh" />
+                </Button>
+                <TextBlock Text="{Binding BondMeasureParameter.VerifyImagesDirectory}" FontSize="12" MaxWidth="600" HorizontalAlignment="Left" Margin="5,0,0,0" />
+                <TextBlock Text="{Binding BondMeasureParameter.CurrentVerifySet,StringFormat=图集数量【{0:F0}】}"  FontSize="12" MaxWidth="600" HorizontalAlignment="Left" Margin="10,0,0,0" />
+            </StackPanel>
+        </StackPanel>
+    </DockPanel>
+</UserControl>

@@ -1,0 +1,56 @@
+<root>
+  <Tag-Names>&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;JFXmlSortedDictionary&gt;
+  &lt;Item&gt;
+    &lt;Type&gt;
+      &lt;string&gt;System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&lt;/string&gt;
+    &lt;/Type&gt;
+    &lt;Key&gt;
+      &lt;string&gt;Dll文件管理&lt;/string&gt;
+    &lt;/Key&gt;
+    &lt;Value&gt;
+      &lt;ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+        &lt;string&gt;拓展dll文件&lt;/string&gt;
+      &lt;/ArrayOfString&gt;
+    &lt;/Value&gt;
+  &lt;/Item&gt;
+  &lt;Item&gt;
+    &lt;Type&gt;
+      &lt;string&gt;System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&lt;/string&gt;
+    &lt;/Type&gt;
+    &lt;Key&gt;
+      &lt;string&gt;设备管理&lt;/string&gt;
+    &lt;/Key&gt;
+    &lt;Value&gt;
+      &lt;ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+        &lt;string&gt;子设备初始化参数&lt;/string&gt;
+      &lt;/ArrayOfString&gt;
+    &lt;/Value&gt;
+  &lt;/Item&gt;
+&lt;/JFXmlSortedDictionary&gt;</Tag-Names>
+  <Items>&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;JFXmlDictionary&gt;
+  &lt;Item&gt;
+    &lt;Type&gt;
+      &lt;string&gt;System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&lt;/string&gt;
+    &lt;/Type&gt;
+    &lt;Key&gt;
+      &lt;string&gt;拓展dll文件&lt;/string&gt;
+    &lt;/Key&gt;
+    &lt;Value&gt;
+      &lt;ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" /&gt;
+    &lt;/Value&gt;
+  &lt;/Item&gt;
+  &lt;Item&gt;
+    &lt;Type&gt;
+      &lt;string&gt;JFToolKits.JFXmlSortedDictionary`2[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Collections.Generic.List`1[[System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], JFToolKits, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null&lt;/string&gt;
+    &lt;/Type&gt;
+    &lt;Key&gt;
+      &lt;string&gt;子设备初始化参数&lt;/string&gt;
+    &lt;/Key&gt;
+    &lt;Value&gt;
+      &lt;JFXmlSortedDictionary /&gt;
+    &lt;/Value&gt;
+  &lt;/Item&gt;
+&lt;/JFXmlDictionary&gt;</Items>
+</root>

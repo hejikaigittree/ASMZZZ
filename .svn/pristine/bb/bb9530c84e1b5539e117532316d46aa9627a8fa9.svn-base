@@ -1,0 +1,1572 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using JFInterfaceDef;
+using JFToolKits;
+namespace JFHub
+{
+    /// <summary>
+    /// 代理:工站工作状态发生改变
+    /// </summary>
+    /// <param name="station"></param>
+    /// <param name="currWorkStatus"></param>
+    public delegate void DelegateStationWorkStatusChanged(IJFStation station, JFWorkStatus currWorkStatus,string info);
+
+    /// <summary>
+    ///  代理:业务状态发生改变
+    /// </summary>
+    /// <param name="station"></param>
+    /// <param name="currCustomStatus"></param>
+    public delegate void DelegateStationCustomStatusChanged(IJFStation station, int currCustomStatus,string info,object param);
+
+    /// <summary>
+    /// 产品加工完成消息
+    /// </summary>
+    /// <param name="station">消息发送者</param>
+    /// <param name="PassCount">本次生产完成的成品数量</param>
+    /// <param name="NGCount">本次生产的次品数量</param>
+    /// <param name="NGInfo">次品信息</param>
+    public delegate void DelegateStationProductFinished(IJFStation station, int passCount,string[] passIDs, int NGCount, string[] ngIDs,string[] NGInfo);
+
+    /// <summary>
+    /// 代理：向外部程序发送定制消息
+    /// </summary>
+    /// <param name="station"></param>
+    /// <param name="msg"></param>
+    public delegate void DelegateStationCustomizeMsg(IJFStation station, string msgCategory,object msgParam);
+
+
+    public abstract class JFStationBase : JFCmdWorkBase, IJFStation
+    {
+        public JFStationBase()
+        {
+            //Name = "";
+            _cfgFilePath = null;
+            IsInitOK = false;
+            _ui = new UcStationBaseRealtimeUI();
+            _ui.SetStation(this);
+
+        }
+        public DelegateStationWorkStatusChanged EventWorkStatusChanged;
+        public DelegateStationCustomStatusChanged EventCustomStatusChanged;
+        public DelegateStationProductFinished EventProductFinished;
+        public DelegateStationCustomizeMsg EventCustomizeMsg;
+
+        int _standardAxisCount = 0; //标准轴数量
+        public int StandardAxisCount { get { return _standardAxisCount; } }
+
+        string _initErrorInfo = "No-Ops"; //初始化动作失败信息
+
+       
+
+        string _cfgFilePath; //工站配置文件名称
+        JFXCfg _cfg = null;
+        /// <summary>
+        /// 用于保存工站私有配置数据
+        /// </summary>
+        public JFXCfg Config { get { return _cfg; } }
+
+        List<JFMethodFlow> _lstMethodFlowsInCfg = new List<JFMethodFlow>(); //可增删改的工作流
+
+        public override string Name //JFCmdWorkBase.Name
+        {
+            get { return JFHubCenter.Instance.InitorManager.GetIDByInitor(this); }
+            set { return; } //暂不提供名称修改功能
+        }
+
+        string IJFWork.Name //IJFStation.Name
+        {
+            get { return Name; }
+            set { Name = value; }
+        }
+
+        JFDataPool _workFlowDataPool = new JFDataPool();
+        /// <summary>
+        /// 工站内部工作流共用的数据池
+        /// </summary>
+        public JFDataPool DataPool{ get { return _workFlowDataPool; } }
+
+        #region IJFInitializable's API
+
+
+
+        string[] _stationBaseInitParams = new string[] { //"工站名称", //工站名称 
+                                                         "配置文件",//配置文件路径
+                                                         "标准轴数"//标准轴为 X，Y，Z，R， 可选值0，1，2，3，4
+                                                        };
+        /// <summary>获取初始化需要的所有参数的名称 </summary>
+        public virtual string[] InitParamNames { get { return _stationBaseInitParams; } }
+
+        /// <summary>
+        /// 检查初始化参数名称是否合法
+        /// 如果InitParamNames未包含initParamName 会抛出异常
+        /// </summary>
+        /// <param name="initParamName"></param>
+        protected void CheckInitParamName(string initParamName,string function = null)
+        {
+            if (string.IsNullOrEmpty(initParamName))
+                throw new ArgumentNullException("initParamName is null or empty" + function == null ? "" : (" in StationName=" + Name + " 's function()"));
+            if(!InitParamNames.Contains(initParamName))
+                throw new ArgumentNullException("initParamName is not contained by ParamName's List, " + function == null ? "" : ("StationName=" + Name + " 's function()"));
+        }
+        /// <summary>
+        /// 获取指定名称的初始化参数的信息
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public virtual JFParamDescribe GetInitParamDescribe(string name)
+        {
+            CheckInitParamName(name, "GetInitParamDescribe");
+            //if (name == _stationBaseInitParams[0])
+            //    return JFParamDescribe.Create(_stationBaseInitParams[0], typeof(string), JFValueLimit.NonLimit,null);
+            /*else */if (name == _stationBaseInitParams[0])
+                return JFParamDescribe.Create(_stationBaseInitParams[0], typeof(string), JFValueLimit.FilePath, null);
+            else if(name == _stationBaseInitParams[1]) //工站中所包含的标准轴数（X，Y，Z，R）
+                return JFParamDescribe.Create(_stationBaseInitParams[1], typeof(int), JFValueLimit.Options, new object[] { 0,1,2,3,4});
+            throw new Exception();//不可能运行到这一步
+        }
+
+        /// <summary>
+        /// 获取指定名称的初始化参数的当前值
+        /// </summary>
+        /// <param name="name">参数名称，如果参数名称不在InitParamNames中，将会抛出一个ArgumentException异常</param>
+        /// <returns>参数值</returns>
+        public virtual object GetInitParamValue(string name)
+        {
+            CheckInitParamName(name, "GetInitParamValue");
+            //if (name == _stationBaseInitParams[0])
+            //    return Name;
+            /*else */if (name == _stationBaseInitParams[0])
+                return _cfgFilePath;
+            else if (name == _stationBaseInitParams[1])
+                return _standardAxisCount;
+            throw new Exception();//不可能运行到这一步
+        }
+
+        /// <summary>
+        ///设置取指定名称的初始化参数的当前值
+        /// </summary>
+        /// <param name="name">参数名称，如果参数名称不在InitParamNames中，将会抛出一个ArgumentException异常</param>
+        /// <param name="value">参数值</param>
+        /// <returns>操作成功返回True，失败返回false，可通过GetInitErrorInfo()获取错误信息</returns>
+        public virtual bool SetInitParamValue(string name, object value)
+        {
+            CheckInitParamName(name, "SetInitParamValue");
+            //if(name == _stationBaseInitParams[0])
+            //{
+            //    if(null == value)
+            //    {
+            //        _initErrorInfo = "SetInitParamValue(name = " + "\"" + name + "\",value) falied by: value = null";
+            //        return false;
+            //    }
+            //    if (!typeof(string).IsAssignableFrom(value.GetType()))
+            //    {
+            //        _initErrorInfo = "SetInitParamValue(name = " + "\"" + name + "\",value) falied by: value's type = " + value.GetType().Name + " is not Assignable to string";
+            //        return false;
+            //    }
+                
+            //    Name = value as string;
+            //    _initErrorInfo = "Success";
+            //    return true;
+            //}
+            /*else */if(name == _stationBaseInitParams[0])
+            {
+                if(null == value)
+                {
+                    _initErrorInfo = "SetInitParamValue(name = " + "\"" + name + "\",value) falied by: value = null";
+                    return false;
+                }
+                if (!typeof(string).IsAssignableFrom(value.GetType()))
+                {
+                    _initErrorInfo = "SetInitParamValue(name = " + "\"" + name + "\",value) falied by: value's type = " + value.GetType().Name + " is not Assignable to string";
+                    return false;
+                }
+                _cfgFilePath = value as string;
+                _initErrorInfo = "Success";
+                return true;
+            }
+            else if (name == _stationBaseInitParams[1])
+            {
+                if (null == value)
+                {
+                    _initErrorInfo = "SetInitParamValue(name = " + "\"" + name + "\",value) falied by: value = null";
+                    return false;
+                }
+
+                int nValue = 0;
+                if (typeof(int) == value.GetType())
+                    nValue = (int)value;
+
+                else if (JFTypeExt.IsExplicitFrom(typeof(int), value.GetType()))
+                    nValue = (int)JFConvertExt.ChangeType(value, typeof(int));
+                else
+                {
+                    _initErrorInfo = "SetInitParamValue(name = " + "\"" + name + "\",value) falied by: value's type = " + value.GetType().Name + " can not Changeto int";
+                    return false;
+                }
+
+                if (nValue < 0 || nValue > 4)
+                {
+                    _initErrorInfo = "SetInitParamValue(name = " + "\"" + name + "\",value) falied by: value = " + nValue + " is outof range 0~4";
+                    return false;
+                }
+                _standardAxisCount = nValue;
+                return true;
+            }
+            throw new Exception();
+        }
+
+        
+        /// <summary>
+        /// 对象初始化
+        /// </summary>
+        /// <returns>操作成功返回True，失败返回false，可通过GetInitErrorInfo()获取错误信息</returns>
+        public virtual bool Initialize()
+        {
+            //if(string.IsNullOrEmpty(Name))
+            //{
+            //    _initErrorInfo = "Initialize Failed by: Station's Name Is Null Or Empty";
+            //    IsInitOK = false;
+            //    return false;
+            //}
+
+            if (string.IsNullOrEmpty(_cfgFilePath))
+            {
+                _initErrorInfo = "Initialize Failed by: Station's CfgFilePath Is Null Or Empty";
+                IsInitOK = false;
+                return false;
+            }
+
+            try
+            {
+                _cfg = new JFXCfg();
+                _cfg.Load(_cfgFilePath,true);
+                LoadCfg(); //加载工站配置
+            }
+            catch(Exception ex)
+            {
+                _cfg = null;
+                _initErrorInfo = "Load Station's cfg failed!path = " + _cfgFilePath + ",Error:" + ex.Message;
+                IsInitOK = false;
+                return false;
+            }
+            _initErrorInfo = "Success";
+            IsInitOK = true;
+            return true;
+           
+
+        }
+
+
+        /// <summary>获取初始化状态，如果对象已初始化成功，返回True</summary>
+        public virtual bool IsInitOK { get; private set; }
+
+        /// <summary>获取初始化错误的描述信息</summary>
+        public virtual string GetInitErrorInfo()
+        {
+            return _initErrorInfo;
+        }
+        #endregion
+
+
+        bool IsRecievedEndBatchCmd { get; set; }
+        /// <summary>
+        /// IJFStation's API
+        /// </summary>
+        /// <returns></returns>
+        public JFWorkCmdResult EndBatch(int milliSeconds) // 向工作线程下达结批指令,供外部调用者使用
+        {
+            if (CurrWorkStatus != JFWorkStatus.Running)
+                return JFWorkCmdResult.StatusError;
+            IsRecievedEndBatchCmd = true;
+            return JFWorkCmdResult.Success;
+            //return _SendCmd(CommandEndBatch,)
+        }
+
+        /// <summary>
+        /// 处理结批动作，由继承类实现
+        /// </summary>
+        protected abstract void ExecuteEndBatch();
+
+        /// <summary>
+        /// 为了支持结批指令，重写线程函数
+        /// </summary>
+        protected override void ThreadFunc()
+        {
+            long cmdWaited = CommandUnknown;
+            try
+            {
+                cmdEvent.WaitOne();
+                if (command != CommandStart)
+                    ExitWork(WorkExitCode.Exception, "WorkThread receive first command is not CommandStart,command = " + command);
+
+                ChangeWorkStatus(JFWorkStatus.Running, Name + "开始运行");
+                RespCmd(JFWorkCmdResult.Success);
+
+                PrepareWhenWorkStart();
+                while (true)
+                {
+                    CheckCmd(CycleMilliseconds < 0 ? -1 : CycleMilliseconds);
+                    RunLoopInWork();
+                    if(IsRecievedEndBatchCmd)
+                    {
+                        ExecuteEndBatch();//DllNotFoundException() hehe ...
+                        IsRecievedEndBatchCmd = false;
+                        ExitWork(WorkExitCode.Normal, "结批完成");
+                    }
+                }
+            }
+            catch (JFWorkExitException) //工作线程退出流程
+            {
+                //Monitor.Exit(workStatusLocker);
+
+            }
+            catch (Exception ex)
+            {
+                ChangeWorkStatus(JFWorkStatus.ExceptionExit, "Exception info:" + ex.ToString());
+            }
+            finally
+            {
+                CleanupWhenWorkExit();
+            }
+
+        }
+
+
+        #region IJFRealtimeUIProvider's API
+        UcStationBaseRealtimeUI _ui = null;//new UcStationBaseRealtimeUI();
+        public virtual JFRealtimeUI GetRealtimeUI()
+        {
+            return _ui;
+        }
+        #endregion
+
+        #region IJFConfigUIProvider's API
+        public virtual void ShowCfgDialog()
+        {
+            FormStationBaseCfg fm = new FormStationBaseCfg();
+            fm.SetStation(this);
+            fm.Text = "工站参数配置-" + Name;
+            fm.ShowDialog();
+        }
+
+        public void Dispose()
+        {
+            try
+            {
+                if (Stop(1000) != JFWorkCmdResult.Success)
+                    Abort();
+            }
+            catch
+            {
+                Abort();
+            }
+        }
+        #endregion
+
+        static object DefaultValueFromType(Type t)
+        {
+            if (t.IsValueType)
+                return Activator.CreateInstance(t);
+            
+            //if (t == null)
+            //    throw new ArgumentNullException("CreateInstance(Type t) failed By: t = null");
+            //if (!typeof(IJFInitializable).IsAssignableFrom(t) || !t.IsClass || t.IsAbstract)
+            //    throw new ArgumentException("CreateInstance(Type t) failed By: t is not an  entity class inherited from IJFInitializable");
+            ConstructorInfo[] ctors = t.GetConstructors(System.Reflection.BindingFlags.Instance
+                                                          | System.Reflection.BindingFlags.NonPublic
+                                                          | System.Reflection.BindingFlags.Public);
+            if (null == ctors)
+                throw new Exception("CreateInstance(Type t) failed By: Not found t-Instance's Constructor");
+            foreach (ConstructorInfo ctor in ctors)
+            {
+                ParameterInfo[] ps = ctor.GetParameters();
+                if (ps == null || ps.Length == 0)
+                    return ctor.Invoke(null) as IJFInitializable;
+            }
+
+            return null;
+        }
+
+        internal static bool IsNullableType(Type type)
+        {
+            return (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>));
+        }
+        bool _isFirstLoadCfg = true;
+        public virtual void LoadCfg()
+        {
+            _cfg.Load();
+            if (!_cfg.ContainsItem("StationBasePrivateConfig"))
+                _cfg.AddItem("StationBasePrivateConfig", new JFXmlDictionary<string,object>());
+            JFXmlDictionary<string, object> baseCfg = _cfg.GetItemValue("StationBasePrivateConfig") as JFXmlDictionary<string, object>; //StationBase 专用配置
+
+            if (!baseCfg.ContainsKey("DiNames"))
+                baseCfg.Add("DiNames", new List<string>());//_cfg.AddItem("DiNames", new List<string>(), "BaseConfig");
+            if (!baseCfg.ContainsKey("DoNames"))
+                baseCfg.Add("DoNames", new List<string>());
+
+            if (!baseCfg.ContainsKey("AiNames"))
+                baseCfg.Add("AiNames", new List<string>());
+            if (!baseCfg.ContainsKey("AoNames"))
+                baseCfg.Add("AoNames", new List<string>());
+
+            if (!baseCfg.ContainsKey("AxisNames"))
+                baseCfg.Add("AxisNames", new List<string>());
+
+            if (!baseCfg.ContainsKey("CmpTrigNames")) //比较触发器
+                baseCfg.Add("CmpTrigNames", new List<string>());
+
+            if (!baseCfg.ContainsKey("CameraNames"))
+                baseCfg.Add("CameraNames", new List<string>());
+
+            if (!baseCfg.ContainsKey("WorkPositions"))//工站的工作点位
+                baseCfg.Add("WorkPositions", new List<JFMultiAxisPosition>());
+
+
+            if (!baseCfg.ContainsKey("LightChannelNames"))//工站的光源通道名称
+                baseCfg.Add("LightChannelNames", new List<string>());
+
+
+            if (!baseCfg.ContainsKey("TrigChannelNames"))//工站的触发通道名称
+                baseCfg.Add("TrigChannelNames", new List<string>());
+
+
+
+
+
+
+            _lstMethodFlowsInCfg.Clear();
+            if (!baseCfg.ContainsKey("MethodFlows"))//工站中包含的所有所有动作流的序列化文本
+                baseCfg.Add("MethodFlows", new List<string>());
+ 
+            List<string> methodFlowsTxts = baseCfg["MethodFlows"] as List<string>;
+            foreach (string txt in methodFlowsTxts)
+            {
+                JFMethodFlow mf = new JFMethodFlow();
+                mf.FromTxt(txt);
+                _lstMethodFlowsInCfg.Add(mf);
+
+            }
+
+            ///加载继承类申明的配置项
+            foreach(KeyValuePair<string,object[]> kv in dictCfgParamDecleared)
+            {
+                string cfgName = kv.Key;
+                string cfgCategory = (kv.Value as object[])[0] as string;
+                Type cfgType = (kv.Value[1] as JFParamDescribe).ParamType;
+                object defaultValue = DefaultValueFromType(cfgType);
+                if (!_cfg.ContainsItem(cfgName))
+                {
+                    _cfg.AddItem(cfgName, defaultValue, cfgCategory);
+                    if (_isFirstLoadCfg && kv.Value.Length > 2) //用户在构造函数中改变了值
+                        _cfg.SetItemValue(cfgName, kv.Value[2]);
+                }
+                else //cfg中已包含声明参数项 ，检查是否合法
+                {
+                    string currCategory = _cfg.GetItemTag(cfgName);
+                    if(currCategory != cfgCategory) //检查类别名称是否合法
+                    {
+                        _cfg.RemoveItem(cfgName);
+                        _cfg.AddItem(cfgName, defaultValue, cfgCategory);
+                        if (_isFirstLoadCfg && kv.Value.Length > 2) //用户在构造函数中改变了值
+                            _cfg.SetItemValue(cfgName, kv.Value[2]);
+                    }
+                    else //检查当前值类型是否合法
+                    {
+                        object currValue = _cfg.GetItemValue(cfgName);
+                        if(null != currValue)
+                        {
+                            if(cfgType != currValue.GetType())
+                            {
+                                _cfg.RemoveItem(cfgName);
+                                _cfg.AddItem(cfgName, defaultValue, cfgCategory);
+                                if (_isFirstLoadCfg && kv.Value.Length > 2) //用户在构造函数中改变了值
+                                    _cfg.SetItemValue(cfgName, kv.Value[2]);
+                            }
+                        }
+                        else
+                        {
+                            if(!IsNullableType(cfgType))
+                            {
+                                _cfg.RemoveItem(cfgName);
+                                _cfg.AddItem(cfgName, defaultValue, cfgCategory);
+                                if (_isFirstLoadCfg && kv.Value.Length > 2) //用户在构造函数中改变了值
+                                    _cfg.SetItemValue(cfgName, kv.Value[2]);
+                            }
+                        }
+                    }
+                }
+            }
+            _isFirstLoadCfg = false;
+        }
+
+        public virtual void SaveCfg()
+        {
+            List<string> methodFlowTxts = new List<string>();
+            foreach (JFMethodFlow mf in _lstMethodFlowsInCfg)
+                methodFlowTxts.Add(mf.ToTxt());
+            (_cfg.GetItemValue("StationBasePrivateConfig") as JFXmlDictionary<string,object>)["MethodFlows"]= methodFlowTxts;
+            _cfg.Save();
+        }
+
+        List<string> _SBCfg(string sbCfgName)// => (_cfg.GetItemValue("StationBasePrivateConfig") as JFXmlDictionary<string, object>)[sbCfgName] as List<string>;
+        {
+            return (_cfg.GetItemValue("StationBasePrivateConfig") as JFXmlDictionary<string, object>)[sbCfgName] as List<string>;
+        }
+
+        /// <summary>
+        ///  获取工站所用的数字量输入（通道）
+        /// </summary>
+        public string[] DINames 
+        {
+            get
+            {
+                return _SBCfg("DiNames").ToArray();
+            }
+        }
+
+        public void AddDI(string diName)
+        {
+            if (string.IsNullOrEmpty(diName))
+                throw new ArgumentNullException("AddDi(diName) failed by:diName is null or empty");
+            List<string> diNames = _SBCfg("DiNames");//_cfg.GetItemValue("DiNames") as List<string>;
+            if (diNames.Contains(diName))
+                return;
+            diNames.Add(diName);
+        }
+
+        public void RemoveDI(string diName)
+        {
+            List<string> diNames = _SBCfg("DiNames");//_cfg.GetItemValue("DiNames") as List<string>;
+            if (!diNames.Contains(diName))
+                return;
+            diNames.Remove(diName);
+        }
+
+        public void ClearDI()
+        {
+            _SBCfg("DiNames").Clear();//(_cfg.GetItemValue("DiNames") as List<string>).Clear();
+        }
+
+        public string[] DONames
+        {
+            get
+            {
+                return _SBCfg("DoNames").ToArray();//(_cfg.GetItemValue("DoNames") as List<string>).ToArray();
+            }
+        }
+
+        public void AddDO(string doName)
+        {
+            if (string.IsNullOrEmpty(doName))
+                throw new ArgumentNullException("AddDo(doName) failed by:doName is null or empty");
+            List<string> doNames = _SBCfg("DoNames");//_cfg.GetItemValue("DoNames") as List<string>;
+            if (doNames.Contains(doName))
+                return;
+            doNames.Add(doName);
+        }
+
+        public void RemoveDO(string doName)
+        {
+            List<string> doNames = _SBCfg("DoNames");//_cfg.GetItemValue("DoNames") as List<string>;
+            if (!doNames.Contains(doName))
+                return;
+            doNames.Remove(doName);
+        }
+
+        public void ClearDO()
+        {
+            _SBCfg("DoNames").Clear();
+        }
+
+
+        public string[] AINames
+        {
+            get
+            {
+                return _SBCfg("AiNames").ToArray();//(_cfg.GetItemValue("AiNames") as List<string>).ToArray();
+            }
+        }
+
+        public void AddAI(string aiName)
+        {
+            if (string.IsNullOrEmpty(aiName))
+                throw new ArgumentNullException("AddAi(aiName) failed by:aiName is null or empty");
+            List<string> aiNames = _SBCfg("AiNames");//_cfg.GetItemValue("AiNames") as List<string>;
+            if (aiNames.Contains(aiName))
+                return;
+            aiNames.Add(aiName);
+        }
+
+        public void RemoveAI(string aiName)
+        {
+            List<string> aiNames = _SBCfg("AiNames");//_cfg.GetItemValue("AiNames") as List<string>;
+            if (!aiNames.Contains(aiName))
+                return;
+            aiNames.Remove(aiName);
+        }
+
+        public void ClearAI()
+        {
+            _SBCfg("AiNames").Clear();
+        }
+
+
+
+        public string[] AONames
+        {
+            get
+            {
+                return _SBCfg("AoNames").ToArray();//(_cfg.GetItemValue("AoNames") as List<string>).ToArray();
+            }
+        }
+
+        public void AddAO(string aoName)
+        {
+            if (string.IsNullOrEmpty(aoName))
+                throw new ArgumentNullException("AddAo(aoName) failed by:aoName is null or empty");
+            List<string> aoNames = _SBCfg("AoNames");//_cfg.GetItemValue("AoNames") as List<string>;
+            if (aoNames.Contains(aoName))
+                return;
+            aoNames.Add(aoName);
+        }
+
+        public void RemoveAO(string aoName)
+        {
+            List<string> aoNames = _SBCfg("AoNames");//_cfg.GetItemValue("AoNames") as List<string>;
+            if (!aoNames.Contains(aoName))
+                return;
+            aoNames.Remove(aoName);
+        }
+
+        public void ClearAO()
+        {
+            _SBCfg("AoNames").Clear();//(_cfg.GetItemValue("AoNames") as List<string>).Clear();
+        }
+
+
+        public string[] AxisNames
+        {
+            get
+            {
+                return _SBCfg("AxisNames").ToArray();//(_cfg.GetItemValue("AxisNames") as List<string>).ToArray();
+            }
+        }
+
+        public void AddAxis(string axisName)
+        {
+            if (string.IsNullOrEmpty(axisName))
+                throw new ArgumentNullException("AddAxis(axisName) failed by:axisName is null or empty");
+            List<string> axisNames = _SBCfg("AxisNames");//_cfg.GetItemValue("AxisNames") as List<string>;
+            if (axisNames.Contains(axisName))
+                return;
+            axisNames.Add(axisName);
+        }
+
+        public void RemoveAxis(string axisName)
+        {
+            List<string> axisNames = _SBCfg("AxisNames");//_cfg.GetItemValue("AxisNames") as List<string>;
+            if (!axisNames.Contains(axisName))
+                return;
+            axisNames.Remove(axisName);
+        }
+
+        public void ClearAxis()
+        {
+            _SBCfg("AxisNames").Clear();//(_cfg.GetItemValue("AxisNames") as List<string>).Clear();
+        }
+
+        public bool ContainAxis(string axisName)
+        {
+            return _SBCfg("AxisNames").Contains(axisName);//return (_cfg.GetItemValue("AxisNames") as List<string>).Contains(axisName);
+        }
+             
+
+
+        public string[] CmpTrigNames
+        {
+            get
+            {
+                return _SBCfg("CmpTrigNames").ToArray();//(_cfg.GetItemValue("CmpTrigNames") as List<string>).ToArray();
+            }
+        }
+
+        public void AddCmpTrig(string cmpTrigName)
+        {
+            if (string.IsNullOrEmpty(cmpTrigName))
+                throw new ArgumentNullException("AddCmpTrig(cmpTrigName) failed by:cmpTrigName is null or empty");
+            List<string> cmpTrigNames = _SBCfg("CmpTrigNames");//_cfg.GetItemValue("CmpTrigNames") as List<string>;
+            if (cmpTrigNames.Contains(cmpTrigName))
+                return;
+            cmpTrigNames.Add(cmpTrigName);
+        }
+
+        public void RemoveCmpTrig(string cmpTrigName)
+        {
+            List<string> cmpTrigNames = _SBCfg("CmpTrigNames");//_cfg.GetItemValue("CmpTrigNames") as List<string>;
+            if (!cmpTrigNames.Contains(cmpTrigName))
+                return;
+            cmpTrigNames.Remove(cmpTrigName);
+        }
+
+        public void ClearCmpTrig()
+        {
+            _SBCfg("CmpTrigNames").Clear();//(_cfg.GetItemValue("CmpTrigNames") as List<string>).Clear();
+        }
+
+
+        public string[] CameraNames
+        {
+            get
+            {
+                return _SBCfg("CameraNames").ToArray();//(_cfg.GetItemValue("CameraNames") as List<string>).ToArray();
+            }
+        }
+
+        public void AddCamera(string cmrName)
+        {
+            if (string.IsNullOrEmpty(cmrName))
+                throw new ArgumentNullException("AddCamera(cmrName) failed by:cmrName is null or empty");
+            List<string> cmrNames = _SBCfg("CameraNames");//_cfg.GetItemValue("CameraNames") as List<string>;
+            if (cmrNames.Contains(cmrName))
+                return;
+            cmrNames.Add(cmrName);
+        }
+
+        public void RemoveCamera(string cmrName)
+        {
+            List<string> cmrNames = _SBCfg("CameraNames");//_cfg.GetItemValue("CameraNames") as List<string>;
+            if (!cmrNames.Contains(cmrName))
+                return;
+            cmrNames.Remove(cmrName);
+        }
+
+        public void ClearCamera()
+        {
+            _SBCfg("CameraNames").Clear();//(_cfg.GetItemValue("CameraNames") as List<string>).Clear();
+        }
+
+        public string[] WorkPositionNames
+        {
+            get
+            {
+                List<string> ret = new List<string>();
+                List<JFMultiAxisPosition> allPos = WorkPositions;
+                foreach (JFMultiAxisPosition pos in allPos)
+                    ret.Add(pos.Name);
+                return ret.ToArray();
+            }
+        }
+
+        public bool ContianPositionName(string posName)
+        {
+            foreach (JFMultiAxisPosition pos in WorkPositions)
+                if (pos.Name == posName)
+                    return true;
+            return false;
+        }
+
+        public JFMultiAxisPosition GetWorkPosition(string name)
+        {
+            List<JFMultiAxisPosition> allPos = WorkPositions;
+            foreach (JFMultiAxisPosition pos in allPos)
+                if (pos.Name == name)
+                    return pos;
+            return null;
+        }
+
+        public void AddWorkPosition(JFMultiAxisPosition maPos)
+        {
+            if (null == maPos || string.IsNullOrEmpty(maPos.Name))
+                throw new ArgumentNullException("SetWorkPosition(maPos) failed by:maPos == null or maPos.Name is null or empty");
+            List<JFMultiAxisPosition> allPos = WorkPositions;
+            for(int i = 0; i < allPos.Count;i++)
+                if (allPos[i].Name == maPos.Name)
+                {
+                    allPos[i] = maPos;
+                    return;
+                }
+            allPos.Add(maPos);
+        }
+
+        /// <summary>
+        /// 移除工作点位
+        /// </summary>
+        /// <param name="name"></param>
+        public void RemoveWorkPosition(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                return;
+            List<JFMultiAxisPosition> allPos = WorkPositions;
+            for (int i = 0; i < allPos.Count; i++)
+                if (allPos[i].Name == name)
+                {
+                    allPos.RemoveAt(i);
+                    return ;
+                }
+        }
+
+        /// <summary>
+        /// 移动到工作点位posName （非插补模式）
+        /// </summary>
+        /// <param name="posName"></param>
+        /// <param name="errorInfo"></param>
+        /// <returns></returns>
+        public bool MoveToWorkPosition(string posName,out string errorInfo)
+        {
+            errorInfo = "Success";
+            string[] workPosNames = WorkPositionNames;
+            if (WorkPositionNames == null)
+            {
+                errorInfo = "无工作点位Name = " + posName;
+                return false;
+            }
+            bool isExisted = false;
+            foreach(string workPosName in workPosNames)
+                if(workPosName == posName)
+                {
+                    isExisted = true;
+                    break;
+                }
+            if(!isExisted)
+            {
+                errorInfo = " 工作点位Name = \"" + posName + "\"不存在";
+                return false;
+            }
+
+            JFMultiAxisPosition pos = GetWorkPosition(posName);
+            return MoveToPosition(pos, out errorInfo);
+
+        }
+
+        /// <summary>
+        /// 检查轴通道(设备)是否存在(可用)
+        /// </summary>
+        /// <param name="axisName"></param>
+        /// <returns></returns>
+        JFDevCellInfo CheckAxisDevInfo(string axisName,out string errorInfo)
+        {
+            if (!ContainAxis(axisName))
+            {
+                errorInfo = "工站不包含轴，Name = \"" + axisName + "\"";
+                return null;
+            }
+            JFDevCellInfo ci = JFHubCenter.Instance.MDCellNameMgr.GetAxisCellInfo(axisName); //在命名表中的通道信息
+            if (null == ci)
+            {
+                errorInfo = "未找到轴:\"" + axisName + "\"设备信息";
+                return null;
+            }
+            IJFDevice_MotionDaq dev = JFHubCenter.Instance.InitorManager.GetInitor(ci.DeviceID) as IJFDevice_MotionDaq;
+            if (null == dev)
+            {
+                errorInfo = "未找到轴:\"" + axisName + "\"所属设备:\"" + ci.DeviceID + "\"";
+                return null;
+            }
+            if (!dev.IsDeviceOpen)
+            {
+                errorInfo = "轴:\"" + axisName + "\"所属设备:\"" + ci.DeviceID + "\"未打开";
+                return null;
+            }
+            if (ci.ModuleIndex >= dev.McCount)
+            {
+                errorInfo = "轴:\"" + axisName + "\"模块序号:\"" + ci.ModuleIndex + "\"超出限制!";
+                return null;
+            }
+            IJFModule_Motion md = dev.GetMc(ci.ModuleIndex);
+            if (ci.ChannelIndex >= md.AxisCount)
+            {
+                errorInfo = "轴:\"" + axisName + "\"通道序号:\"" + ci.ChannelIndex + "\"超出限制!";
+                return null;
+            }
+
+            errorInfo = "";
+            return ci;
+        }
+
+        bool CheckAxisCanMove(string axisName, out string errorInfo)
+        {
+            JFDevCellInfo ci = CheckAxisDevInfo(axisName, out errorInfo);
+            if (null == ci)
+                return false;
+            
+            IJFModule_Motion md = (JFHubCenter.Instance.InitorManager as IJFDevice_MotionDaq).GetMc(ci.ModuleIndex);
+            return CheckAxisCanMove(md, ci.ChannelIndex, out errorInfo);
+        }
+
+        public bool AxisServo(string axisName,bool isServOn,out string errorInfo)
+        {
+            JFDevCellInfo ci = CheckAxisDevInfo(axisName, out errorInfo);
+            if (null == ci)
+            {
+                errorInfo = "轴:\"" + axisName + "\"伺服" + (isServOn ? "使能" : "去使能") + "失败,ErrorInfo:" + errorInfo;
+                return false;
+            }
+            int errCode = 0;
+            if (isServOn)
+                errCode = (JFHubCenter.Instance.InitorManager.GetInitor(ci.DeviceID) as IJFDevice_MotionDaq).GetMc(ci.ModuleIndex).ServoOn(ci.ChannelIndex);
+            else
+                errCode = (JFHubCenter.Instance.InitorManager.GetInitor(ci.DeviceID) as IJFDevice_MotionDaq).GetMc(ci.ModuleIndex).ServoOff(ci.ChannelIndex);
+            if(errCode != 0)
+            {
+                errorInfo = "轴:\"" + axisName + "\"伺服" + (isServOn ? "使能" : "去使能") + "失败,ErrorInfo:" + (JFHubCenter.Instance.InitorManager.GetInitor(ci.DeviceID) as IJFDevice_MotionDaq).GetMc(ci.ModuleIndex).GetErrorInfo(errCode);
+                return false;
+            }
+            errorInfo = "Success";
+            return true;
+        }
+
+        //public bool AllAxisServo(bool isServOn, out string errorInfo)
+        //{
+        //    errorInfo = "Success";
+        //    string[] axisNames = AxisNames;
+        //    if (null == axisNames || 0 == axisNames.Length)
+        //        return true;
+        //    foreach(string axis)
+        //}
+
+        bool CheckAxisCanMove(IJFModule_Motion md ,int axisIndex,out string errorInfo)
+        {
+            bool[] axisStatus;
+            int errRet = md.GetMotionStatus(axisIndex, out axisStatus);
+            if (0 != errRet)
+            {
+                errorInfo = "获取轴状态失败";
+                               return false;
+            }
+            if (!axisStatus[md.MSID_SVO])
+            {
+                errorInfo = "轴伺服未使能";
+                                return false;
+            }
+            if (axisStatus[md.MSID_ALM])
+            {
+                errorInfo = "轴已报警";
+                return false;
+            }
+            if(!axisStatus[md.MSID_MDN])
+            {
+                errorInfo = "轴运动未完成";
+                return false;
+            }
+
+            if (!axisStatus[md.MSID_INP])
+            {
+                errorInfo = "轴运动未到位";
+                return false;
+            }
+
+            errorInfo = "";
+            return true;
+        }
+
+        public bool MoveToPosition(JFMultiAxisPosition pos, out string errorInfo)
+        {
+            errorInfo = "Success";
+            string[] axisNamesInPos = pos.AxisNames;
+            if (null == axisNamesInPos || 0 == axisNamesInPos.Length)
+            {
+                errorInfo = "点位中不包含轴/电机";
+                return false;
+            }
+            
+            string[] AxisNamesInStation = AxisNames;
+            if(AxisNamesInStation == null || AxisNamesInStation.Length == 0)
+            {
+                errorInfo = "工站配置中没有轴/电机";
+                return false;
+            }
+            List<JFDevCellInfo> lstAxisCIs = new List<JFDevCellInfo>();
+            foreach(string axisNameInPos in axisNamesInPos)
+            {
+                JFDevCellInfo ci = CheckAxisDevInfo(axisNameInPos, out errorInfo);
+                if (null == ci)
+                {
+                    errorInfo = errorInfo = "轴移动失败 Name = \"" + axisNameInPos + "\",ErrorInfo :" + errorInfo;
+                    return false;
+                }
+                lstAxisCIs.Add(ci);
+            }
+
+            bool isAllAxisOK = true;
+            int i = 0;
+            for(i = 0; i < lstAxisCIs.Count;i++)
+            {
+                IJFModule_Motion md = (JFHubCenter.Instance.InitorManager.GetInitor(lstAxisCIs[i].DeviceID) as IJFDevice_MotionDaq).GetMc(lstAxisCIs[i].ModuleIndex);
+                if(!CheckAxisCanMove(md, lstAxisCIs[i].ChannelIndex,out errorInfo))
+                {
+                    errorInfo = "轴移动失败 Name = \"" + axisNamesInPos[i] + "\",ErrorInfo :" + errorInfo;
+                    isAllAxisOK = false;
+                    break;
+                }
+              
+                int errCode =md.AbsMove(lstAxisCIs[i].ChannelIndex, pos.GetAxisPos(axisNamesInPos[i]));
+                if (0 != errCode)
+                {
+                    errorInfo = "轴移动失败 Name = \"" + axisNamesInPos[i] + "\",ErrorInfo :" + md.GetErrorInfo(errCode);
+                    isAllAxisOK = false;
+                    break;
+                }
+            }
+            if(!isAllAxisOK)
+            {
+                for (int j = 0; j < i; j++)
+                    (JFHubCenter.Instance.InitorManager.GetInitor(lstAxisCIs[j].DeviceID) as IJFDevice_MotionDaq).GetMc(lstAxisCIs[j].ModuleIndex).StopAxis(lstAxisCIs[j].ChannelIndex);
+                return false;
+            }
+            return true;
+            
+        }
+
+        public bool WaitMotionDone(string axisName,int milliSenconds = -1)
+        {
+            string errorInfo = "";
+            JFDevCellInfo ci = CheckAxisDevInfo(axisName, out errorInfo);
+            if (null == ci)
+                return false;
+
+            DateTime startTime = DateTime.Now;
+            IJFModule_Motion md = (JFHubCenter.Instance.InitorManager.GetInitor(ci.DeviceID) as IJFDevice_MotionDaq).GetMc(ci.ModuleIndex);
+            while (true)
+            {
+                if(md.IsMDN(ci.ChannelIndex))
+                {
+                    errorInfo = "Success";
+                    return true;
+                }
+                CheckCmd(CycleMilliseconds);
+                if (milliSenconds >= 0)
+                {
+                    TimeSpan ts = DateTime.Now - startTime;
+                    if (ts.TotalMilliseconds >= milliSenconds)
+                        return false;
+                }
+                
+            }
+
+
+        }
+
+        public bool LineToWorkPosition(string posName, out string errorInfo)
+        {
+            if (WorkPositionNames == null)
+            {
+                errorInfo = "无工作点位Name = " + posName;
+                return false;
+            }
+            string[] workPosNames = WorkPositionNames;
+            bool isExisted = false;
+            foreach (string workPosName in workPosNames)
+                if (workPosName == posName)
+                {
+                    isExisted = true;
+                    break;
+                }
+            if (!isExisted)
+            {
+                errorInfo = " 工作点位Name = \"" + posName + "\"不存在";
+                return false;
+            }
+
+            JFMultiAxisPosition pos = GetWorkPosition(posName);
+            return LineToPosition(pos, out errorInfo);
+        }
+
+        /// <summary>
+        /// 直线插补到某一个点位
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="errorInfo"></param>
+        /// <returns></returns>
+        public bool LineToPosition(JFMultiAxisPosition pos, out string errorInfo)
+        {
+            errorInfo = "Success";
+            string[] axisNamesInPos = pos.AxisNames;
+            if (null == axisNamesInPos || 0 == axisNamesInPos.Length)
+            {
+                errorInfo = "点位中不包含轴/电机";
+                return false;
+            }
+            string[] AxisNamesInStation = AxisNames;
+            if (AxisNamesInStation == null || AxisNamesInStation.Length == 0)
+            {
+                errorInfo = "工站配置中没有轴/电机";
+                return false;
+            }
+            List<JFDevCellInfo> lstAxisCIs = new List<JFDevCellInfo>();
+            foreach (string axisNameInPos in axisNamesInPos)
+            {
+                JFDevCellInfo ci = CheckAxisDevInfo(axisNameInPos, out errorInfo);
+                if (null == ci)
+                {
+                     errorInfo = "轴移动失败 Name = \"" + axisNameInPos + "\",ErrorInfo :" + errorInfo;
+                    return false;
+                }
+                if(0 == lstAxisCIs.Count)
+                    lstAxisCIs.Add(ci);
+                else
+                {
+                    foreach(JFDevCellInfo ciExist in lstAxisCIs)
+                        if(ciExist.DeviceID != ci.DeviceID || ciExist.ModuleIndex != ci.ModuleIndex)
+                        {
+                            errorInfo = "插补运动失败 Name = \"" + axisNameInPos + "\",与其他轴不在一个设备/模块中"; 
+                            return false;
+                        }
+                    lstAxisCIs.Add(ci);
+                }
+                if(!CheckAxisCanMove(axisNameInPos,out errorInfo))
+                {
+                    errorInfo = "插补运动失败 轴名 = \"" + axisNameInPos + "\" ErrorInfo:" + errorInfo;
+                    return false;
+                }
+            }
+            List<int> axisIndexes = new List<int>();
+            List<double> axisPoses = new List<double>();
+            for(int i = 0; i < pos.Positions.Count;i++)
+            {
+                axisIndexes.Add(lstAxisCIs[i].ChannelIndex);
+                axisPoses.Add(pos.Positions[i].Position);
+            }
+            int errCode = (JFHubCenter.Instance.InitorManager.GetInitor(lstAxisCIs[0].DeviceID) as IJFDevice_MotionDaq).GetMc(lstAxisCIs[0].ModuleIndex).AbsLine(axisIndexes.ToArray(), axisPoses.ToArray());
+            if(errCode != 0)
+            {
+                errorInfo = "轴插补失败，ErrorInfo:" + (JFHubCenter.Instance.InitorManager.GetInitor(lstAxisCIs[0].DeviceID) as IJFDevice_MotionDaq).GetMc(lstAxisCIs[0].ModuleIndex).GetErrorInfo(errCode);
+                return false;
+            }
+            return true;
+
+        }
+
+
+        /// <summary>
+        /// 单轴运动(PTP)
+        /// </summary>
+        /// <param name="axisName"></param>
+        /// <param name="pos"></param>
+        /// <param name=""></param>
+        /// <returns></returns>
+        public bool MoveAxis(string axisName,double pos,bool isAbs,out string errorInfo)
+        {
+            errorInfo = "Success";
+            JFDevCellInfo ci = CheckAxisDevInfo(axisName, out errorInfo);
+            if(null == ci)
+            {
+                errorInfo = "轴移动失败，Name = \"" + axisName + "\",ErrorInfo:" + errorInfo;
+                return false;
+            }
+
+            if(!CheckAxisCanMove(axisName,out errorInfo))
+            {
+                errorInfo = "轴移动失败，Name = \"" + axisName + "\",ErrorInfo:" + errorInfo;
+                return false;
+            }
+            int errCode = 0;
+            if (isAbs)
+                errCode = (JFHubCenter.Instance.InitorManager.GetInitor(ci.DeviceID) as IJFDevice_MotionDaq).GetMc(ci.ModuleIndex).AbsMove(ci.ChannelIndex, pos);
+            else
+                errCode = (JFHubCenter.Instance.InitorManager.GetInitor(ci.DeviceID) as IJFDevice_MotionDaq).GetMc(ci.ModuleIndex).RelMove(ci.ChannelIndex, pos);
+
+            if (errCode != 0)
+            {
+                errorInfo = "轴移动失败，Name = \"" + axisName + "\",ErrorInfo:" + (JFHubCenter.Instance.InitorManager.GetInitor(ci.DeviceID) as IJFDevice_MotionDaq).GetMc(ci.ModuleIndex).GetErrorInfo(errCode);
+                return false;
+            }
+            return true;
+        }
+
+
+        public List<JFMultiAxisPosition> WorkPositions { get { return (_cfg.GetItemValue("StationBasePrivateConfig") as JFXmlDictionary<string,object>)["WorkPositions"] as List<JFMultiAxisPosition>; } }
+        
+        public string[] WorkFlowNames
+        {
+            get
+            {
+                List<string> ret = new List<string>();
+                foreach (JFMethodFlow mf in _lstMethodFlowsInCfg)
+                    ret.Add(mf.Name);
+                return ret.ToArray();
+            }
+        }
+
+        public JFMethodFlow GetWorkFlow(string mfName)
+        {
+            foreach (JFMethodFlow mf in _lstMethodFlowsInCfg)
+                if (mf.Name == mfName)
+                    return mf;
+            return null;
+        }
+
+        public bool AddWorkFlow(JFMethodFlow mf)
+        {
+            for (int i = 0; i < _lstMethodFlowsInCfg.Count; i++)
+                if (_lstMethodFlowsInCfg[i].Name == mf.Name)
+                {
+                    //_lstMethodFlowsInCfg[i] = mf;
+                    return false;
+                }
+
+            _lstMethodFlowsInCfg.Add(mf);
+            mf.SetStation(this);
+            return true;
+        }
+
+        public void RemoveWorkFlow(string mfName)
+        {
+            for(int i = 0; i < _lstMethodFlowsInCfg.Count;i++)
+                if(_lstMethodFlowsInCfg[i].Name == mfName)
+                {
+                    _lstMethodFlowsInCfg.RemoveAt(i);
+                    return;
+                }
+        }
+
+
+
+        /// <summary>
+        /// 获取轴(电机)当前的实际位置
+        /// </summary>
+        public bool GetAxisPosition(string axisName,out double dPos,out string errorInfo)
+        {
+            dPos = 0;
+            errorInfo = "Unknown-Error";
+            JFDevCellInfo axisCellInfo = JFHubCenter.Instance.MDCellNameMgr.GetAxisCellInfo(axisName);
+            if(null == axisCellInfo)
+            {
+                errorInfo = string.Format("轴名称:\"{0}\"在配置表中不存在！", axisName);
+                return false;
+            }
+
+            if(!JFHubCenter.Instance.InitorManager.ContainID(axisCellInfo.DeviceID))
+            {
+                errorInfo = string.Format("轴:\"{0}\"所属设备\"{1}\"在设备管理器中不存在!", axisName, axisCellInfo.DeviceID);
+            }
+            IJFDevice_MotionDaq dev = JFHubCenter.Instance.InitorManager.GetInitor(axisCellInfo.DeviceID) as IJFDevice_MotionDaq;
+            if(!dev.IsDeviceOpen)
+            {
+                errorInfo = string.Format("轴:\"{0}\"所属设备\"{1}\"未打开!", axisName, axisCellInfo.DeviceID);
+                return false;
+            }
+            if(axisCellInfo.ModuleIndex >= dev.McCount)
+            {
+                errorInfo = string.Format("轴:\"{0}\"所属模块序号\"{1}超出限制:0~{2}\"", axisName, axisCellInfo.ModuleIndex, dev.McCount-1);
+                return false;
+            }
+
+            IJFModule_Motion motion = dev.GetMc(axisCellInfo.ModuleIndex);
+            if(axisCellInfo.ChannelIndex >= motion.AxisCount)
+            {
+                errorInfo = string.Format("轴:\"{0}\"通道序号\"{1}超出限制:0~{2}\"", axisName, axisCellInfo.ChannelIndex, motion.AxisCount - 1);
+                return false;
+            }
+
+            int errorCode = motion.GetFbkPos(axisCellInfo.ChannelIndex, out dPos);
+            if (0 == errorCode)
+            {
+                errorInfo = "Success";
+                return true;
+            }
+
+            errorInfo = string.Format("获取轴:\"{0}\"位置失败：ErrorInfo:{1}", axisName, motion.GetErrorInfo(errorCode));
+            return false;
+        }
+
+
+        //public abstract string[] InternalMethodFlowNames();
+
+        //FormStationBase _stationForm = new FormStationBase();
+
+        /// <summary>
+        /// 用于单独调试工站的窗口界面(不建议以Dialog模式显示)
+        /// </summary>
+        /// <returns></returns>
+        public virtual Form GenForm()
+        {
+            //get 
+            {
+                //_stationForm.SetStation(this); 
+                //return _stationForm; 
+                FormStationBaseDebug fm = new FormStationBaseDebug();
+                fm.SetStation(this);
+                return fm;
+            }
+        }
+
+        /// <summary>
+        /// 工站包含的所有光源通道名称
+        /// </summary>
+        public string[] LightChannelNames 
+        { 
+            get
+            {
+                return _SBCfg("LightChannelNames").ToArray();//return (_cfg.GetItemValue("LightChannelNames") as List<string>).ToArray();
+            }
+        }
+
+        public void AddLightChannel(string chnName)
+        {
+            if (string.IsNullOrEmpty(chnName))
+                throw new ArgumentNullException("AddLightChannel(chnName) failed by:chnName is null or empty");
+            List<string> chnNames = _SBCfg("LightChannelNames");//_cfg.GetItemValue("LightChannelNames") as List<string>;
+            if (chnNames.Contains(chnName))
+                return;
+            chnNames.Add(chnName);
+        }
+
+        public void RemoveLightChannel(string chnName)
+        {
+            List<string> chnNames = _SBCfg("LightChannelNames");//_cfg.GetItemValue("LightChannelNames") as List<string>;
+            if (!chnNames.Contains(chnName))
+                return;
+            chnNames.Remove(chnName);
+        }
+
+        public void ClearLightChannel()
+        {
+            _SBCfg("LightChannelNames").Clear();//(_cfg.GetItemValue("LightChannelNames") as List<string>).Clear();
+        }
+
+
+
+        public string[] TrigChannelNames
+        {
+            get
+            {
+                return _SBCfg("TrigChannelNames").ToArray();//return (_cfg.GetItemValue("TrigChannelNames") as List<string>).ToArray();
+            }
+        }
+
+        public void AddTrigChannel(string chnName)
+        {
+            if (string.IsNullOrEmpty(chnName))
+                throw new ArgumentNullException("AddTrigChannel(chnName) failed by:chnName is null or empty");
+            List<string> chnNames = _SBCfg("TrigChannelNames");//_cfg.GetItemValue("TrigChannelNames") as List<string>;
+            if (chnNames.Contains(chnName))
+                return;
+            chnNames.Add(chnName);
+        }
+
+        public void RemoveTrigChannel(string chnName)
+        {
+            List<string> chnNames = _SBCfg("TrigChannelNames");//_cfg.GetItemValue("TrigChannelNames") as List<string>;
+            if (!chnNames.Contains(chnName))
+                return;
+            chnNames.Remove(chnName);
+        }
+
+        public void ClearTrigChannel()
+        {
+            _SBCfg("TrigChannelNames").Clear();//(_cfg.GetItemValue("TrigChannelNames") as List<string>).Clear();
+        }
+
+        /*
+        public IJFInitializable CreateInstance(Type t)
+        {
+            if (t == null)
+                throw new ArgumentNullException("CreateInstance(Type t) failed By: t = null");
+            if (!typeof(IJFInitializable).IsAssignableFrom(t) || !t.IsClass || t.IsAbstract)
+                throw new ArgumentException("CreateInstance(Type t) failed By: t is not an  entity class inherited from IJFInitializable");
+            ConstructorInfo[] ctors = t.GetConstructors(System.Reflection.BindingFlags.Instance
+                                                          | System.Reflection.BindingFlags.NonPublic
+                                                          | System.Reflection.BindingFlags.Public);
+            if (null == ctors)
+                throw new Exception("CreateInstance(Type t) failed By: Not found t-Instance's Constructor");
+            foreach (ConstructorInfo ctor in ctors)
+            {
+                ParameterInfo[] ps = ctor.GetParameters();
+                if (ps == null || ps.Length == 0)
+                    return ctor.Invoke(null) as IJFInitializable;
+            }
+
+            return null;
+        }
+        */
+
+
+        /// <summary>
+        /// 存放继承类中声明的参数配置 ， 
+        /// Key = ItemName
+        /// Value = <"参数类别",参数类型> 
+        /// </summary>
+        Dictionary<string, object[]> dictCfgParamDecleared = new Dictionary<string, object[]>(); 
+        /// <summary>
+        /// 供继承类申明需要的序列化参数
+        /// 只在继承类的构造函数中使用
+        /// </summary>
+        /// <param name="paramName"></param>
+        /// <param name="paramType"></param>
+        public void DeclearCfgParam(string cfgName,Type cfgType,string category = "StationConfig")
+        {
+            if (string.IsNullOrEmpty(cfgName))
+                throw new ArgumentNullException("声明的配置参数名称为空 in DeclearCfgParam()");
+            if (cfgName == "StationBasePrivateConfig")
+                throw new ArgumentException("声明的配置参数名称不能为:\"StationBasePrivateConfig\" in DeclearCfgParam()");
+            if (string.IsNullOrEmpty(category))
+                throw new ArgumentException("声明的配置参数类别名不能为空 in DeclearCfgParam()");
+            if (dictCfgParamDecleared.ContainsKey(cfgName))
+                throw new ArgumentException("重复申明配置参数,Name = " + cfgName);
+            dictCfgParamDecleared.Add(cfgName, new object[] { category, JFParamDescribe.Create(cfgName,cfgType,JFValueLimit.NonLimit,null) });
+           
+        }
+
+        /// <summary>
+        /// 获取所有已声明配置参数的类别名称
+        /// </summary>
+        /// <returns></returns>
+        public List<string> AllCfgParamCategories()
+        {
+            List<string> ret = new List<string>();
+            foreach (KeyValuePair<string, object[]> kv in dictCfgParamDecleared)
+                if (!ret.Contains(kv.Value[0] as string))
+                    ret.Add(kv.Value[0] as string);
+            return ret;
+        }
+
+        /// <summary>
+        /// 获取某一个类别下的所有配置参数名
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        public List<string> AllCfgParamNamesInCategory(string category)
+        {
+            List<string> ret = new List<string>();
+            foreach (KeyValuePair<string, object[]> kv in dictCfgParamDecleared)
+                if (kv.Value[0] as string == category)
+                    ret.Add(kv.Key);
+            return ret;
+        }
+
+
+
+        public void DeclearCfgParam(string cfgName,JFParamDescribe paramDescribe,string category)
+        {
+            if (string.IsNullOrEmpty(cfgName))
+                throw new ArgumentNullException("声明的配置参数名称为空 in DeclearCfgParam()");
+            if (cfgName == "StationBasePrivateConfig")
+                throw new ArgumentException("声明的配置参数名称不能为:\"StationBasePrivateConfig\" in DeclearCfgParam()");
+            if (string.IsNullOrEmpty(category))
+                throw new ArgumentException("声明的配置参数类别名不能为空 in DeclearCfgParam()");
+            if (dictCfgParamDecleared.ContainsKey(cfgName))
+                throw new ArgumentException("重复申明配置参数,Name = " + cfgName);
+            dictCfgParamDecleared.Add(cfgName, new object[] { category, paramDescribe });
+        }
+
+        public JFParamDescribe GetCfgParamDescribe(string cfgName)
+        {
+            if (!dictCfgParamDecleared.ContainsKey(cfgName))
+                throw new ArgumentException(string.Format("GetCfgParamDescribe(cfgName,...) failed by cfgName = \"{0}\" is not contained by DictCfgParamDecleared,StationName = \"{1}\"", cfgName, Name));
+            return dictCfgParamDecleared[cfgName][1] as JFParamDescribe;
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cfgName"></param>
+        /// <param name="cfgValue"></param>
+        public void SetCfgParamValue(string cfgName,object cfgValue)
+        {
+            
+            if (!dictCfgParamDecleared.ContainsKey(cfgName))
+                throw new ArgumentException(string.Format("SetCfgParam(cfgName,...) failed by cfgName = \"{0}\" is not contained by DictCfgParamDecleared,StationName = \"{1}\"", cfgName, Name));
+            if(null == cfgValue)
+            {
+                if(!IsNullableType((dictCfgParamDecleared[cfgName][1] as JFParamDescribe).ParamType))
+                    throw new ArgumentException(string.Format("SetCfgParam(cfgName = \"{0}\",cfgValue = null) failed by cfgType ={1}  is not nullable type,StationName = \"{2}\"", cfgName, (dictCfgParamDecleared[cfgName][1] as Type).Name, Name));
+            }
+            else
+            {
+                if(cfgValue.GetType() != (dictCfgParamDecleared[cfgName][1] as JFParamDescribe).ParamType)
+                    throw new ArgumentException(string.Format("SetCfgParam(cfgName = \"{0}\",cfgValue ) failed by cfgType ={1}  isnot equal {2},StationName = \"{3}\"", cfgName, cfgValue.GetType().Name,(dictCfgParamDecleared[cfgName][1] as Type).Name, Name));
+
+            }
+            if (IsInitOK) //已经初始化完成
+                _cfg.SetItemValue(cfgName, cfgValue);
+            else //调用时未初始化（构造函数中）
+            {
+                object[] oa = dictCfgParamDecleared[cfgName];
+                dictCfgParamDecleared[cfgName] = new object[] { oa[0],oa[1], cfgValue };
+            }
+        }
+
+
+        public object GetCfgParamValue(string cfgName)
+        {
+            if (!dictCfgParamDecleared.ContainsKey(cfgName))
+                throw new ArgumentException(string.Format("GetCfgParam(cfgName) failed by cfgName = \"{0}\" is not contained by DictCfgParamDecleared,StationName = \"{1}\"", cfgName, Name));
+            if(!IsInitOK)
+            {
+                object[] oa = dictCfgParamDecleared[cfgName];
+                if (oa.Length > 2)
+                    return oa[2];
+                else
+                    return DefaultValueFromType((oa[1] as JFParamDescribe).ParamType);
+            }
+            return _cfg.GetItemValue(cfgName);
+        }
+
+
+
+
+
+        /// <summary>
+        /// 供工作线程内部调用，向外部程序发出通知，工作状态发生改变
+        /// </summary>
+        /// <param name="ws"></param>
+        /// <param name="info"></param>
+        protected virtual void NotifyWorkStatusChanged(JFWorkStatus ws, string info)
+        {
+            //ChangeWorkStatus(ws, info); //CmdWork成员函数
+            EventWorkStatusChanged?.Invoke(this, ws, info);
+        }
+
+        /// <summary>
+        ///  向外部程序发送通知，业务状态发生改变
+        /// </summary>
+        /// <param name="customStatus"></param>
+        /// <param name="info"></param>
+        /// <param name="param"></param>
+        protected virtual void NotifyCustomStatusChanged(int customStatus, string info, object param)
+        {
+            //ChangeCustomStatus(customStatus, info, param); //CmdWork成员函数
+            EventCustomStatusChanged?.Invoke(this, customStatus, info, param);
+        }
+
+        protected virtual void NotifyProductFinished(int passCount, string[] passIDs, int NGCount, string[] ngIDs, string[] NGInfo)
+        {
+            EventProductFinished?.Invoke(this, passCount, passIDs, NGCount, ngIDs, NGInfo);
+        }
+
+        protected virtual void NotifyCustomizeMsg(string msgCategory, object msgParam)
+        {
+            EventCustomizeMsg?.Invoke(this, msgCategory, msgParam);
+        }
+
+
+
+        #region 通用的工站方法
+
+        ///// <summary>
+        /////  设置DO状态
+        ///// </summary>
+        ///// <param name="doName">工站内配置的DO</param>
+        ///// <param name="isTurnOn"></param>
+        ///// <param name="errorInfo"></param>
+        ///// <returns></returns>
+        //bool SetDO(string doName,bool isTurnOn,out string errorInfo)
+        //{
+        //    errorInfo = "Unknown error";
+        //    return false;
+        //}
+
+
+        //bool WaitDO(string doName,bool isTurnOn)
+
+        #endregion
+
+
+    }
+}

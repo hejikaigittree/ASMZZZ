@@ -1,0 +1,74 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using JFHub;
+using JFInterfaceDef;
+
+namespace JFApp
+{
+    /// <summary>
+    /// 生产运行时的主界面
+    /// </summary>
+    public partial class FormAuto : Form
+    {
+        public FormAuto()
+        {
+            InitializeComponent();
+        }
+
+        private void FormAuto_Load(object sender, EventArgs e)
+        {
+            IJFMainStation mainStation = JFHubCenter.Instance.StationMgr.MainStation;
+            if(null == mainStation)
+            {
+                MessageBox.Show("MainStation is not Regist,App will Exit");
+                Application.Exit();
+            }
+            Control mainStationPanel = mainStation.UIPanel;
+            mainStationPanel.Dock = DockStyle.Fill;
+            //mainStationPanel.Parent = splitContainer1.Panel2;
+            splitContainer1.Panel2.Controls.Add(mainStationPanel);
+            AdjustView();
+        }
+
+
+        /// <summary>
+        /// 根据当前已激活的工站，布局界面
+        /// </summary>
+        public void AdjustView()
+        {
+            if(InvokeRequired)
+            {
+                Invoke(new Action(AdjustView));
+                return;
+            }
+            pnStations.Controls.Clear();
+
+            JFStationManager stationMgr = JFHubCenter.Instance.StationMgr;
+            string[] allEnabledStationName = stationMgr.AllEnabledStationNames();
+            foreach(string enabledStationName in allEnabledStationName)
+            {
+                IJFStation station = stationMgr.GetStation(enabledStationName);
+                JFRealtimeUI ui = station.GetRealtimeUI(); //如果station不提供界面，则提供一个默认的
+                if(null == ui)
+                {
+                    UcStationBaseRealtimeUI ucStationBaseRealtimeUI = new UcStationBaseRealtimeUI();
+                    stationMgr.AppendStationRealtimeUI(station, ucStationBaseRealtimeUI);
+                    ui = ucStationBaseRealtimeUI;
+                }
+                pnStations.Controls.Add(ui);
+            }
+        }
+
+        private void FormAuto_VisibleChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
+}

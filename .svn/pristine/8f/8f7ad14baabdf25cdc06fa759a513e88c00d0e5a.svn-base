@@ -1,0 +1,77 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using JFInterfaceDef;
+using JFHub;
+namespace JFMethodCommonLib
+{
+    [JFCategoryLevels(new string[] { "JF 设备控制", "Axis" })]
+    [JFDisplayName("轴停止")]
+    public class JFCM_StopAxis:JFMethodInitParamBase
+    {
+        public JFCM_StopAxis()
+        {
+            string[] allAxisIDs = JFHubCenter.Instance.MDCellNameMgr.AllAxisNames();
+            DeclearInitParam(JFParamDescribe.Create("轴ID", typeof(string), JFValueLimit.Options, allAxisIDs), "");
+        }
+
+        public override bool Initialize()
+        {
+            string axisID = GetInitParamValue("轴ID") as string;
+            if(string.IsNullOrEmpty(axisID))
+            {
+                InitErrorInfo = "参数项:\"轴ID\"未设置/空值";
+                IsInitOK = false;
+                return false;
+            }
+            if(!JFHubCenter.Instance.MDCellNameMgr.ContainAxisName(axisID))
+            {
+                InitErrorInfo = "参数项:\"轴ID\" = " + axisID + " 在设备名称表中不存在";
+                IsInitOK = false;
+                return false;
+            }
+
+            InitErrorInfo = "Success";
+            IsInitOK = true;
+            return true;
+        }
+
+        protected override bool ActionGenuine()
+        {
+            if(!IsInitOK)
+            {
+                ActionErrorInfo = "未初始化," + InitErrorInfo;
+                StopActionTimer();
+                return false;
+            }
+
+            string axisID = GetInitParamValue("轴ID") as string;
+            IJFInitializable dev = null;
+            string errInfo = "";
+            JFDevCellInfo ci = null;
+            if(!JFCMFunction.CheckDevCellName(JFCMFunction.Axis, axisID,out dev,out ci,out errInfo))
+            {
+                ActionErrorInfo = errInfo;
+                return false;
+            }
+            IJFModule_Motion md = (dev as IJFDevice_MotionDaq).GetMc(ci.ModuleIndex);
+            if(!md.IsSVO(ci.ChannelIndex)) //HTM控制卡在未上电时，调用Stop会异常退出
+            {
+                ActionErrorInfo = "Success";
+                return true;
+            }
+            int errCode = md.StopAxis(ci.ChannelIndex);
+            if(errCode != 0)
+            {
+                ActionErrorInfo = md.GetErrorInfo(errCode);
+                return false;
+            }
+            ActionErrorInfo = "Success";
+            return true;
+        }
+
+
+    }
+}

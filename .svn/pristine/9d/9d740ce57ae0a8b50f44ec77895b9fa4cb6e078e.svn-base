@@ -1,0 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace JFApp
+{
+    /// <summary>
+    /// 设备配置
+    /// </summary>
+    public partial class FormCfg : Form
+    {
+        public FormCfg()
+        {
+            InitializeComponent();
+        }
+
+        private void FormCfg_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
+}

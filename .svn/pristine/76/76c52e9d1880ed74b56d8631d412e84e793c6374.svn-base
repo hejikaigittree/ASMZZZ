@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace JFApp
+{
+    static class Program
+    {
+        /// <summary>
+        /// 应用程序的主入口点。
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            
+            Application.ApplicationExit += CleanUpPreExit;
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            FormMain mainForm = new FormMain(); 
+            //添加主界面（自动运行）
+
+            Application.Run(mainForm);
+        }
+
+        static void CleanUpPreExit(object sender, EventArgs e)
+        {
+            //日后添加程序退出前的处理
+        }
+    }
+}

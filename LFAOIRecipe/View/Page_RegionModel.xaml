@@ -1,0 +1,522 @@
+﻿<UserControl x:Name="userControl" 
+             x:Class="LFAOIRecipe.Page_RegionModel"
+             x:ClassModifier="internal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LFAOIRecipe"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"      
+             mc:Ignorable="d"             
+             Background="White"
+             MinWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel x:Name="dockPanel" LastChildFill="False">
+        <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <materialDesign:Card Margin="5,5,5,0">
+                <StackPanel>
+                    <TextBlock Text="{Binding DisplayName}"
+                           FontSize="16"
+                           Margin="10"
+                           Foreground="DarkBlue" HorizontalAlignment="Left"/>
+                    <TextBlock Margin="10,0,10,10"
+                       Text="【创建FreeRegion区域】"
+                       TextWrapping="Wrap" HorizontalAlignment="Left">
+                    </TextBlock>
+                </StackPanel>
+            </materialDesign:Card>
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal" DockPanel.Dock="Top">
+                <Button x:Name="button_load" Content="加载全局数据"
+                    Margin="5,-1,0,0"
+                    Command="{Binding LoadReferenceCommand}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBlock Text="{Binding ReferenceDirectory}" 
+                       Margin="10,0,0,0"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Center" Width="570" FontSize="12"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Center">
+                <TextBlock Text="属于框架" Margin="5,0,0,0"/>
+                <ComboBox Margin="5,0,0,0"  materialDesign:ComboBoxAssist.ClassicMode="true" MinWidth="100"
+                        x:Name="OnWhichFrame" 
+                        ItemsSource="{Binding EpoxyParameter.OnRecipesIndexs,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                        SelectedIndex="{Binding EpoxyParameter.OnRecipesIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="77" />
+
+            </StackPanel>
+            <Button Panel.ZIndex="1"  HorizontalContentAlignment="Center"  materialDesign:ShadowAssist.ShadowDepth="Depth3" Height="40
+                                " BorderBrush="#FFB6B6B6" FontSize="12" HorizontalAlignment="Center" Width="252" Margin="0,20,0,-20" Background="#FFA0A0A0">
+                <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock   Text="操作参数"   FontWeight="Light" VerticalAlignment="Center" FontSize="16" HorizontalAlignment="Center" Foreground="White" />
+                </StackPanel>
+            </Button>
+            <materialDesign:Card  materialDesign:ShadowAssist.ShadowDepth="Depth2" Padding="32,10,32,20" HorizontalAlignment="Center" HorizontalContentAlignment="Center" 
+                                  UniformCornerRadius="10" Width="390">
+                <ListView Style="{StaticResource MaterialDesignListView}" HorizontalContentAlignment="Center" Margin="0,20,0,0" HorizontalAlignment="Center">
+                    <ListViewItem  Padding="0" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock Text="序号"  FontSize="14" HorizontalAlignment="Center" Width="60"/>
+                            <TextBlock Text="操作"   FontSize="14" HorizontalAlignment="Center" Width="100"/>
+                            <TextBlock Text="参数"   FontSize="14" HorizontalAlignment="Center" Width="100"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Padding="0" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="0" HorizontalAlignment="Center" Width="60"/>
+                            <TextBlock Text="区域选择" HorizontalAlignment="Center" Width="100"/>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBox Text="{Binding RegionIdx[0]}"  HorizontalAlignment="Center" Width="50"/>
+                                <TextBox Text="{Binding RegionIdx[1]}"  HorizontalAlignment="Center" Width="50"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Padding="0" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="1" HorizontalAlignment="Center" Width="60"/>
+                            <TextBlock Text="腐蚀" HorizontalAlignment="Center" Width="100"/>
+                            <TextBox Text="{Binding ErosionRadius[0]}"  HorizontalAlignment="Center" Width="100"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Padding="0" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="2" HorizontalAlignment="Center" Width="60"/>
+                            <TextBlock Text="膨胀" HorizontalAlignment="Center" Width="100"/>
+                            <TextBox Text="{Binding DilationRadius[0]}"  HorizontalAlignment="Center" Width="100"/>
+                        </StackPanel>
+
+                    </ListViewItem>
+                    <ListViewItem Padding="0" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="3" HorizontalAlignment="Center" Width="60"/>
+                            <TextBlock Text="填孔" HorizontalAlignment="Center" Width="100"/>
+                            <TextBox Text="{Binding MaxFillUp[0]}"  HorizontalAlignment="Center" Width="100"/>
+                        </StackPanel>
+
+                    </ListViewItem>
+                    <ListViewItem Padding="0" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="4" HorizontalAlignment="Center" Width="60"/>
+                            <TextBlock Text="开运算" HorizontalAlignment="Center" Width="100"/>
+                            <TextBox Text="{Binding OpeningCircleSize[0]}"  HorizontalAlignment="Center" Width="100"/>
+                        </StackPanel>
+
+                    </ListViewItem>
+                    <ListViewItem Padding="0" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="5" HorizontalAlignment="Center" Width="60"/>
+                            <TextBlock Text="闭运算" HorizontalAlignment="Center" Width="100"/>
+                            <TextBox Text="{Binding ClosingCircleSize[0]}"  HorizontalAlignment="Center" Width="100"/>
+                        </StackPanel>
+
+                    </ListViewItem>
+                    <ListViewItem Padding="0" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="6" HorizontalAlignment="Center" Width="60"/>
+                            <TextBlock Text="阈值分割" HorizontalAlignment="Center" Width="100"/>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBox Text="{Binding ThresValue[0]}"  HorizontalAlignment="Center" Width="50"/>
+                                <TextBox Text="{Binding ThresValue[1]}"  HorizontalAlignment="Center" Width="50"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Padding="0" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="7" HorizontalAlignment="Center" Width="60"/>
+                            <TextBlock Text="面积选择" HorizontalAlignment="Center" Width="100"/>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBox Text="{Binding AreaValue[0]}"  HorizontalAlignment="Center" Width="50"/>
+                                <TextBox Text="{Binding AreaValue[1]}"  HorizontalAlignment="Center" Width="50"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Padding="0" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="8" HorizontalAlignment="Center" Width="60"/>
+                            <TextBlock Text="转换类型" HorizontalAlignment="Center" Width="100"/>
+                            <StackPanel Orientation="Horizontal" >
+                                <ComboBox x:Name="OnWhichTrans" Width="100" materialDesign:ComboBoxAssist.ClassicMode="true"
+                                    SelectedIndex="{Binding TransType, Mode=TwoWay}">
+                                    <ComboBoxItem Content="inner_circle"/>
+                                    <ComboBoxItem Content="circum_circle"/>
+                                    <ComboBoxItem Content="smallest_rectangle1"/>
+                                    <ComboBoxItem Content="smallest_rectangle2"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Padding="0" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="9" HorizontalAlignment="Center" Width="60"/>
+                            <TextBlock Text="阵列区域数目" HorizontalAlignment="Center" Width="100"/>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBox Text="{Binding ArrayRegNum}"  HorizontalAlignment="Center" Width="100"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+            </materialDesign:Card>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                <materialDesign:Card  UniformCornerRadius="6" VerticalAlignment="Center" Margin="20,0,0,0">
+                    <StackPanel Orientation="Horizontal" Margin="10,0" >
+                        <TextBlock Text="fill" VerticalAlignment="Center" FontSize="14"/>
+                        <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                              IsChecked="{Binding IsMargin}" Margin="5,0" Height="32" />
+                        <TextBlock Text="margin" FontSize="14"/>
+                    </StackPanel>
+                </materialDesign:Card>
+                <materialDesign:Card  UniformCornerRadius="6" VerticalAlignment="Center" Margin="20,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Height="32">
+                    <StackPanel Orientation="Horizontal" Margin="10,0">
+                        <TextBlock Text="显示通道图"
+                         VerticalAlignment="Center" Margin="0"/>
+                        <ComboBox Name="comboBox_FreeRegion"                                    
+                            ItemsSource="{Binding ChannelNames}"
+                            DisplayMemberPath="Name"
+                            Margin="5,0,0,0"
+                            materialDesign:ComboBoxAssist.ClassicMode="true"
+                            SelectedIndex="{Binding ImageIndex, Mode=TwoWay}"  Padding="4,5" Foreground="#FF555555" HorizontalAlignment="Left" Width="70" FontSize="14" >
+                        </ComboBox>
+                    </StackPanel>
+                </materialDesign:Card>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Center" Margin="0,20,0,0">
+                <StackPanel Orientation="Horizontal" Margin="20,0,0,0" HorizontalAlignment="Center">
+                    <TextBlock Text="FreeRegion 命名:" HorizontalAlignment="Center" FontWeight="Bold"   />
+                    <TextBox Text="{Binding FreeRegionName}"  HorizontalAlignment="Center" MaxWidth="300" Width="200"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <TextBlock Text="Load FreeRegion:" Margin="20,0,0,0" FontWeight="Bold" />
+                    <Button Command="{Binding LoadFreeRegionCommond}"
+                                                Style="{StaticResource MaterialDesignFloatingActionButton}"
+                                                Margin="10,0,0,0"
+                                                Width="22" Height="22">
+                        <materialDesign:PackIcon Kind="Folder" />
+                    </Button>
+                </StackPanel>
+            </StackPanel>        
+            
+            <StackPanel Orientation="Horizontal"
+                    Margin="0,20,5,0">
+                <Button Content="添加区域"
+                    Margin="5,0,0,0"
+                    Command="{Binding AddUserRegionCommand}"/>
+                <Button Content="删除区域"
+                    Margin="10,0,0,0"
+                    Command="{Binding RemoveUserRegionCommand}"/>
+                <Button Content="修改区域"  Margin="10,0,0,0" ToolTip="区域修改完，鼠标右键确认！"
+                        Command="{Binding ModifyRegionCommand}"/>
+                <Button  Command="{Binding UnionCommand}" HorizontalAlignment="Left" Margin="30,0,0,0">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon Kind="VectorUnion" VerticalAlignment="Center" />
+                            <TextBlock Text="合并" VerticalAlignment="Center" Padding="0,0,0,2" Foreground="White" Margin="0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button  Command="{Binding DifferenceCommand}" HorizontalAlignment="Left" Margin="10">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon Kind="VectorDifference" VerticalAlignment="Center" />
+                            <TextBlock Text="求差" VerticalAlignment="Center" Padding="0,0,0,2" Foreground="White" Margin="0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button  Command="{Binding ConnectionCommand}" HorizontalAlignment="Left" Margin="0">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon Kind="VectorSelection" VerticalAlignment="Center" />
+                            <TextBlock Text="打散" VerticalAlignment="Center" Padding="0,0,0,2" Foreground="White" Margin="0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Margin="5,10,0,0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                <Button  Command="{Binding SelectShapeCommand}" Margin="0">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon Kind="SelectAll"  VerticalAlignment="Center" />
+                            <TextBlock Text="面积选择" VerticalAlignment="Center" Padding="0,0,0,2" Foreground="White" Margin="0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button  Command="{Binding RegionTransCommand}" HorizontalAlignment="Center" Margin="10,0,0,0">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon Kind="Shape" VerticalAlignment="Center" />
+                            <TextBlock Text="区域转换" VerticalAlignment="Center" Padding="0,0,0,2" Foreground="White" Margin="0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button  Command="{Binding RegionArrayCommand}" HorizontalAlignment="Center" Margin="10,0,0,0">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon Kind="VectorLine" VerticalAlignment="Center" />
+                            <TextBlock Text="区域阵列" VerticalAlignment="Center" Padding="0,0,0,2" Foreground="White" Margin="0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Margin="5,20,5,0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                <Button  Command="{Binding ThresCommand}" HorizontalAlignment="Left" Margin="0">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon Kind="ContrastBox" VerticalAlignment="Center" />
+                            <TextBlock Text="阈值分割" VerticalAlignment="Center" Padding="0,0,0,2" Foreground="White" Margin="0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button  Command="{Binding ErosionCommand}" Margin="10,0,0,0">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon Kind="ArrowCollapse"  VerticalAlignment="Center" />
+                            <TextBlock Text="腐蚀" VerticalAlignment="Center" Padding="0,0,0,2" Foreground="White" Margin="0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button  Command="{Binding DilationCommand}" Margin="10,0,0,0">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon Kind="ArrowAll"  VerticalAlignment="Center" />
+                            <TextBlock Text="膨胀" VerticalAlignment="Center" Padding="0,0,0,2" Foreground="White" Margin="0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button  Command="{Binding FillupCommand}" Margin="10,0,0,0">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon Kind="Circle"  VerticalAlignment="Center" />
+                            <TextBlock Text="填孔" VerticalAlignment="Center" Padding="0,0,0,2" Foreground="White" Margin="0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button  Command="{Binding OpeningCommand}" Margin="10,0,0,0">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon Kind="CircleOutline"  VerticalAlignment="Center" />
+                            <TextBlock Text="开运算" VerticalAlignment="Center" Padding="0,0,0,2" Foreground="White" Margin="0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button  Command="{Binding ClosingCommand}" Margin="10,0,0,0">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon Kind="CloseCircle"  VerticalAlignment="Center" />
+                            <TextBlock Text="闭运算" VerticalAlignment="Center" Padding="0,0,0,2" Foreground="White" Margin="0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
+                <!--
+                <Button Height="32" Command="{Binding DisplayThresCommand}" 
+                        ToolTip="显示列表当前行的区域"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Width="32" Margin="20,0,0,0" HorizontalAlignment="Right">
+                    <materialDesign:PackIcon Kind="Eye" Height="15" Width="15" />
+                </Button>
+                -->
+                <Button Height="32" Command="{Binding DisplayResultCommand}" 
+                        ToolTip="显示运行到列表当前行的结果区域"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Width="32" Margin="20,0,0,0">
+                    <materialDesign:PackIcon  Kind="Eye"  Height="21"  Width="21" />
+                </Button>
+            </StackPanel>
+
+            <materialDesign:Card Margin="5,10,5,5">
+                <StackPanel>
+                    <DataGrid Margin="0,2,0,0" IsReadOnly="False"
+                          ItemsSource="{Binding OperRegionUserRegions}" 
+                          AlternatingRowBackground="#D1DFE7"
+                          HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="White">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="选择"  FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                            <CheckBox  IsChecked="{Binding DataContext.IsCheckAll,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,ElementName=userControl}" 
+                                                Command="{Binding DataContext.IsCheckAllCommand,  ElementName=userControl}" IsThreeState="True"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.HeaderTemplate>
+                                <DataGridTemplateColumn.CellTemplate >
+                                    <DataTemplate >
+                                        <CheckBox IsChecked="{Binding IsSelected,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                                  Command="{Binding DataContext.IsCheckCommand,ElementName=userControl}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <materialDesign:MaterialDataGridTextColumn Header="序号" 
+                                                           Binding="{Binding Index}" 
+                                                           IsReadOnly="True"/>
+                            <materialDesign:MaterialDataGridTextColumn Header="前节点" 
+                                                           Binding="{Binding LastIndex}" 
+                                                           IsReadOnly="False"/>
+                            <!--
+                            <DataGridTemplateColumn  Header="前节点">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox 
+                                Style="{StaticResource MaterialDesignDataGridComboBox}"
+                                ItemsSource="{Binding OperRegionUserRegions}" DisplayMemberPath="Index"
+                                SelectedIndex="{Binding LastIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                materialDesign:ComboBoxAssist.ClassicMode="true" HorizontalContentAlignment="Center">
+                                        </ComboBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            -->
+                            <DataGridTemplateColumn  Header="启用">
+                                <DataGridTemplateColumn.CellTemplate >
+                                    <DataTemplate >
+                                        <CheckBox IsChecked="{Binding IsEnable,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"         
+                                      Command="{Binding DataContext.UserRegionEnableChangedCommand, ElementName=userControl}"
+                                      CommandParameter="{Binding}"
+                                      Style="{StaticResource MaterialDesignCheckBox}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <materialDesign:MaterialDataGridTextColumn Header="形状" 
+                                                           Binding="{Binding RegionType}" 
+                                                           IsReadOnly="True"/>
+                            <materialDesign:MaterialDataGridTextColumn Header="操作" 
+                                                           Binding="{Binding RegionOperatType}" 
+                                                           IsReadOnly="True"/>
+                            <DataGridTemplateColumn  Header="类型">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox 
+                                Style="{StaticResource MaterialDesignDataGridComboBox}"
+                                SelectedIndex="{Binding IsAccept, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanToComboBoxIndexConverter}}"
+                                materialDesign:ComboBoxAssist.ClassicMode="true" HorizontalContentAlignment="Center">
+                                            <ComboBoxItem Content="接受区"/>
+                                            <ComboBoxItem Content="拒绝区"/>
+                                        </ComboBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <materialDesign:MaterialDataGridTextColumn Header="参数"   Binding="{Binding}"  IsReadOnly="True"/>
+                            <DataGridTemplateColumn MinWidth="0">
+                                <DataGridTemplateColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <TextBlock Text="运行"  FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBox Text="{Binding DataContext.StepTime,
+                                                UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, 
+                                                    RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                                                    Style="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" VerticalContentAlignment="Top" HorizontalContentAlignment="Center"/>
+                                                <TextBlock Text="ms" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5,0,0,0"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.HeaderTemplate>
+                                <DataGridTemplateColumn.CellTemplate >
+                                    <DataTemplate >
+                                        <StackPanel>
+                                            <CheckBox IsChecked="{Binding IsCurrentStep,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"         
+                                            Command="{Binding DataContext.UserRegionStepChangedCommand, ElementName=userControl}"
+                                            CommandParameter="{Binding}"
+                                            Style="{StaticResource MaterialDesignCheckBox}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn  Header="显示"  MinWidth="0">
+                                <DataGridTemplateColumn.CellTemplate >
+                                    <DataTemplate >
+                                        <Button   Command="{Binding DataContext.DisplayThresCommand, ElementName=userControl}" 
+                                            ToolTip="显示列表当前行的区域"
+                                            Style="{StaticResource MaterialDesignFloatingActionMiniButton}"   Margin="5,0,0,0"                                                    
+                                            CommandParameter="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="23" Height="23">
+                                            <materialDesign:PackIcon Kind="Eye" Height="15" Width="15" />
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn  Header="保存"  MinWidth="0">
+                                <DataGridTemplateColumn.CellTemplate >
+                                    <DataTemplate >
+                                        <Button Command="{Binding DataContext.RegionSaveCommand, ElementName=userControl}"     
+                                                Style="{StaticResource MaterialDesignFloatingActionButton}"
+                                                CommandParameter="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="23" Height="23">
+                                            <materialDesign:PackIcon Kind="ContentSave"  Height="17"  Width="17" VerticalAlignment="Center"/>
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="5,20,0,0" >
+                <materialDesign:Card  UniformCornerRadius="6" VerticalAlignment="Center" Margin="0,0,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Stretch" Height="32">
+                    <StackPanel Orientation="Horizontal" Margin="10,0">
+                        <TextBlock Text="特征选择" VerticalAlignment="Center" Margin="0"/>
+                        <ComboBox x:Name="comboBox_Feature" Width="100" Margin="10,0,0,0"
+                              materialDesign:ComboBoxAssist.ClassicMode="true" SelectedIndex="{Binding FeatureTypeIndex, Mode=TwoWay}">
+                            <ComboBoxItem Content="中心点"/>
+                            <ComboBoxItem Content="面积"/>
+                            <ComboBoxItem Content="长短轴"/>
+                            <ComboBoxItem Content="角度"/>
+                            <ComboBoxItem Content="灰度均值"/>
+                            <ComboBoxItem Content="灰度方差"/>
+                            <ComboBoxItem Content="最大最小灰度值"/>
+                        </ComboBox>
+                    </StackPanel>
+                </materialDesign:Card>
+            </StackPanel>
+            <materialDesign:Card Margin="5,10,5,5">
+                <StackPanel>
+                    <DataGrid Margin="0,2,0,0" IsReadOnly="False"
+                          ItemsSource="{Binding RegionsFeature}" 
+                          AlternatingRowBackground="#D1DFE7"
+                          HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="White">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="选择"  FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                            <CheckBox  IsChecked="{Binding DataContext.IsCheckAll,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,ElementName=userControl}" 
+                                                Command="{Binding DataContext.IsCheckAllCommand,  ElementName=userControl}" IsThreeState="True"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.HeaderTemplate>
+                                <DataGridTemplateColumn.CellTemplate >
+                                    <DataTemplate >
+                                        <CheckBox IsChecked="{Binding IsFeatureSelected,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                                  Command="{Binding DataContext.IsCheckCommand,ElementName=userControl}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <materialDesign:MaterialDataGridTextColumn Header="序号" 
+                                                           Binding="{Binding FeatureIndex}" 
+                                                           IsReadOnly="True"/>
+                            <materialDesign:MaterialDataGridTextColumn Header="特征类型" 
+                                                           Binding="{Binding FeatureType}" 
+                                                           IsReadOnly="True"/>
+                            <materialDesign:MaterialDataGridTextColumn Header="特征值"  
+                                                           Binding="{Binding}"  
+                                                           IsReadOnly="True"/>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+
+
+                </StackPanel>
+            </materialDesign:Card>
+            <Button Content="保存参数" Width="130" 
+                    Command="{Binding SaveCommand}" VerticalAlignment="Bottom" Margin="0,20,0,5"/>
+        </StackPanel>
+    </DockPanel>
+</UserControl>

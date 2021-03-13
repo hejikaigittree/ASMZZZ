@@ -1,0 +1,49 @@
+﻿using JFHub;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using JFInterfaceDef;
+
+namespace JFMethodCommonLib
+{
+    public class JFCM_SetSysPoolBool_S : JFMethodInitParamBase
+    {
+        static string PN_SysPoolItemName = "系统Bool变量名称";
+        static string PN_TargetVal = "写入值";
+        public JFCM_SetSysPoolBool_S()
+        {
+            DeclearInitParam(PN_SysPoolItemName, typeof(string), "");
+            DeclearInitParam(PN_TargetVal, typeof(bool), false);
+        }
+
+        public override JFParamDescribe GetInitParamDescribe(string name)
+        {
+            if (name == PN_SysPoolItemName)
+                return JFParamDescribe.Create(PN_SysPoolItemName, typeof(string), JFValueLimit.Options, JFHubCenter.Instance.DataPool.AllItemKeys);
+            return base.GetInitParamDescribe(name);
+        }
+        protected override bool ActionGenuine(out string errorInfo)
+        {
+            string itemName = GetInitParamValue(PN_SysPoolItemName) as string;
+            bool targetVal = Convert.ToBoolean(GetInitParamValue(PN_TargetVal));
+            JFHubCenter.Instance.DataPool.SetItemValue(itemName, targetVal);
+            errorInfo = "Success";
+            return true;
+        }
+
+        protected override bool InitializeGenuine(out string errorInfo)
+        {
+            string itemName = GetInitParamValue(PN_SysPoolItemName) as string;
+            if (!JFHubCenter.Instance.DataPool.ContainItem(itemName))
+            {
+                errorInfo = "系统数据池中未包含数据项:" + itemName;
+                return false;
+            }
+
+            errorInfo = "Success";
+            return true;
+        }
+    }
+}

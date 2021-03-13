@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit.3.12.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{372F9AC4-A7E0-4A61-A2DA-0CA4C7466D6C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ConvertExt</RootNamespace>
+    <AssemblyName>ConvertExt</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.ConfigurationManager, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Configuration.ConfigurationManager.4.7.0\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.AccessControl, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.4.7.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Permissions, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Permissions.4.7.0\lib\net461\System.Security.Permissions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.4.7.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ArrayExt.cs" />
+    <Compile Include="ArrayExt.Fill.cs" />
+    <Compile Include="CharExt.cs" />
+    <Compile Include="Collections\ArrayAdapter`1.cs" />
+    <Compile Include="Collections\BitList.cs" />
+    <Compile Include="Collections\BitListEqualityComparer.cs" />
+    <Compile Include="Collections\CharSet.cs" />
+    <Compile Include="Collections\CollectionDebugView`1.cs" />
+    <Compile Include="Collections\DictionaryExt.cs" />
+    <Compile Include="Collections\ListEqualityComparer`1.cs" />
+    <Compile Include="Collections\ListExt.cs" />
+    <Compile Include="Collections\ListQueue`1.cs" />
+    <Compile Include="Collections\ListStack`1.cs" />
+    <Compile Include="Collections\ObjectModel\CollectionBase`1.cs" />
+    <Compile Include="Collections\ObjectModel\CollectionHelper.cs" />
+    <Compile Include="Collections\ObjectModel\IteratorBase`1.cs" />
+    <Compile Include="Collections\ObjectModel\KeyedCollectionBase`2.cs" />
+    <Compile Include="Collections\ObjectModel\KeyedListBase`2.cs" />
+    <Compile Include="Collections\ObjectModel\ListBase`1.cs" />
+    <Compile Include="Collections\ObjectModel\ReadOnlyCollection`1.cs" />
+    <Compile Include="Collections\ObjectModel\ReadOnlyKeyedCollectionBase`2.cs" />
+    <Compile Include="Collections\ObjectModel\ReadOnlyList`1.cs" />
+    <Compile Include="Collections\ObjectModel\ReadOnlySet`1.cs" />
+    <Compile Include="Collections\ObjectModel\SetBase`1.cs" />
+    <Compile Include="Collections\SetEqualityComparer`1.cs" />
+    <Compile Include="CommonExceptions.cs" />
+    <Compile Include="Configurations\ConfigurationElementCollection`1.cs" />
+    <Compile Include="Configurations\ConfigurationElementCollection`2.cs" />
+    <Compile Include="ConversionCache.cs" />
+    <Compile Include="ConversionMethod.cs" />
+    <Compile Include="ConvertExt.cs" />
+    <Compile Include="DelegateBuilder.cs" />
+    <Compile Include="DoubleComparer.cs" />
+    <Compile Include="EnumerableExt.cs" />
+    <Compile Include="EnumExt.cs" />
+    <Compile Include="ExceptionResources.Designer.cs" />
+    <Compile Include="ExpressionHelper.cs" />
+    <Compile Include="FloatComparer.cs" />
+    <Compile Include="IntegerExt.Byte.cs" />
+    <Compile Include="IntegerExt.Int32.cs" />
+    <Compile Include="IntegerExt.Int64.cs" />
+    <Compile Include="IntegerExt.UInt32.cs" />
+    <Compile Include="IntegerExt.UInt64.cs" />
+    <Compile Include="IO\AggregateSourceException.cs" />
+    <Compile Include="IO\DirectoryExt.cs" />
+    <Compile Include="IO\FileExt.cs" />
+    <Compile Include="IO\ISourceFileLocatable.cs" />
+    <Compile Include="IO\ISourceLocatable.cs" />
+    <Compile Include="IO\PathExt.cs" />
+    <Compile Include="IO\SourceException.cs" />
+    <Compile Include="IO\SourceFileRange.cs" />
+    <Compile Include="IO\SourceLocatableExt.cs" />
+    <Compile Include="IO\SourceLocator.cs" />
+    <Compile Include="IO\SourcePosition.cs" />
+    <Compile Include="IO\SourceRange.cs" />
+    <Compile Include="IO\SourceReader.cs" />
+    <Compile Include="MemberAccessor`1.cs" />
+    <Compile Include="MemberAccessor`2.cs" />
+    <Compile Include="MethodExt.cs" />
+    <Compile Include="MethodSwitcher.cs" />
+    <Compile Include="MethodSwitcherManual`1.cs" />
+    <Compile Include="PowerBinder.cs" />
+    <Compile Include="ProcessorAttribute.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomExt.cs" />
+    <Compile Include="ResDescriptionAttribute.cs" />
+    <Compile Include="Resources.Designer.cs" />
+    <Compile Include="StringExt.cs" />
+    <Compile Include="TextValuePair.cs" />
+    <Compile Include="TextValuePairCollection.cs" />
+    <Compile Include="TextValuePairCollection`1.cs" />
+    <Compile Include="TextValuePair`1.cs" />
+    <Compile Include="Text\CharsReader.cs" />
+    <Compile Include="Text\TokenParser`1.cs" />
+    <Compile Include="Text\TokenReader`1.cs" />
+    <Compile Include="Text\Token`1.cs" />
+    <Compile Include="Tristate.cs" />
+    <Compile Include="TypeExt.cs" />
+    <Compile Include="UniqueValue`1.cs" />
+    <Compile Include="Utility\CacheDefaultEventArgs.cs" />
+    <Compile Include="Utility\CacheElement.cs" />
+    <Compile Include="Utility\CacheElementCollection.cs" />
+    <Compile Include="Utility\CacheFactory.cs" />
+    <Compile Include="Utility\CacheResolveEventArgs.cs" />
+    <Compile Include="Utility\CacheSection.cs" />
+    <Compile Include="Utility\Hash.cs" />
+    <Compile Include="Utility\ICache`2.cs" />
+    <Compile Include="Utility\LruCacheNoSync`2.cs" />
+    <Compile Include="Utility\LruCache`2.cs" />
+    <Compile Include="Utility\LruNodeNoSync`2.cs" />
+    <Compile Include="Utility\LruNode`2.cs" />
+    <Compile Include="Utility\LruNormalNode`2.cs" />
+    <Compile Include="Utility\SimplyCache`2.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ExceptionResources.resx" />
+    <EmbeddedResource Include="ExceptionResources.zh-CN.resx" />
+    <EmbeddedResource Include="Resources.resx" />
+    <EmbeddedResource Include="Resources.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.12.0\build\NUnit.props'))" />
+  </Target>
+</Project>

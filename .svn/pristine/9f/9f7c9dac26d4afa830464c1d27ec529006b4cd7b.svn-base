@@ -1,0 +1,112 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using JFInterfaceDef;
+using JFHub;
+namespace JFMethodCommonLib
+{
+    [JFCategoryLevels(new string[] { "JF 设备控制", "Axis" })]
+    [JFDisplayName("轴归零_S")]
+    public class JFCM_Home_S : JFMethodInitParamBase
+    {
+        public JFCM_Home_S()
+        {
+            string[] allAxisIDs = JFHubCenter.Instance.MDCellNameMgr.AllAxisNames();
+            DeclearInitParam(JFParamDescribe.Create("轴ID", typeof(string), JFValueLimit.Options, allAxisIDs), "");
+            //DeclearInitParam(JFParamDescribe.Create("测试数值功能", typeof(string[]), JFValueLimit.NonLimit, null), null);
+        }
+        protected override bool ActionGenuine(out string errorInfo)
+        { 
+            IJFInitializable dev = null;
+            JFDevCellInfo ci = null;
+            string errInfo = null;
+            string axisID = GetInitParamValue("轴ID") as string;
+            if (!JFCMFunction.CheckDevCellName(JFCMFunction.Axis, axisID, out dev, out ci, out errInfo))
+            {
+                errorInfo = errInfo;
+                return false;
+            }
+
+            IJFModule_Motion md = (dev as IJFDevice_MotionDaq).GetMc(ci.ModuleIndex);
+
+            bool[] AxisStatus = null;
+            int err = md.GetMotionStatus(ci.ChannelIndex, out AxisStatus);
+            if(err != 0)
+            {
+                errorInfo = "归0前获取轴状态失败:" + md.GetErrorInfo(err);
+                return false;
+            }
+
+            //if(md.IsSVO)
+            if (!AxisStatus[md.MSID_SVO])
+            {
+                errorInfo = "轴伺服未上电";
+                return false;
+            }
+
+            if (AxisStatus[md.MSID_ALM])
+            {
+                errorInfo = "轴伺服已报警";
+                return false;
+            }
+
+            if (!AxisStatus[md.MSID_MDN])
+            {
+                errorInfo = "轴当前运动未完成";
+                return false;
+            }
+
+
+            err = md.Home(ci.ChannelIndex);
+            if(err != 0)
+            {
+                errorInfo = "调用SDK失败:" + md.GetErrorInfo(err);
+                return false;
+            }
+
+            errorInfo = "Success";
+            return true;
+        }
+
+        public override bool SetInitParamValue(string name, object value)
+        {
+            if(name == "轴ID")
+            {
+                string axisID = value as string;
+                if(string.IsNullOrEmpty(axisID))
+                {
+                    InitErrorInfo = "参数项:\"轴ID\"为空字串";
+                    return false;
+                }
+
+                if(!JFHubCenter.Instance.MDCellNameMgr.ContainAxisName(axisID))
+                {
+                    InitErrorInfo = "参数项:\"轴ID\"的值:\"" + axisID +"\"在设备名称表中不存在";
+                    return false;
+                }
+            }
+            return base.SetInitParamValue(name, value);
+        }
+
+        protected override bool InitializeGenuine(out string errorInfo)
+        {
+            string axisID = GetInitParamValue("轴ID") as string;
+            if(string.IsNullOrEmpty(axisID))
+            {
+                errorInfo = "参数项:\"轴ID\"未设置/空值"; 
+                return false;
+            }
+
+            if (!JFHubCenter.Instance.MDCellNameMgr.ContainAxisName(axisID))
+            {
+                errorInfo = "参数项:\"轴ID\"的值:\"" + axisID + "\"在设备名称表中不存在";
+                return false;
+            }
+
+            errorInfo = "Success";
+            return true;
+        }
+    }
+}

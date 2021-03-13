@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="LFAOIReview.Mapping" x:ClassModifier="internal" x:Name="userControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LFAOIReview"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <DockPanel>
+        <DockPanel Height="{Binding BottomBarHeight}" DockPanel.Dock="Bottom">
+            <TextBlock Text="{Binding SelectionText}"
+                       Margin="0,0,10,0" DockPanel.Dock="Right" VerticalAlignment="Center"
+                       FontSize="12" FontFamily="Microsoft YaHei"/>
+            <ItemsControl ItemsSource="{Binding ExampleCollection, ElementName=userControl}" VerticalAlignment="Center">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="ExampleData">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Rectangle Width="15" Height="15" 
+                                       Stroke="{Binding BorderColor}" 
+                                       Fill="{Binding FillColor}" 
+                                       StrokeThickness="0.5" 
+                                       Margin="5,0,0,0"/>
+                            <TextBlock Text="{Binding DieState}" 
+                                       VerticalAlignment="Center" Margin="3,0,0,0"
+                                       FontSize="12" FontFamily="Microsoft YaHei"/>
+                            <TextBlock Text="{Binding Count}" 
+                                       VerticalAlignment="Center" Margin="1,0,0,0"
+                                       FontSize="12" FontFamily="Microsoft YaHei"/>
+                            <StackPanel.RenderTransform>
+                                <TranslateTransform X="{Binding VariableX}"
+                                                    Y="{Binding VariableY}"/>
+                            </StackPanel.RenderTransform>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </DockPanel>
+        <ScrollViewer x:Name="scrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <Grid x:Name="grid">
+                <ItemsControl ItemsSource="{Binding DataCollection, ElementName=userControl}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="MappingData">
+                            <Grid  Height="{Binding Height}" MouseMove="Rectangle_MouseMove" PreviewMouseLeftButtonDown="Rectangle_PreviewMouseLeftButtonDown" PreviewMouseRightButtonDown="Rectangle_PreviewMouseRightButtonDown"
+                                   Width="{Binding Width}" HorizontalAlignment="Left" VerticalAlignment="Top">
+
+                                <Border HorizontalAlignment="Left" 
+                                        VerticalAlignment="Top"     
+                                        BorderThickness="{Binding BorderThickness}"
+                                        BorderBrush="{Binding BorderColor}"    
+                                        Background="{Binding FillColor}"  
+                                        Height="{Binding Height}"
+                                        Width="{Binding Width}">
+                                    <TextBlock FontSize="{Binding FontSize}" 
+                                               Text="{Binding Text}" 
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Grid.RenderTransform>
+                                    <TranslateTransform X="{Binding VariableX}"
+                                                        Y="{Binding VariableY}"/>
+                                </Grid.RenderTransform>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Grid/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Grid>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>

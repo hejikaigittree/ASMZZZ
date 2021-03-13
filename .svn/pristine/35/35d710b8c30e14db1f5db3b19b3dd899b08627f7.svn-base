@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace JFApp
+{
+    /// <summary>
+    /// 手动测试各工站的界面
+    /// </summary>
+    public partial class FormManual : Form
+    {
+        public FormManual()
+        {
+            InitializeComponent();
+        }
+
+        private void FormManual_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FormManual_VisibleChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
+}

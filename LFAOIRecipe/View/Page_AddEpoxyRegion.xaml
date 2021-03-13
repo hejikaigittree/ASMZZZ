@@ -1,0 +1,325 @@
+﻿<UserControl x:Name="userControl" 
+             x:Class="LFAOIRecipe.Page_AddEpoxyRegion"
+             x:ClassModifier="internal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LFAOIRecipe"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"      
+             mc:Ignorable="d"             
+             Background="White"
+             MinWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel x:Name="dockPanel" LastChildFill="False">
+        <StackPanel DockPanel.Dock="Top" Width="706">
+            <materialDesign:Card Margin="5,5,5,0">
+                <StackPanel>
+                    <TextBlock Text="{Binding DisplayName}"
+                           FontSize="16"
+                           Margin="10"
+                           Foreground="DarkBlue"/>
+                    <TextBlock Margin="10,0,10,10"
+                       Text="【用矩形工具绘制参考芯片图像的银胶区域，设置检测参数，在检测图集中进行银胶检测】"
+                       TextWrapping="Wrap">
+                    </TextBlock>
+                </StackPanel>
+            </materialDesign:Card>
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal" DockPanel.Dock="Top">
+                <Button x:Name="button_load" Content="加载全局数据"
+                    Margin="5,-1,0,0"
+                    Command="{Binding LoadReferenceCommand}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBlock Text="{Binding ReferenceDirectory}" 
+                       Margin="10,0,0,0"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Center" Width="570" FontSize="12"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                <!--
+                <Button Content="银胶属于"  Margin="5,0,0,0" Height="Auto" ToolTip="选择银胶所在位置，即在哪个芯片上！"
+                                    Command="{Binding WireOnWhatCommand}" Padding="10,4"/>
+                <ComboBox Width="100" Margin="5,0,0,0"  materialDesign:ComboBoxAssist.ClassicMode="true" 
+                                      x:Name="EpoxyOnWhat"  
+                                      SelectedIndex="{Binding EpoxyParameter.OnRecipesIndex}" HorizontalContentAlignment="Center" />
+                -->
+
+                <StackPanel Orientation="Horizontal" Margin="0" VerticalAlignment="Center">
+                    <TextBlock Text="银胶属于" Margin="10,0,0,0"/>
+                    <ComboBox Margin="5,0,0,0"  materialDesign:ComboBoxAssist.ClassicMode="true" MinWidth="100"
+                        x:Name="EpoxyOnWhat" 
+                        ItemsSource="{Binding EpoxyParameter.OnRecipesIndexs,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                        SelectedIndex="{Binding EpoxyParameter.OnRecipesIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock Text="添加银胶参考区域" Margin="10,0,0,0"></TextBlock>
+                <Button Command="{Binding LoadReferenceUserRegionCommond}"
+                                    Style="{StaticResource MaterialDesignFloatingActionButton}"
+                                    Margin="20,0,0,0"
+                                    Width="26" Height="26">
+                    <materialDesign:PackIcon Kind="Folder" />
+                </Button>
+                <Button Content="添加区域"
+                    Margin="20,0,0,0"
+                    Command="{Binding AddReferenceUserRegionCommand}"/>
+                <Button Content="删除区域"
+                    Margin="20,0,0,0"
+                    Command="{Binding RemoveReferenceUserRegionCommand}"/>
+                <Button Content="修改区域"  Margin="20,0,0,0" Height="Auto" ToolTip="区域修改完，鼠标右键确认！"
+                        Command="{Binding ModifyReferenceUserRegionCommand}"/>
+            </StackPanel>
+            <materialDesign:Card Margin="5,10,5,5">
+                <StackPanel>
+                    <DataGrid Margin="0,5,0,0" IsReadOnly="False"
+                          ItemsSource="{Binding EpoxyReferenceUserRegions}" 
+                          AlternatingRowBackground="#D1DFE7"
+                          HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="White">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn Header="选择"
+                                        Binding="{Binding IsSelected}" 
+                                        ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"/>
+                            <materialDesign:MaterialDataGridTextColumn Header="序号" 
+                                                           Binding="{Binding Index}" 
+                                                           IsReadOnly="True"/>
+                            <DataGridTemplateColumn  Header="显示">
+                                <DataGridTemplateColumn.CellTemplate >
+                                    <DataTemplate >
+                                        <CheckBox IsChecked="{Binding IsEnable,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"         
+                                      Command="{Binding DataContext.ReferenceUserRegionEnableChangedCommand, ElementName=userControl}"
+                                      CommandParameter="{Binding}"
+                                      Style="{StaticResource MaterialDesignCheckBox}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <materialDesign:MaterialDataGridTextColumn Header="形状" 
+                                                           Binding="{Binding RegionType}" 
+                                                           IsReadOnly="True"/>
+                            <materialDesign:MaterialDataGridTextColumn Header="参数" 
+                                                           Binding="{Binding}" 
+                                                           IsReadOnly="True"/>
+
+                            <!--<DataGridCheckBoxColumn Header="是否启用"
+                                        Binding="{Binding IsEnable}" 
+                                        ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
+                    <DataGridCheckBoxColumn.CellStyle>
+                        <Style>
+                            <EventSetter Event="CheckBox.Checked" Handler="CheckBox_Checked"/>
+                        </Style>
+                    </DataGridCheckBoxColumn.CellStyle>
+                </DataGridCheckBoxColumn>-->
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </materialDesign:Card>
+            <StackPanel Orientation="Horizontal"
+                    Margin="0,20,0,0">
+                <TextBlock Text="请绘制银胶区域"
+                       VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0"/>
+                <Button Content="添加区域"
+                    Margin="20,0,0,0"
+                    Command="{Binding AddUserRegionCommand}"/>
+                <Button Content="删除区域"
+                    Margin="20,0,0,0"
+                    Command="{Binding RemoveUserRegionCommand}"/>
+                <Button Content="修改区域"  Margin="20,0,0,0" Height="Auto" ToolTip="区域修改完，鼠标右键确认！"
+                        Command="{Binding ModifyRegionCommand}"/>
+
+                <Button Height="32" Command="{Binding DisplayAutoEpoxyRegionCommand}" 
+                                Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Width="32" Margin="20,0,0,0">
+                    <materialDesign:PackIcon  Kind="Eye"  Height="21"  Width="21" />
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                    Margin="0,20,0,0">
+                <Button Content="自动生成银胶区域"
+                    Margin="10,0,0,0"
+                    Command="{Binding AutoGenEpoxyRegionCommand}"/>
+                <DockPanel ToolTip="银胶区域高度"  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Label Content="银胶区高度" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="80"/>
+                    <TextBox Text="{Binding EpoxyRegionHigh}" Width="70" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </DockPanel>
+                <DockPanel ToolTip="银胶区域宽度相对于参考区边长扩展长度"  Margin="5,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Label Content="银胶区扩展长度" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="100"/>
+                    <TextBox Text="{Binding EpoxyLenExpand}" Width="70" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </DockPanel>
+                <DockPanel ToolTip="银胶区域距离参考区偏移距离"  Margin="5,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Label Content="芯片保护区距离" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="100"/>
+                    <TextBox Text="{Binding EpoxyRegionOffset}" Width="70" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </DockPanel>
+            </StackPanel>
+
+            <materialDesign:Card Margin="5,10,5,5">
+                <StackPanel>
+                    <DataGrid Margin="0,5,0,0" IsReadOnly="False"
+                          ItemsSource="{Binding EpoxyUserRegions}" 
+                          SelectedItem="{Binding SelectedUserRegion}" 
+                          AlternatingRowBackground="#D1DFE7"
+                          HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="White">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn Header="选择"
+                                        Binding="{Binding IsSelected}" 
+                                        ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"/>
+                            <materialDesign:MaterialDataGridTextColumn Header="序号" 
+                                                           Binding="{Binding Index}" 
+                                                           IsReadOnly="True"/>
+                            <DataGridTemplateColumn  Header="显示">
+                                <DataGridTemplateColumn.CellTemplate >
+                                    <DataTemplate >
+                                        <CheckBox IsChecked="{Binding IsEnable,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"         
+                                      Command="{Binding DataContext.UserRegionEnableChangedCommand, ElementName=userControl}"
+                                      CommandParameter="{Binding}"
+                                      Style="{StaticResource MaterialDesignCheckBox}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <materialDesign:MaterialDataGridTextColumn Header="形状" 
+                                                           Binding="{Binding RegionType}" 
+                                                           IsReadOnly="True"/>
+                            <materialDesign:MaterialDataGridTextColumn Header="参数" 
+                                                           Binding="{Binding}" 
+                                                           IsReadOnly="True"/>
+
+                            <!--<DataGridCheckBoxColumn Header="是否启用"
+                                        Binding="{Binding IsEnable}" 
+                                        ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
+                    <DataGridCheckBoxColumn.CellStyle>
+                        <Style>
+                            <EventSetter Event="CheckBox.Checked" Handler="CheckBox_Checked"/>
+                        </Style>
+                    </DataGridCheckBoxColumn.CellStyle>
+                </DataGridCheckBoxColumn>-->
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <StackPanel Margin="0,15,0,0">
+
+                <DockPanel HorizontalAlignment="Center"  DockPanel.Dock="Top" Margin="0,20,0,10">
+                    <Label Content="验证图像通道选择" Width="140" HorizontalContentAlignment="Right"/>
+                    <ComboBox Name="comboBox_EpoxyVerify"                                    
+                            ItemsSource="{Binding ChannelNames}"
+                            DisplayMemberPath="Name"
+                            Margin="0,0,0,0"
+                            materialDesign:ComboBoxAssist.ClassicMode="true"
+                            SelectedIndex="{Binding ImageIndex, Mode=TwoWay}"  Padding="4,5" Foreground="#FF555555" HorizontalAlignment="Left" Width="140" FontSize="14" >
+                    </ComboBox>
+                </DockPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,10">
+                    <TextBlock Text="区域【 " VerticalAlignment="Center"></TextBlock>
+                    <TextBlock Text="{Binding SelectedUserRegion.Index}"  VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5,0"/>
+                    <TextBlock Text=" 】检测Epoxy算法参数设置" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+
+                <materialDesign:Card HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFFAFAFA">
+                    <StackPanel HorizontalAlignment="Center" Background="#FFFAFAFA" Width="396" Margin="10,10,10,10">
+                        <DockPanel ToolTip="设置阈值分割的灰度阈值，2个参数（灰度上下限）"  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="阈值分割的灰度阈值" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="160"/>
+                            <TextBox Text="{Binding SelectedUserRegion.EpoxyModelVerifyParameterSet.ThreshGray[0]}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding SelectedUserRegion.EpoxyModelVerifyParameterSet.ThreshGray[1]}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </DockPanel>
+                        <!--
+                    <DockPanel ToolTip="亮暗因数"  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Label Content="亮暗因数" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="160"/>
+                        <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                          SelectedValuePath="Content"
+                          Text="{Binding EpoxyModelVerifyParameter.LightOrDark}" HorizontalAlignment="Left" Width="194" HorizontalContentAlignment="Center">
+                            <ComboBoxItem Content="light"/>
+                            <ComboBoxItem Content="dark"/>
+                        </ComboBox>
+                    </DockPanel>
+                     -->
+                        <DockPanel ToolTip="为去除金线干扰进行开运算的尺寸"  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="开运算的尺寸" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="160"/>
+                            <TextBox Text="{Binding SelectedUserRegion.EpoxyModelVerifyParameterSet.OpeningSize}" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel Width="360"
+                       ToolTip="银胶目标提取的面积阈值，可以为1个参数（面积下限）或2个参数（面积上下限）"
+                       Margin="0,5,0,0">
+                            <Label Content="银胶目标提取的面积阈值" Width="160" HorizontalContentAlignment="Right"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox Text="{Binding SelectedUserRegion.EpoxyModelVerifyParameterSet.EpoxySizeTh[0]}" Width="100" HorizontalAlignment="Left" HorizontalContentAlignment="Center"/>
+                                <TextBox Text="{Binding SelectedUserRegion.EpoxyModelVerifyParameterSet.EpoxySizeTh[1]}" Width="100" HorizontalAlignment="Left" HorizontalContentAlignment="Center"/>
+                            </StackPanel>
+                        </DockPanel>
+                        <DockPanel ToolTip="设置银胶长度阈值：0-1之间，银胶长度与芯片长度的比值：上下左右 "  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="银胶长度阈值" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="160"/>
+                            <TextBox Text="{Binding SelectedUserRegion.EpoxyModelVerifyParameterSet.EpoxyLenTh}" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel ToolTip="设置银胶最高度距离芯片边缘的高度 ：上下左右的高度  单位像素  "  Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="银胶最高度距芯片边缘高度" HorizontalContentAlignment="Right" Foreground="#DD000000" Width="160"/>
+                            <TextBox Text="{Binding SelectedUserRegion.EpoxyModelVerifyParameterSet.EpoxyHeiTh}" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </DockPanel>
+                    </StackPanel>
+                </materialDesign:Card>
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Bottom" Margin="0">
+                <StackPanel Orientation="Horizontal" Margin="10,10,10,0" HorizontalAlignment="Center">
+                    <TextBlock Text="检测图像路径  " VerticalAlignment="Stretch" Margin="0" FontSize="12" MaxWidth="Infinity"/>
+                    <TextBlock Text="{Binding PImageIndexPath}"
+                            Margin="10,0,0,0"
+                            TextWrapping="Wrap"
+                            VerticalAlignment="Center" FontSize="12" HorizontalAlignment="Left" MaxWidth="490"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0,20" VerticalAlignment="Center">
+                    <Button Content="检测图集"
+                        Width="130"
+                        Command="{Binding ImagesSetVerifyCommand}"/>
+                    <Button Background="{x:Null}" BorderBrush="{x:Null}" Padding="0"
+                                Command="{Binding PreviousCommand}" Foreground="{x:Null}" Margin="30,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button.Content>
+                            <Viewbox>
+                                <Canvas Width="24" Height="24">
+                                    <Path Fill="#FF7A7A7A" Data="M6,18V6H8V18H6M9.5,12L18,6V18L9.5,12Z" />
+                                </Canvas>
+                            </Viewbox>
+                        </Button.Content>
+                    </Button>
+                    <Button Content="检测验证"
+                        Width="130"
+                        Command="{Binding VerifyCommand}" Margin="0"/>
+                    <Button Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Padding="0"
+                                Command="{Binding NextCommand}">
+                        <Button.Content>
+                            <Viewbox>
+                                <Canvas Width="24" Height="24">
+                                    <Path Fill="#FF7A7A7A" Data="M16,18H18V6H16M6,18L14.5,12L6,6V18Z" />
+                                </Canvas>
+                            </Viewbox>
+                        </Button.Content>
+                    </Button>
+                    <Button Content="保存参数"
+                        Width="130"
+                        Margin="30,0,0,0"
+                        Command="{Binding SaveCommand}"/>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Top" Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Width="32"
+                        ToolTip="用现有图集！"
+                        Command="{Binding RefreshImagesSet}"
+                            Height="32"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Margin="10,0,20,0">
+                        <materialDesign:PackIcon Kind="Refresh" />
+                    </Button>
+                    <TextBlock Text="{Binding EpoxyModelVerifyParameter.VerifyImagesDirectory}" FontSize="12" MaxWidth="600" HorizontalAlignment="Left" Margin="5,0,0,0" />
+                    <TextBlock Text="{Binding EpoxyModelVerifyParameter.CurrentVerifySet,StringFormat=图集数量【{0:F0}】}"  FontSize="12" MaxWidth="600" HorizontalAlignment="Left" Margin="10,0,0,0" />
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+
+    </DockPanel>
+</UserControl>

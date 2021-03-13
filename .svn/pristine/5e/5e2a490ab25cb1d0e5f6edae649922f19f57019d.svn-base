@@ -1,0 +1,154 @@
+﻿namespace JFApp
+{
+    partial class FormCfg
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.tabCtrl = new System.Windows.Forms.TabControl();
+            this.tpStationEnableCfg = new System.Windows.Forms.TabPage();
+            this.tpDevCfg = new System.Windows.Forms.TabPage();
+            this.tpDllMgr = new System.Windows.Forms.TabPage();
+            this.tpDevNameCfg = new System.Windows.Forms.TabPage();
+            this.tpStationMgr = new System.Windows.Forms.TabPage();
+            this.tpSystemCfg = new System.Windows.Forms.TabPage();
+            this.tpStationCfg = new System.Windows.Forms.TabPage();
+            this.tabCtrl.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // tabCtrl
+            // 
+            this.tabCtrl.Controls.Add(this.tpStationEnableCfg);
+            this.tabCtrl.Controls.Add(this.tpStationCfg);
+            this.tabCtrl.Controls.Add(this.tpDllMgr);
+            this.tabCtrl.Controls.Add(this.tpDevCfg);
+            this.tabCtrl.Controls.Add(this.tpDevNameCfg);
+            this.tabCtrl.Controls.Add(this.tpStationMgr);
+            this.tabCtrl.Controls.Add(this.tpSystemCfg);
+            this.tabCtrl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabCtrl.Location = new System.Drawing.Point(0, 0);
+            this.tabCtrl.Name = "tabCtrl";
+            this.tabCtrl.SelectedIndex = 0;
+            this.tabCtrl.Size = new System.Drawing.Size(800, 450);
+            this.tabCtrl.TabIndex = 0;
+            // 
+            // tpStationEnableCfg
+            // 
+            this.tpStationEnableCfg.Location = new System.Drawing.Point(4, 22);
+            this.tpStationEnableCfg.Name = "tpStationEnableCfg";
+            this.tpStationEnableCfg.Padding = new System.Windows.Forms.Padding(3);
+            this.tpStationEnableCfg.Size = new System.Drawing.Size(792, 424);
+            this.tpStationEnableCfg.TabIndex = 0;
+            this.tpStationEnableCfg.Text = "工站使能列表";
+            this.tpStationEnableCfg.UseVisualStyleBackColor = true;
+            // 
+            // tpDevCfg
+            // 
+            this.tpDevCfg.Location = new System.Drawing.Point(4, 22);
+            this.tpDevCfg.Name = "tpDevCfg";
+            this.tpDevCfg.Padding = new System.Windows.Forms.Padding(3);
+            this.tpDevCfg.Size = new System.Drawing.Size(792, 424);
+            this.tpDevCfg.TabIndex = 1;
+            this.tpDevCfg.Text = "设备管理";
+            this.tpDevCfg.UseVisualStyleBackColor = true;
+            // 
+            // tpDllMgr
+            // 
+            this.tpDllMgr.Location = new System.Drawing.Point(4, 22);
+            this.tpDllMgr.Name = "tpDllMgr";
+            this.tpDllMgr.Size = new System.Drawing.Size(792, 424);
+            this.tpDllMgr.TabIndex = 2;
+            this.tpDllMgr.Text = "拓展软件库";
+            this.tpDllMgr.UseVisualStyleBackColor = true;
+            // 
+            // tpDevNameCfg
+            // 
+            this.tpDevNameCfg.Location = new System.Drawing.Point(4, 22);
+            this.tpDevNameCfg.Name = "tpDevNameCfg";
+            this.tpDevNameCfg.Padding = new System.Windows.Forms.Padding(3);
+            this.tpDevNameCfg.Size = new System.Drawing.Size(792, 424);
+            this.tpDevNameCfg.TabIndex = 3;
+            this.tpDevNameCfg.Text = "设备通道命名";
+            this.tpDevNameCfg.UseVisualStyleBackColor = true;
+            // 
+            // tpStationMgr
+            // 
+            this.tpStationMgr.Location = new System.Drawing.Point(4, 22);
+            this.tpStationMgr.Name = "tpStationMgr";
+            this.tpStationMgr.Padding = new System.Windows.Forms.Padding(3);
+            this.tpStationMgr.Size = new System.Drawing.Size(792, 424);
+            this.tpStationMgr.TabIndex = 4;
+            this.tpStationMgr.Text = "工站管理";
+            this.tpStationMgr.UseVisualStyleBackColor = true;
+            // 
+            // tpSystemCfg
+            // 
+            this.tpSystemCfg.Location = new System.Drawing.Point(4, 22);
+            this.tpSystemCfg.Name = "tpSystemCfg";
+            this.tpSystemCfg.Padding = new System.Windows.Forms.Padding(3);
+            this.tpSystemCfg.Size = new System.Drawing.Size(792, 424);
+            this.tpSystemCfg.TabIndex = 5;
+            this.tpSystemCfg.Text = "系统配置";
+            this.tpSystemCfg.UseVisualStyleBackColor = true;
+            // 
+            // tpStationCfg
+            // 
+            this.tpStationCfg.Location = new System.Drawing.Point(4, 22);
+            this.tpStationCfg.Name = "tpStationCfg";
+            this.tpStationCfg.Padding = new System.Windows.Forms.Padding(3);
+            this.tpStationCfg.Size = new System.Drawing.Size(792, 424);
+            this.tpStationCfg.TabIndex = 6;
+            this.tpStationCfg.Text = "工站配置管理";
+            this.tpStationCfg.UseVisualStyleBackColor = true;
+            // 
+            // FormCfg
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.tabCtrl);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "FormCfg";
+            this.Text = "FormCfg";
+            this.Load += new System.EventHandler(this.FormCfg_Load);
+            this.VisibleChanged += new System.EventHandler(this.FormCfg_VisibleChanged);
+            this.tabCtrl.ResumeLayout(false);
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.TabControl tabCtrl;
+        private System.Windows.Forms.TabPage tpStationEnableCfg;
+        private System.Windows.Forms.TabPage tpDevCfg;
+        private System.Windows.Forms.TabPage tpStationCfg;
+        private System.Windows.Forms.TabPage tpDllMgr;
+        private System.Windows.Forms.TabPage tpDevNameCfg;
+        private System.Windows.Forms.TabPage tpStationMgr;
+        private System.Windows.Forms.TabPage tpSystemCfg;
+    }
+}

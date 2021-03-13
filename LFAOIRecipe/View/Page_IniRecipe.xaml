@@ -1,0 +1,175 @@
+﻿<UserControl x:Name="userControl" 
+             x:Class="LFAOIRecipe.Page_IniRecipe"
+             x:ClassModifier="internal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LFAOIRecipe"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"      
+             mc:Ignorable="d"             
+             Background="White"
+             MinWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel x:Name="dockPanel">
+        <StackPanel DockPanel.Dock="Top">
+            <materialDesign:Card Margin="5,5,5,0">
+                <StackPanel>
+                    <TextBlock Text="{Binding DisplayName}"
+                           FontSize="16"
+                           Margin="10"
+                           Foreground="DarkBlue"/>
+                    <TextBlock Margin="10,0,10,10"
+                       Text="【加载参考图像图集，Die区域(矩形)添加到列表，每个矩形框包含一颗Die，选择参考Die区域，保存全局数据】"
+                       TextWrapping="Wrap"/>
+                </StackPanel>
+            </materialDesign:Card>
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <materialDesign:Card  UniformCornerRadius="6" VerticalAlignment="Center" Background="White" HorizontalAlignment="Left" Margin="5,0,0,0" Height="34">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0,0,0" Height="32">
+                        <TextBlock
+                       Text="产品目录路"
+                       TextWrapping="Wrap" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </materialDesign:Card>
+                <TextBlock
+                       Text="{Binding ProductPath}"
+                       TextWrapping="Wrap" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="12"/>
+            </StackPanel>
+            <DockPanel x:Name="dockPanel_IC_TrainSet" Margin="0,20,0,0">
+                <Button x:Name="button_IC_TrainSet" Content="生成/选择训练图集"
+                    Command="{Binding SelectedTrainningImageDirectoryCommand}" Margin="5,0,0,0"/>
+                <TextBlock Text="{Binding iniParameters.TrainningImagesDirectory}"
+                       Margin="10,0,0,0"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="12"/>
+            </DockPanel>
+            <DockPanel x:Name="dockPanel_IC_Image" Margin="0,20,0,0">
+                <Button x:Name="button_IC_Image" Content="加载图像"
+                    Width="100"
+                    Command="{Binding LoadImageCommand}" Margin="5,0,0,0"/>
+                <TextBlock Text="{Binding iniParameters.ImagePath}"
+                       Margin="10,0,0,0"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="12"/>
+            </DockPanel>
+            <DockPanel  Margin="0,20,0,0" HorizontalAlignment="Left">
+                <TextBlock Text="显示通道图"
+                       VerticalAlignment="Center" Margin="10,0,0,0"/>
+                <ComboBox x:Name="comboBox_addMatchRegion" Width="70"
+                          ItemsSource="{Binding iniParameters.ChannelNames}"
+                          DisplayMemberPath="Name"
+                          Margin="10,0,0,0"
+                          materialDesign:ComboBoxAssist.ClassicMode="true"
+                          SelectedIndex="{Binding SwitchImageChannelIndex, Mode=TwoWay}">
+                </ComboBox>
+            </DockPanel>
+            <DockPanel  Margin="0,20,0,0" HorizontalAlignment="Left">
+                <Button  Content="加载Die区域"
+                    Command="{Binding LoadDieRegionCommand}" Height="32" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+            </DockPanel>
+            
+            <StackPanel Orientation="Horizontal"
+                    Margin="0,20,0,0">
+                <TextBlock Text="请绘制Die区域"
+                       VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0"/>
+                
+
+
+                <TextBlock Text="选择图像"
+                       VerticalAlignment="Center" Padding="0" Margin="38,0,0,0"/>
+                <ComboBox Width="70"
+                      Margin="10,0,0,0"
+                      materialDesign:ComboBoxAssist.ClassicMode="true"
+                      SelectedIndex="{Binding SwitchImageComboBoxIndex, Mode=TwoWay}">
+                    <ComboBoxItem Content="整图"/>
+                    <ComboBoxItem Content="Die区域"/>
+                </ComboBox>
+                <Button Content="添加区域"
+                    Margin="20,0,0,0"
+                    Command="{Binding AddUserRegionCommand}"/>
+                <Button Content="删除区域"
+                    Margin="20,0,0,0"
+                    Command="{Binding RemoveUserRegionCommand}"/>
+                <Button Content="修改区域"  Margin="20,0,0,0" Height="Auto" ToolTip="区域修改完，鼠标右键确认！"
+                        Command="{Binding ModifyRegionCommand}"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Margin="0">
+            <materialDesign:Card Margin="5,5,5,0">
+                <DataGrid Margin="0,5,0,0" IsReadOnly="False" AlternatingRowBackground="#D1DFE7"
+                  ItemsSource="{Binding DieUserRegions}" Background="White">
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn Header="选择"
+                                        Binding="{Binding IsSelected}" 
+                                        ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"/>
+                        <materialDesign:MaterialDataGridTextColumn Header="序号" 
+                                                           Binding="{Binding Index}" 
+                                                           IsReadOnly="True"/>
+                        <DataGridTemplateColumn  Header="启用">
+                            <DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate >
+                                    <CheckBox IsChecked="{Binding IsEnable,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"         
+                                      Command="{Binding DataContext.UserRegionEnableChangedCommand, ElementName=userControl}"
+                                      CommandParameter="{Binding}"
+                                      Style="{StaticResource MaterialDesignCheckBox}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <materialDesign:MaterialDataGridTextColumn Header="形状" 
+                                                           Binding="{Binding RegionType}" 
+                                                           IsReadOnly="True"/>
+                        <materialDesign:MaterialDataGridTextColumn Header="参数" 
+                                                           Binding="{Binding}" 
+                                                           IsReadOnly="True"/>
+
+                        <!--<DataGridCheckBoxColumn Header="是否启用"
+                                        Binding="{Binding IsEnable}" 
+                                        ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
+                    <DataGridCheckBoxColumn.CellStyle>
+                        <Style>
+                            <EventSetter Event="CheckBox.Checked" Handler="CheckBox_Checked"/>
+                        </Style>
+                    </DataGridCheckBoxColumn.CellStyle>
+                </DataGridCheckBoxColumn>-->
+                    </DataGrid.Columns>
+                </DataGrid>
+            </materialDesign:Card>
+            <StackPanel x:Name="stackPanel_forCutOut" Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock Text="选择Die区域制作模板，模板创建完成参考Die勿更改    区域序号"
+                       VerticalAlignment="Center" Margin="10,0,0,0"/>
+                <ComboBox x:Name="ComboBox_Die" Width="50" 
+                      materialDesign:ComboBoxAssist.ClassicMode="true"                     
+                      HorizontalContentAlignment="Center"
+                      ItemsSource="{Binding DieUserRegions}"
+                      DisplayMemberPath="Index"
+                      SelectedItem="{Binding SelectedUserRegion}"/>
+                <Button Content="裁  剪" 
+                    Width="80"
+                    Margin="20,0,0,0"
+                    Command="{Binding CutOutCommand}"/>
+                <!--
+                <TextBlock Text="当前用于裁剪的区域序号为"
+                       VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20,0,0,0"/>
+                <TextBlock Text="{Binding UserRegionForCutOut.Index}"
+                           Margin="5,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                </TextBlock>
+                -->
+            </StackPanel>
+            <DockPanel x:Name="dockPanel_Frame" Margin="0,80,0,0">
+                <Button Content="保存全局参数"
+                    Margin="0,-1,0,0"
+                    Command="{Binding SaveAllCommand}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </DockPanel>
+        </StackPanel>
+    </DockPanel>
+
+</UserControl>

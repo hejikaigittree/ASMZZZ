@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{69F925BC-83C1-48A0-9617-30E00EF5DF26}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>LFAOIReview</RootNamespace>
+    <AssemblyName>LFAOIReview</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="halcondotnet, Version=12.0.0.0, Culture=neutral, PublicKeyToken=4973bed59ddbf2b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\halcondotnet.dll</HintPath>
+    </Reference>
+    <Reference Include="HTHalControl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\x64\Debug\HTHalControl.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\MaterialDesignColors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.4.1.1101, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\MaterialDesignThemes.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\NPOI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System.Data">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.104.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\x64\Debug\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System.Xml">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System.Core">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="WindowsFormsIntegration">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Converter\BoolInverterConverter.cs" />
+    <Compile Include="Converter\DefectResultDisplayConverter.cs" />
+    <Compile Include="DataBase\DbText.cs" />
+    <Compile Include="DataBase\DefectDataDb.cs" />
+    <Compile Include="DataBase\FrameIndexDb.cs" />
+    <Compile Include="DataBase\InspectionDataDb.cs" />
+    <Compile Include="DataBase\InspectionDataDbMatrix.cs" />
+    <Compile Include="DataBase\LotInfoDb.cs" />
+    <Compile Include="DataBase\SQLiteOperation.cs" />
+    <Compile Include="Data\DataManager.cs" />
+    <Compile Include="Data\DataShow.cs" />
+    <Compile Include="Data\DefectData.cs" />
+    <Compile Include="Data\DefectTypeInfo.cs" />
+    <Compile Include="Data\InspectionData.cs" />
+    <Compile Include="Data\InspectionResult.cs" />
+    <Compile Include="Data\LotInfo.cs" />
+    <Compile Include="ExcelText.Designer.cs" />
+    <Compile Include="HalconOperation.cs" />
+    <Compile Include="HTWindowShowWPF\HTWindowShowWPF.xaml.cs">
+      <DependentUpon>HTWindowShowWPF.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ini\IniHelper.cs" />
+    <Compile Include="LegalFileName.cs" />
+    <Compile Include="Mapping\DoubleToPointConverter.cs" />
+    <Compile Include="Mapping\ExampleData.cs" />
+    <Compile Include="Mapping\Mapping.xaml.cs">
+      <DependentUpon>Mapping.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mapping\MappingData.cs" />
+    <Compile Include="Mapping\MappingViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="ReadData\DataGeting.cs" />
+    <Compile Include="Report\DefectDataReport.cs" />
+    <Compile Include="Report\DefectPriorityReport.cs" />
+    <Compile Include="Report\DefectStatistics.cs" />
+    <Compile Include="Report\DefectTypeInfoReport.cs" />
+    <Compile Include="Report\ExcelColor.cs" />
+    <Compile Include="Report\ExcelOperation.cs" />
+    <Compile Include="Report\InspectionDataReport.cs" />
+    <Compile Include="Report\Report.cs" />
+    <Compile Include="Report\SummaryInfo.cs" />
+    <Compile Include="Review\DefectDataView.cs" />
+    <Compile Include="Review\Form_Review.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Review\Form_Review.Designer.cs">
+      <DependentUpon>Form_Review.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Review\InspectionDataView.cs" />
+    <Compile Include="Review\Review.xaml.cs">
+      <DependentUpon>Review.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModelBase\CommandBase.cs" />
+    <Compile Include="ViewModelBase\ViewModelBase.cs" />
+    <EmbeddedResource Include="ExcelText.en-US.resx" />
+    <EmbeddedResource Include="ExcelText.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Review\Form_Review.resx">
+      <DependentUpon>Form_Review.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="ClassDiagram1.cd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="HTWindowShowWPF\HTWindowShowWPF.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mapping\Mapping.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Review\Review.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Dll\halcon.dll" />
+    <None Include="Dll\halcondotnet.dll" />
+    <None Include="Dll\HTHalControl.dll" />
+    <None Include="Dll\ICSharpCode.SharpZipLib.dll" />
+    <None Include="Dll\MaterialDesignColors.dll" />
+    <None Include="Dll\MaterialDesignThemes.Wpf.dll" />
+    <None Include="Dll\NPOI.dll" />
+    <None Include="Dll\NPOI.OOXML.dll" />
+    <None Include="Dll\NPOI.OpenXml4Net.dll" />
+    <None Include="Dll\NPOI.OpenXmlFormats.dll" />
+    <None Include="Dll\System.Data.SQLite.dll" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

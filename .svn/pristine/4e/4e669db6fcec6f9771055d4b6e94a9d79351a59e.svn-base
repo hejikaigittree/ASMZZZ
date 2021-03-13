@@ -1,0 +1,235 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using JFInterfaceDef;
+using JFToolKits;
+using JFHub;
+namespace JFMethodCommonLib
+{
+    [JFCategoryLevels(new string[] { "JF 设备控制", "DIO" })]
+    [JFDisplayName("获取DO状态_S")]
+    public class JFCM_GetDO_S:IJFMethod,IJFInitializable
+    {
+        public JFCM_GetDO_S()
+        {
+            IsInitOK = false;
+        }
+        readonly string[] _initNames = new string[] { "DO通道名称" };
+        /// <summary>获取初始化需要的所有参数的名称 </summary>
+        public string[] InitParamNames { get { return _initNames; } }
+
+
+        /// <summary>
+        /// 获取指定名称的初始化参数的信息
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public JFParamDescribe GetInitParamDescribe(string name)
+        {
+            if(name == InitParamNames[0])
+            {
+                JFDevCellNameManeger nameMgr = JFHubCenter.Instance.MDCellNameMgr;
+                string[] allDoNames = nameMgr.AllDoNames();
+                return JFParamDescribe.Create(name, typeof(string), JFValueLimit.Options, allDoNames);
+            }
+
+            throw new ArgumentException("非法的初始化参数名称项:" + name);
+        }
+
+        string _doName = null;
+
+        /// <summary>
+        /// 获取指定名称的初始化参数的当前值
+        /// </summary>
+        /// <param name="name">参数名称，如果参数名称不在InitParamNames中，将会抛出一个ArgumentException异常</param>
+        /// <returns>参数值</returns>
+        public object GetInitParamValue(string name)
+        {
+            if (name == InitParamNames[0])
+                return _doName;
+            throw new ArgumentException("非法的初始化参数名称项:" + name);
+        }
+
+        /// <summary>
+        ///设置取指定名称的初始化参数的当前值
+        /// </summary>
+        /// <param name="name">参数名称，如果参数名称不在InitParamNames中，将会抛出一个ArgumentException异常</param>
+        /// <param name="value">参数值</param>
+        /// <returns>操作成功返回True，失败返回false，可通过GetInitErrorInfo()获取错误信息</returns>
+        public bool SetInitParamValue(string name, object value)
+        {
+            if(name == InitParamNames[0])
+            {
+                string doName = value as string;
+                if(string.IsNullOrEmpty(doName))
+                {
+                    _initError = "参数项：\"" + name + "\"的值为空字串";
+                    return false;
+                }
+                if(JFHubCenter.Instance.MDCellNameMgr.ContainDoName(_doName))
+                {
+                    _initError = "参数项：\"" + name + "\"的值:\"" + _doName + "\"在设备名称表中不存在";
+                    return false;
+                }
+                _initError = "参数项：\"" + name + "\"设置OK";
+                _doName = doName;
+                return true;
+            }
+            throw new ArgumentException("非法的初始化参数名称项:" + name);
+        }
+
+
+        string _initError = "None-Opt";
+        /// <summary>
+        /// 对象初始化
+        /// </summary>
+        /// <returns>操作成功返回True，失败返回false，可通过GetInitErrorInfo()获取错误信息</returns>
+        public bool Initialize()
+        {
+            if(string.IsNullOrEmpty(_doName))
+            {
+                _initError = "DO名称未设置/空值";
+                return false;
+            }
+            //JFDevCellInfo ci = null;
+            //string errInfo = null;
+            //IJFInitializable dev = null;
+            //if(!JFCMFunction.CheckDevCellName(JFCMFunction.DO,_doName,out dev,out ci,out errInfo))
+            //{
+            //    _initError = errInfo;
+            //    return false;
+            //}
+
+            _initError = "Success";
+            IsInitOK = true;
+            return true;
+        }
+
+
+        /// <summary>获取初始化状态，如果对象已初始化成功，返回True</summary>
+        public bool IsInitOK { get; private set; }
+
+        /// <summary>获取初始化错误的描述信息</summary>
+        public string GetInitErrorInfo()
+        {
+            return _initError;
+        }
+
+
+
+
+        #region 输入项
+        public string[] MethodInputNames { get { return new string[] { }; } }
+        public Type GetMethodInputType(string name) { throw new NotImplementedException(); }
+        public object GetMethodInputValue(string name) { throw new NotImplementedException(); }
+        public void SetMethodInputValue(string name, object value) { throw new NotImplementedException(); }
+        #endregion
+
+
+        #region 输出项
+        bool _isDoTurnOn = false; //输出项
+        readonly string[] _outputNames = new string[] { "DO Enabled" };
+        public string[] MethodOutputNames { get { return _outputNames; } }
+        public Type GetMethodOutputType(string name)
+        {
+            if (name == _outputNames[0])
+                return typeof(string);
+            throw new ArgumentException("非法的输出参数项名称:" + name);
+        }
+        public object GetMethodOutputValue(string name)
+        {
+            if (name == MethodOutputNames[0])
+                return _isDoTurnOn;
+            throw new ArgumentException("非法的输出参数项名称:" + name);
+        }
+        #endregion
+
+        #region 执行
+        string _actionErrorInfo = "未执行";
+        double _startPfCnt = 0; //动作开始时CPU计数
+        double _endPfCnt = 0;//动作结束时CPU计数
+        double _PfFrequency = JFFunctions.PerformanceFrequency();
+        public bool Action()
+        {
+            _startPfCnt = JFFunctions.PerformanceCounter();
+            if (!IsInitOK)
+            {
+                _actionErrorInfo = "未初始化";
+                _endPfCnt = JFFunctions.PerformanceCounter(); 
+                return false;
+            }
+
+            IJFInitializable dev = null;
+            JFDevCellInfo ci = null;
+            string errInfo = null;
+            if(!JFCMFunction.CheckDevCellName(JFCMFunction.DO,_doName,out dev,out ci,out errInfo))
+            {
+                _actionErrorInfo = errInfo;
+                _endPfCnt = JFFunctions.PerformanceCounter();
+                return false;
+            }
+
+            bool isTurnOn = false;
+            int errCode = (dev as IJFDevice_MotionDaq).GetDio(ci.ModuleIndex).GetDO(ci.ChannelIndex, out isTurnOn);
+            if (errCode != 0)
+            {
+                _endPfCnt = JFFunctions.PerformanceCounter();
+                _actionErrorInfo = "获取DO状态失败：" + (dev as IJFDevice_MotionDaq).GetDio(ci.ModuleIndex).GetErrorInfo(errCode);
+                return false;
+            }
+            _endPfCnt = JFFunctions.PerformanceCounter();
+            _actionErrorInfo = "Success";
+            return true;
+        }
+        public string GetActionErrorInfo()
+        {
+            return _actionErrorInfo;
+        }
+
+        public double GetActionSeconds()
+        {
+            return (_endPfCnt - _startPfCnt) / _PfFrequency;
+        }
+
+
+        #endregion
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects).
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // TODO: set large fields to null.
+
+                disposedValue = true;
+            }
+        }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        // ~JFCM_GetDO_S()
+        // {
+        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        //   Dispose(false);
+        // }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
+    }
+}

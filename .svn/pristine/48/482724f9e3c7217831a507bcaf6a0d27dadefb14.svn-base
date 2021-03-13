@@ -1,0 +1,158 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using JFInterfaceDef;
+
+namespace JFHub
+{
+    /// <summary>
+    /// 为StationBase基类提供一个RealtimeUI
+    /// </summary>
+    public partial class UcStationBaseRealtimeUI : UserControl
+    {
+        public UcStationBaseRealtimeUI()
+        {
+            InitializeComponent();
+        }
+
+        bool _isFormLoaded = false;
+        JFStationBase _station = null;
+        private void UcStationBaseRealtimeUI_Load(object sender, EventArgs e)
+        {
+            _isFormLoaded = true;
+        }
+
+
+        /// <summary>
+        /// 接收一条Log，
+        /// </summary>
+        /// <param name="info"></param>
+        void Log(string info, LogMode mode, IJFStation station)
+        {
+
+        }
+
+        ///// <summary>
+        ///// 通过UI获取一个参数
+        ///// </summary>
+        ///// <param name="paramDescribe"></param>
+        ///// <param name=""></param>
+        ///// <returns></returns>
+        //object OptionalParam(JFParamDescribe paramDescribe,double timeoutSeconds,object defaultParamValue);
+
+        /// <summary>
+        /// 处理工站状态改变
+        /// </summary>
+        /// <param name="station"></param>
+        /// <param name="currWorkStatus"></param>
+        void OnWorkStatusChanged(IJFStation station, JFWorkStatus currWorkStatus, string info)
+        {
+
+        }
+        //void HandleStationMsg(IJFStation station,object msg )
+
+        /// <summary>
+        ///  处理工站的业务状态发生改变
+        /// </summary>
+        /// <param name="station"></param>
+        /// <param name="currCustomStatus"></param>
+        void OnCustomStatusChanged(IJFStation station, int currCustomStatus, string info, object param)
+        {
+
+        }
+
+        /// <summary>
+        /// 产品加工完成消息
+        /// </summary>
+        /// <param name="station">消息发送者</param>
+        /// <param name="PassCount">本次生产完成的成品数量</param>
+        /// <param name="NGCount">本次生产的次品数量</param>
+        /// <param name="NGInfo">次品信息</param>
+        void OnProductFinished(IJFStation station, int passCount, string[] passIDs, int ngCount, string[] ngIDs, string[] ngInfo)
+        {
+
+        }
+
+        /// <summary>
+        /// 处理工站发来的其他定制化的消息
+        /// </summary>
+        /// <param name="station"></param>
+        /// <param name="msg"></param>
+        void OnCustomizeMsg(IJFStation station, string msgCategory, object msgParam)
+        {
+
+        }
+
+
+        public void SetStation(JFStationBase station)
+        {
+            if(_station != station)
+            {
+                //if()
+            }
+        }
+
+        void AdjustStationView()
+        {
+
+        }
+
+        int _maxTips = 2000; //最多显示2000条信息
+        delegate void dgShowTips(string info);
+        public void ShowTips(string info)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new dgShowTips(ShowTips), new object[] { info });
+                return;
+            }
+            rchTips.AppendText(info + "\n");
+            string[] lines = rchTips.Text.Split('\n');
+            if (lines.Length >= _maxTips)
+            {
+                int rmvChars = 0;
+                for (int i = 0; i < lines.Length - _maxTips; i++)
+                    rmvChars += lines[i].Length + 1;
+                rchTips.Text = rchTips.Text.Substring(rmvChars);
+            }
+            rchTips.Select(rchTips.TextLength, 0); //滚到最后一行
+            rchTips.ScrollToCaret();//滚动到控件光标处 
+        }
+
+        private void btResetProductInfo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// 向工站发送一条指令（包含 开始/停止/暂停/恢复/结批 和用户自定义指令）
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btSendCmd_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btClearTips_Click(object sender, EventArgs e)
+        {
+            rchTips.Text = "";
+        }
+
+        /// <summary>
+        /// 显示日志窗口
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btShowLog_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+}

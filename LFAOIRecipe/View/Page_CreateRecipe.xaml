@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="LFAOIRecipe.Page_CreateRecipe"
+             x:ClassModifier="internal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"  
+             xmlns:local="clr-namespace:LFAOIRecipe"
+             mc:Ignorable="d" 
+             d:DesignHeight="718" d:DesignWidth="999"
+             Background="White">
+    <UserControl.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid x:Name="grid">
+        <Grid.ColumnDefinitions>
+            <!--
+            <ColumnDefinition Width="450"/>
+            -->
+            <ColumnDefinition Width="750"/>
+            <ColumnDefinition Width="2"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DockPanel>
+            <Grid DockPanel.Dock="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Content="上一步"
+                        Width="110"
+                        IsEnabled="{Binding IsLastStepEnable}"
+                        Command="{Binding LastStepCommand}"/>
+                <Button Content="下一步" Grid.Column="1"
+                        Width="110"
+                        IsEnabled="{Binding IsNextStepEnable}"
+                        Command="{Binding NextStepCommand}"/>
+            </Grid>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <ContentControl Content="{Binding CurrentProcedureContent}"
+                            Margin="10,0,10,10"/>
+            </ScrollViewer>
+        </DockPanel>
+        <GridSplitter Grid.Column="1"
+                      HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Stretch" 
+                      Background="Gray" />
+        <local:HTHalControlWPF Margin="5,0,0,0" 
+                               Grid.Column="2"
+                               x:Name="htWindow"/>
+    </Grid>
+</UserControl>

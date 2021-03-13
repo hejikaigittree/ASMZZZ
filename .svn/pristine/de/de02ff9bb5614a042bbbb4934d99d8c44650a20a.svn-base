@@ -1,0 +1,49 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace JFApp
+{
+    /// <summary>
+    /// 各种配置项管理
+    /// </summary>
+    public partial class FormCfg : Form
+    {
+        public FormCfg()
+        {
+            InitializeComponent();
+            AllowedEdit = false;
+        }
+
+        private void FormCfg_Load(object sender, EventArgs e)
+        {
+
+        }
+
+
+        public bool AllowedEdit
+        {
+            get;set;
+        }
+
+        private void FormCfg_VisibleChanged(object sender, EventArgs e)
+        {
+            if(Visible)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+
+
+    }
+}

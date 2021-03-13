@@ -1,0 +1,360 @@
+﻿<UserControl x:Class="LFAOIRecipe.Page_BondWireInspectVerify"
+             x:ClassModifier="internal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:local="clr-namespace:LFAOIRecipe"
+             mc:Ignorable="d" 
+             Background="White"
+             MinWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel x:Name="dockPanel">
+        <StackPanel DockPanel.Dock="Top">
+            <materialDesign:Card Margin="5,5,5,0">
+                <StackPanel>
+                    <TextBlock Text="{Binding DisplayName}"
+                               FontSize="16"
+                               Margin="10"
+                               Foreground="DarkBlue"/>
+                    <TextBlock Margin="10,0,10,10"
+                       Text="选择焊点金线组，设置检测验证参数，对当前组进行检测验证，保存参数。"
+                       TextWrapping="Wrap"/>
+                </StackPanel>
+            </materialDesign:Card>
+        </StackPanel>
+
+        <StackPanel DockPanel.Dock="Top"
+                    Margin="0,20,0,0"
+                    HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="button_IC_Image" Content="加载图像"
+                    Width="100"
+                    Command="{Binding LoadImageCommand}"/>
+                <StackPanel Name="stackPanel_channelDisplay"  Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                    <TextBlock Text="显示通道图"
+                       VerticalAlignment="Center" Margin="30,0,0,0"/>
+                    <ComboBox Width="70"
+                          Margin="10,0,0,0"
+                          materialDesign:ComboBoxAssist.ClassicMode="true"
+                          SelectedItem="{Binding SwitchImageComboBoxIndex, Mode=TwoWay}">
+                        <ComboBoxItem Content="原图"/>
+                        <ComboBoxItem Content="R通道"/>
+                        <ComboBoxItem Content="G通道"/>
+                        <ComboBoxItem Content="B通道"/>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="0,20,0,0"
+                        HorizontalAlignment="Center">
+                <Label Content="选择一个焊点金线组合  序号" Foreground="Black"/>
+                <ComboBox Width="100"
+                          ItemsSource="{Binding Groups}"
+                          DisplayMemberPath="Index"
+                          SelectedItem="{Binding CurrentGroup, Mode=TwoWay}"
+                          materialDesign:ComboBoxAssist.ClassicMode="true"/>
+            </StackPanel>
+            <DockPanel Width="350"
+                       Margin="0,20,0,0">
+                <Label Content="金线图像索引"
+                       Width="140"
+                       HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                          SelectedIndex="{Binding CurrentGroup.Parameter.WireImageIndex, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBoxItem Content="R通道"/>
+                    <ComboBoxItem Content="G通道"/>
+                    <ComboBoxItem Content="B通道"/>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel Width="350"
+                       Margin="0,5,0,0">
+                <Label Content="PCB图像索引"
+                                   Width="140"
+                                   HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                      SelectedIndex="{Binding CurrentGroup.Parameter.PCBImageIndex, Mode=TwoWay}">
+                    <ComboBoxItem Content="R通道"/>
+                    <ComboBoxItem Content="G通道"/>
+                    <ComboBoxItem Content="B通道"/>
+                </ComboBox>
+            </DockPanel>
+
+            <DockPanel Width="350"
+                       Margin="0,5,0,0">
+                <Label Content="第二焊点模板类型"
+                       Width="140"
+                       HorizontalContentAlignment="Right"/>
+                <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                          SelectedIndex="{Binding Bond2ModelParameter.ModelType, Mode=TwoWay}">
+                    <ComboBoxItem Content="ncc"/>
+                    <ComboBoxItem Content="shape"/>
+                </ComboBox>
+            </DockPanel>
+
+            <DockPanel Width="350"
+                       ToolTip="预处理时使用的Gamma变换系数"
+                       Margin="0,5,0,0">
+                <Label Content="Gamma指数"
+                       Width="140"
+                       HorizontalContentAlignment="Right"/>
+                <TextBox Text="{Binding Bond2ModelParameter.Gamma}"
+                           Width="194"
+                           HorizontalAlignment="Left"/>
+            </DockPanel>
+
+            <DockPanel Width="350"
+                       ToolTip="创建模板之前图像是否需要预处理"
+                       Margin="0,5,0,0">
+                <Label Content="创建模板之前预处理"
+                       Width="140"
+                       HorizontalContentAlignment="Right"/>
+                <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                      SelectedIndex="{Binding Bond2ModelParameter.IsPreProcess, Mode=TwoWay,Converter={StaticResource BooleanToComboBoxIndexConverter}}">
+                    <ComboBoxItem Content="是"/>
+                    <ComboBoxItem Content="否"/>
+                </ComboBox>
+            </DockPanel>
+
+            <TabControl Margin="0,5,0,0">
+                <TabItem Header="第一焊点" 
+                         Width="120"
+                         Height="30">
+                    <StackPanel Margin="10">
+                        <DockPanel Width="350"
+                                   Margin="0,10,0,0">
+                            <Label Content="最小半径"
+                                   Width="140"
+                                   HorizontalContentAlignment="Right"/>
+                            <TextBox Text="{Binding CurrentGroup.Parameter.Bond1MinRadius}"
+                                     Width="194"
+                                     HorizontalAlignment="Left"/>
+                        </DockPanel>
+                        <DockPanel Width="350"
+                                   Margin="0,5,0,0">
+                            <Label Content="最大半径"
+                                   Width="140"
+                                   HorizontalContentAlignment="Right"/>
+                            <TextBox Text="{Binding CurrentGroup.Parameter.Bond1MaxRadius}"
+                                     Width="194"
+                                     HorizontalAlignment="Left"/>
+                        </DockPanel>
+                        <DockPanel Width="350"
+                                   ToolTip="焊点与背景之间的灰度差"
+                                   Margin="0,5,0,0">
+                            <Label Content="测量阈值"
+                                   Width="140"
+                                   HorizontalContentAlignment="Right"/>
+                            <TextBox Text="{Binding CurrentGroup.Parameter.Bond1MeasureTh}"
+                                     Width="194"
+                                     HorizontalAlignment="Left"/>
+                        </DockPanel>
+                        <DockPanel Width="350"
+                                   Margin="0,5,0,0"
+                                   ToolTip="阈值分割方式">
+                            <Label Content="边界变换"
+                                   Width="140"
+                                   HorizontalContentAlignment="Right"/>
+                            <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                      SelectedIndex="{Binding CurrentGroup.Parameter.IsBond1MeasureTransPositive, Mode=TwoWay, Converter={StaticResource BooleanToComboBoxIndexConverter}}">
+                                <ComboBoxItem Content="由暗到亮"/>
+                                <ComboBoxItem Content="由亮到暗"/>
+                            </ComboBox>
+                        </DockPanel>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="第二焊点" 
+                         Width="120"
+                         Height="30">
+                    <StackPanel Margin="10">
+                        <DockPanel Width="350"
+                                   Margin="0,10,0,0">
+                            <Label Content="采用模板匹配定位焊点"
+                                   Width="140"
+                                   HorizontalContentAlignment="Right"/>
+                            <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                      SelectedIndex="{Binding CurrentGroup.Parameter.IsBond2Model, Mode=TwoWay,Converter={StaticResource BooleanToComboBoxIndexConverter}}">
+                                <ComboBoxItem Content="是"/>
+                                <ComboBoxItem Content="否"/>
+                            </ComboBox>
+                        </DockPanel>
+                        <DockPanel Width="350"
+                                   Margin="0,5,0,0">
+                            <Label Content="最小半径"
+                                   Width="140"
+                                   HorizontalContentAlignment="Right"/>
+                            <TextBox Text="{Binding CurrentGroup.Parameter.Bond2MinRadius}"
+                                     Width="194"
+                                     HorizontalAlignment="Left"/>
+                        </DockPanel>
+                        <DockPanel Width="350"
+                                   Margin="0,5,0,0">
+                            <Label Content="最大半径"
+                                   Width="140"
+                                   HorizontalContentAlignment="Right"/>
+                            <TextBox Text="{Binding CurrentGroup.Parameter.Bond2MaxRadius}"
+                                     Width="194"
+                                     HorizontalAlignment="Left"/>
+                        </DockPanel>
+                        <DockPanel Width="350"
+                                   Margin="0,5,0,0">
+                            <Label Content="初始测量灰度阈值"
+                                   Width="140"
+                                   HorizontalContentAlignment="Right"/>
+                            <TextBox Text="{Binding CurrentGroup.Parameter.Bond2GrayTh}"
+                                     Width="194"
+                                     HorizontalAlignment="Left"/>
+                        </DockPanel>
+                        <DockPanel Width="350"
+                                   ToolTip="焊点与背景之间的灰度差"
+                                   Margin="0,5,0,0">
+                            <Label Content="测量阈值"
+                                   Width="140"
+                                   HorizontalContentAlignment="Right"/>
+                            <TextBox Text="{Binding CurrentGroup.Parameter.Bond2MeasureTh}"
+                                     Width="194"
+                                     HorizontalAlignment="Left"/>
+                        </DockPanel>
+                        <DockPanel Width="350"
+                                   Margin="0,5,0,0"
+                                   ToolTip="阈值分割方式">
+                            <Label Content="边界变换"
+                                   Width="140"
+                                   HorizontalContentAlignment="Right"/>
+                            <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                      SelectedIndex="{Binding CurrentGroup.Parameter.IsBond2MeasureTransPositive, Mode=TwoWay, Converter={StaticResource BooleanToComboBoxIndexConverter}}">
+                                <ComboBoxItem Content="由暗到亮"/>
+                                <ComboBoxItem Content="由亮到暗"/>
+                            </ComboBox>
+                        </DockPanel>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="金线"
+                         Height="30" Margin="-2,-2,-2,0" Width="120">
+                    <StackPanel Margin="10">
+                        <DockPanel x:Name="dockPanel_IsCurve" Width="350"
+                                   Margin="0,10,0,0">
+                            <Label Content="弯曲线"
+                                   Width="140"
+                                   HorizontalContentAlignment="Right"/>
+                            <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                      SelectedIndex="{Binding CurrentGroup.Parameter.IsCurve, Mode=TwoWay,Converter={StaticResource BooleanToComboBoxIndexConverter}}">
+                                <ComboBoxItem Content="是"/>
+                                <ComboBoxItem Content="否"/>
+                            </ComboBox>
+                        </DockPanel>
+                        <DockPanel Width="350"
+                                   Margin="0,5,0,0">
+                            <Label Content="线检测框的半宽度"
+                                   Width="140"
+                                   HorizontalContentAlignment="Right"/>
+                            <TextBox Text="{Binding CurrentGroup.Parameter.WireSearchLen}"
+                                     Width="194"
+                                     HorizontalAlignment="Left"/>
+                        </DockPanel>
+                        <DockPanel Width="350"
+                                   Margin="0,5,0,0">
+                            <Label Content="线端裁剪长度"
+                                   Width="140"
+                                   HorizontalContentAlignment="Right"/>
+                            <TextBox Text="{Binding CurrentGroup.Parameter.WireClipLen}"
+                                     Width="194"
+                                     HorizontalAlignment="Left"/>
+                        </DockPanel>
+                        <DockPanel Width="350"
+                                   Margin="0,5,0,0">
+                            <Label Content="线宽"
+                                   Width="140"
+                                   HorizontalContentAlignment="Right"/>
+                            <TextBox Text="{Binding CurrentGroup.Parameter.WireWidth}"
+                                     Width="194"
+                                     HorizontalAlignment="Left"/>
+                        </DockPanel>
+                        <DockPanel Width="350"
+                                   Margin="0,5,0,0">
+                            <Label Content="线检测的对比度"
+                                   Width="140"
+                                   HorizontalContentAlignment="Right"/>
+                            <TextBox Text="{Binding CurrentGroup.Parameter.WireContrast}"
+                                     Width="194"
+                                     HorizontalAlignment="Left"/>
+                        </DockPanel>
+                        <DockPanel Width="350"
+                                   Margin="0,5,0,0">
+                            <Label Content="最小线段长度"
+                                   Width="140"
+                                   HorizontalContentAlignment="Right"/>
+                            <TextBox Text="{Binding CurrentGroup.Parameter.WireMinSegLen}"
+                                     Width="194"
+                                     HorizontalAlignment="Left"/>
+                        </DockPanel>
+                        <DockPanel Width="350"
+                                   Margin="0,5,0,0">
+                            <Label Content="线段方向变化范围"
+                                   Width="140"
+                                   HorizontalContentAlignment="Right"/>
+                            <TextBox Text="{Binding CurrentGroup.Parameter.WireAngleExt}"
+                                     Width="194"
+                                     HorizontalAlignment="Left"/>
+                        </DockPanel>
+                        <DockPanel Width="350"
+                                   Margin="0,5,0,0">
+                            <Label Content="线段间的最大间距"
+                                   Width="140"
+                                   HorizontalContentAlignment="Right"/>
+                            <TextBox Text="{Binding CurrentGroup.Parameter.WireMaxGap}"
+                                     Width="194"
+                                     HorizontalAlignment="Left"/>
+                        </DockPanel>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0,20,0,0">
+                <Button Content="检测验证"
+                        Width="130"
+                        Command="{Binding VerifyCommand}"/>
+                <Button Content="保存参数"
+                        Width="130"
+                        Margin="50,0,0,0"
+                        Command="{Binding SaveCommand}"/>
+            </StackPanel>
+
+            <StackPanel Margin="0,20,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="第一焊点半径：" Foreground="#DD000000"/>
+                    <TextBlock Text="{Binding Path=Bond1Radius,StringFormat={}{0:F1}, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Width="70"/>
+                    <TextBlock Text="坐标：" Foreground="#DD000000"/>
+                    <TextBlock Text="{Binding Path=Bond1Row,StringFormat={}{0:F1},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    <TextBlock Text="{Binding Path=Bond1Column,StringFormat=，{0:F1},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Margin="0,20,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="第二焊点半径：" Foreground="#DD000000"/>
+                    <TextBlock Text="{Binding Path=Bond2Radius,StringFormat={}{0:F1},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Width="70"/>
+                    <TextBlock Text="坐标：" Foreground="#DD000000"/>
+                    <TextBlock Text="{Binding Path=Bond2Row,StringFormat={}{0:F1},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    <TextBlock Text="{Binding Path=Bond2Column,StringFormat=，{0:F1},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+
+    </DockPanel>
+</UserControl>

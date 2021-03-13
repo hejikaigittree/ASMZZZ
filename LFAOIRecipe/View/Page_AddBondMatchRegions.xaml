@@ -1,0 +1,138 @@
+﻿<UserControl x:Class="LFAOIRecipe.Page_AddBondMatchRegions"
+             x:ClassModifier="internal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:local="clr-namespace:LFAOIRecipe"
+             mc:Ignorable="d" 
+             Background="White"
+             MinWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel x:Name="dockPanel">
+        <StackPanel DockPanel.Dock="Top">
+            <materialDesign:Card Margin="5,5,5,0">
+                <StackPanel>
+                    <TextBlock Text="{Binding DisplayName}"
+                               FontSize="16"
+                               Margin="10"
+                               Foreground="DarkBlue"/>
+                    <TextBlock Margin="10,0,10,10"
+                       Text="【添加多组焊点检测区域、焊点方向直线区域】"
+                       TextWrapping="Wrap">
+                    </TextBlock>
+                </StackPanel>
+            </materialDesign:Card>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Top"
+                    Margin="0,20,0,0">
+            <StackPanel VerticalAlignment="Center" Margin="0,10,0,0">
+                <Button Content="加载自动生成焊点检测区域" ToolTip="从自动生成的焊点加载到当前页面！"
+                        Command="{Binding LoadAutoMatchBondCommand}"
+                        HorizontalAlignment="Left" Margin="5,0,0,0" Background="#FF607D8B"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center" Margin="0,30,0,0">
+                <Button Width="25"
+                        Height="25"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                        DockPanel.Dock="Right"
+                        ToolTip="添加新的焊点金线组合"
+                        Margin="0,0,5,0"
+                        Command="{Binding AddGroupCommand}">
+                    <materialDesign:PackIcon Kind="Plus" />
+                </Button>
+                <TextBlock Text="焊点检测区域组合 共"
+                           VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding GroupsCount}" 
+                           VerticalAlignment="Center"
+                           Margin="5,0"/>
+                <TextBlock Text="套，当前序号"
+                           VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding CurrentGroup.Index}" 
+                           VerticalAlignment="Center" 
+                           Margin="5,0"/>
+                <Button Width="25"
+                        Height="25"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                        DockPanel.Dock="Right"
+                        ToolTip="删除当前焊点金线组合"
+                        Margin="5,0,0,0"
+                        Command="{Binding RemoveGroupCommand}">
+                    <materialDesign:PackIcon Kind="Minus" />
+                </Button>
+                <TextBlock Text="切换"
+                           Margin="10,0,0,0"
+                           VerticalAlignment="Center"/>
+                <ComboBox Width="50"
+                          ItemsSource="{Binding Groups}"
+                          DisplayMemberPath="Index"
+                          SelectedItem="{Binding CurrentGroup, Mode=TwoWay}"
+                          materialDesign:ComboBoxAssist.ClassicMode="true"/>
+            </StackPanel>
+            
+            <StackPanel Margin="5,30,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="添加焊点检测区域"
+                        Width="160"
+                        Command="{Binding AddBond2UserRegionCommand}"
+                        HorizontalAlignment="Left"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,10,0,0">
+                    <TextBlock Text="设置焊点数量" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                    <TextBox Text="{Binding CurrentGroup.Bond2_BallNums}" Width="43"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,10,0,0">
+                    <TextBlock Text="类型：" Margin="20,0,0,0"/>
+                    <TextBlock Text="{Binding CurrentGroup.Bond2UserRegion.RegionType}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,10,0,0">
+                    <TextBlock Text="参数：" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                    <Label Content="{Binding CurrentGroup.Bond2UserRegion}" VerticalAlignment="Center"/>
+                    <Button Content="修改区域"  Margin="5,0,0,0" Height="Auto" ToolTip="区域修改完，鼠标右键确认！"
+                        Command="{Binding ModifyBond2RegionCommand}" Padding="10,4" HorizontalContentAlignment="Center" FontSize="12"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Margin="5,30,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="添加焊点方向直线"
+                        ToolTip="需要检测弯曲线时，请画此区域！"
+                        Width="160"
+                        Command="{Binding AddWireUserRegionCommand}"
+                        HorizontalAlignment="Left"/>
+                    <!--
+                    <TextBlock Text="检测弯曲线时，添加此区域。"   VerticalAlignment="Center" Margin="20,0,0,0"/>
+                    -->
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,10,0,0">
+                    <TextBlock Text="类型：" Margin="20,0,0,0"/>
+                    <TextBlock Text="{Binding CurrentGroup.WireUserRegion.RegionType}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,10,0,0">
+                    <TextBlock Text="参数：" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                    <Label Content="{Binding CurrentGroup.WireUserRegion}" VerticalAlignment="Center"/>
+                    <Button Content="修改区域"  Margin="5,0,0,0" Height="Auto" ToolTip="区域修改完，鼠标右键确认！"
+                        Command="{Binding ModifyWireRegionCommand}" Padding="10,4" HorizontalContentAlignment="Center" FontSize="12"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Margin="0,20,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Content="显示所有组区域" ToolTip="显示所有组区域！"
+                        Width="160"
+                        Command="{Binding DisplayAllRegionCommand}"
+                        HorizontalAlignment="Left" Margin="0,50,0,0"/>
+            </StackPanel>
+        </StackPanel>
+    </DockPanel>
+</UserControl>

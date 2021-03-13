@@ -1,0 +1,1696 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ToolKitsDll</name>
+    </assembly>
+    <members>
+        <member name="T:ToolKitsDll.Properties.Resources">
+            <summary>
+              一个强类型的资源类，用于查找本地化的字符串等。
+            </summary>
+        </member>
+        <member name="P:ToolKitsDll.Properties.Resources.ResourceManager">
+            <summary>
+              返回此类使用的缓存的 ResourceManager 实例。
+            </summary>
+        </member>
+        <member name="P:ToolKitsDll.Properties.Resources.Culture">
+            <summary>
+              使用此强类型资源类，为所有资源查找
+              重写当前线程的 CurrentUICulture 属性。
+            </summary>
+        </member>
+        <member name="P:ToolKitsDll.Properties.Resources.circle">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:ToolKitsDll.Properties.Resources.ellipse">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:ToolKitsDll.Properties.Resources.line">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:ToolKitsDll.Properties.Resources.point">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:ToolKitsDll.Properties.Resources.rect1">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:ToolKitsDll.Properties.Resources.rect2">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:ToolKitsDll.Properties.Resources.region">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:ToolKitsDll.Properties.Resources.xld">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="T:ToolKits.HTCamera.CameraEnum">
+            <summary>
+            相机类型
+            </summary>
+        </member>
+        <member name="F:ToolKits.HTCamera.CameraEnum.BaslerNI">
+            <summary>
+            basler相机使用NI工具
+            </summary>
+        </member>
+        <member name="F:ToolKits.HTCamera.CameraEnum.Basler">
+            <summary>
+            basler相机
+            </summary>
+        </member>
+        <member name="F:ToolKits.HTCamera.CameraEnum.PointGray">
+            <summary>
+            灰点相机
+            </summary>
+        </member>
+        <member name="F:ToolKits.HTCamera.CameraEnum.SVS">
+            <summary>
+            SVS相机
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:ToolKits.HTCamera.CameraEnum.BaslerMatroxCamLink" -->
+        <member name="F:ToolKits.HTCamera.CameraEnum.BaslerVirtualToHalcon">
+            <summary>
+            虚拟相机
+            </summary>
+        </member>
+        <member name="F:ToolKits.HTCamera.CameraEnum.BaslerEuresysCamLink">
+            <summary>
+            Euresys采集卡+Basler相机
+            </summary>
+        </member>
+        <member name="F:ToolKits.HTCamera.CameraEnum.MVSCamera">
+            <summary>
+            海康威视相机
+            </summary>
+        </member>
+        <member name="F:ToolKits.HTCamera.CameraEnum.SVSEuresysCamLink">
+            <summary>
+            海康威视相机
+            </summary>
+        </member>
+        <member name="F:ToolKits.HTCamera.CameraEnum.GenaralEuresyCamLink">
+            <summary>
+            Euresys采集卡通用
+            </summary>
+        </member>
+        <member name="T:ToolKits.HTCamera.BaslerFromNIPixelFormat">
+            <summary>
+            Basler相机使用NI库的像素格式
+            </summary>
+        </member>
+        <member name="T:ToolKits.HTCamera.BaslerPixelFormat">
+            <summary>
+            Basler相机像素格式
+            </summary>
+        </member>
+        <member name="T:ToolKits.HTCamera.PointGreyPixelFormat">
+            <summary>
+            PointGray相机像素格式
+            </summary>
+        </member>
+        <member name="T:ToolKits.HTCamera.EuresysPixelFormat">
+            <summary>
+            Basler相机像素格式
+            </summary>
+        </member>
+        <member name="F:ToolKits.HTCamera.Acquisition.index">
+            <summary>
+            当前图像索引,初始值为-1
+            </summary>
+        </member>
+        <member name="M:ToolKits.HTCamera.CameraMgr.#ctor(ToolKits.HTCamera.CameraEnum,System.String,System.String)">
+            <summary>
+            实例化相机管理类
+            </summary>
+            <param name="camType">相机类型</param>
+            <param name="camName">NI接口，相机名称为相机的ID，其它为相机的SN</param>
+        </member>
+        <member name="P:ToolKits.HTCamera.BaslerFromNIToHalcon.IsSoftwareTrigger">
+            <summary>
+            OpenCamera之前设置触发源
+            </summary>
+            <param name="source"></param>
+        </member>
+        <member name="M:ToolKits.HTCamera.BaslerFromNIToHalcon.BaslerFromNISetPixelFormat(ToolKits.HTCamera.BaslerFromNIPixelFormat)">
+            <summary>
+            
+            </summary>
+            <param name="pix_format"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolKits.HTCamera.BaslerFromNIToHalcon.Snap(System.Int32,System.Int32)">
+            <summary>
+            软件触发采集图像，主动采集
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ToolKits.HTCamera.BaslerFromNIToHalcon.Hard_Snap">
+            <summary>
+            硬件触发采集图像，被动采集
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ToolKits.HTCamera.BaslerToHalcon.BaslerSetPixelFormat(System.String)">
+            <summary>设置相机的像素格式
+            设置相机的像素格式
+            </summary>
+            <param name="value">value可以设置为如:BaslerToHalcon.PixelFormat.Mono8</param>
+        </member>
+        <member name="M:ToolKits.HTCamera.BaslerToHalcon.Snap(System.Int32,System.Int32)">
+            <summary>
+            软触发采集图像
+            </summary>
+            <param name="imageNum"></param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolKits.HTCamera.BaslerMtxCamLinkToHalcon.BaslerSetPixelFormat(System.String)">
+            <summary>设置相机的像素格式
+            设置相机的像素格式
+            </summary>
+            <param name="value">value可以设置为如:BaslerToHalcon.PixelFormat.Mono8</param>
+        </member>
+        <member name="M:ToolKits.HTCamera.IOMtxCamLinkToHalcon.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="serialNumber">串口端口号，非相机序列号</param>
+        </member>
+        <member name="M:ToolKits.HTCamera.IOMtxCamLinkToHalcon.BaslerSetPixelFormat(System.String)">
+            <summary>设置相机的像素格式
+            设置相机的像素格式
+            </summary>
+            <param name="value">value可以设置为如:BaslerToHalcon.PixelFormat.Mono8</param>
+        </member>
+        <member name="T:ToolKits.HTCamera.BaslerEuresysCamLink.NativeMethods">
+            <summary>
+            Native functions imported from the MultiCam C API.
+            </summary>
+        </member>
+        <member name="M:ToolKits.HTCamera.BaslerEuresysCamLink.EuresysSetPixelFormat(System.String)">
+            <summary>设置相机的像素格式
+            设置相机的像素格式
+            </summary>
+            <param name="value">value可以设置为如:BaslerToHalcon.PixelFormat.Mono8</param>
+        </member>
+        <member name="M:ToolKits.HTCamera.MVSCamToHalcon.BaslerSetPixelFormat(System.String)">
+            <summary>设置相机的像素格式
+            设置相机的像素格式
+            </summary>
+            <param name="value">value可以设置为如:BaslerToHalcon.PixelFormat.Mono8</param>
+        </member>
+        <member name="M:ToolKits.HTCamera.MVSCamToHalcon.Snap(System.Int32,System.Int32)">
+            <summary>
+            软触发采集图像
+            </summary>
+            <param name="imageNum"></param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ToolKits.HTCamera.SVSEuresysCamLink.NativeMethods">
+            <summary>
+            Native functions imported from the MultiCam C API.
+            </summary>
+        </member>
+        <member name="M:ToolKits.HTCamera.SVSEuresysCamLink.EuresysSetPixelFormat(System.String)">
+            <summary>设置相机的像素格式
+            设置相机的像素格式
+            </summary>
+            <param name="value">value可以设置为如:BaslerToHalcon.PixelFormat.Mono8</param>
+        </member>
+        <member name="T:ToolKits.HTCamera.GenaralEuresyCamLink.NativeMethods">
+            <summary>
+            Native functions imported from the MultiCam C API.
+            </summary>
+        </member>
+        <member name="M:ToolKits.HTCamera.GenaralEuresyCamLink.EuresysSetPixelFormat(System.String)">
+            <summary>设置相机的像素格式
+            设置相机的像素格式
+            </summary>
+            <param name="value">value可以设置为如:BaslerToHalcon.PixelFormat.Mono8</param>
+        </member>
+        <member name="P:ToolKits.UI.DialogUI.About.AssemblyTitle">
+            <summary>
+            程序集的标题
+            </summary>
+        </member>
+        <member name="P:ToolKits.UI.DialogUI.About.AssemblyProduct">
+            <summary>
+            产品名称
+            </summary>
+        </member>
+        <member name="P:ToolKits.UI.DialogUI.About.AssemblyVersion">
+            <summary>
+            高软版本
+            </summary>
+        </member>
+        <member name="P:ToolKits.UI.DialogUI.About.AssemblyCopyright">
+            <summary>
+            版权
+            </summary>
+        </member>
+        <member name="P:ToolKits.UI.DialogUI.About.AssemblyCompany">
+            <summary>
+            公司名称
+            </summary>
+        </member>
+        <member name="P:ToolKits.UI.DialogUI.About.AssemblyDescription">
+            <summary>
+            说明
+            </summary>
+        </member>
+        <member name="F:ToolKits.UI.DialogUI.About.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:ToolKits.UI.DialogUI.About.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:ToolKits.UI.DialogUI.About.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:ToolKits.UI.DialogUI.Confirm.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="P:ToolKits.UI.DialogUI.Confirm.FuncMode">
+            <summary>
+            功能模式0--为普通输入模式，1--为密码框模式
+            </summary>
+        </member>
+        <member name="P:ToolKits.UI.DialogUI.Confirm.LabelInfo">
+            <summary>
+            文本框提示信息
+            </summary>
+        </member>
+        <member name="P:ToolKits.UI.DialogUI.Confirm.TextTitle">
+            <summary>
+            窗体表示
+            </summary>
+        </member>
+        <member name="M:ToolKits.UI.DialogUI.Confirm.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:ToolKits.UI.DialogUI.Confirm.ShowDialog">
+            <summary>
+            以独占的方式显示自己，如果结果正确返回DialogResult.OK
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ToolKits.UI.DialogUI.Confirm.txtPsd_TextChanged(System.Object,System.EventArgs)">
+            <summary>
+            判断输入信息是否正确
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="F:ToolKits.UI.DialogUI.Confirm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:ToolKits.UI.DialogUI.Confirm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:ToolKits.UI.DialogUI.Confirm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:ToolKits.UI.DialogUI.Loading.SetLoadingIMG(System.Drawing.Image)">
+            <summary>
+            设置显示的图像
+            </summary>
+            <param name="img"></param>
+        </member>
+        <member name="M:ToolKits.UI.DialogUI.Loading.SetLoadingStatus(System.String)">
+            <summary>
+            设置状态信息
+            </summary>
+            <param name="str"></param>
+        </member>
+        <member name="P:ToolKits.UI.DialogUI.Loading.Text">
+            <summary>
+            显示的文字(线程安全)
+            </summary>
+        </member>
+        <member name="M:ToolKits.UI.DialogUI.Loading.GetLoadingStatus(System.String@)">
+            <summary>
+            设置状态信息
+            </summary>
+            <param name="str"></param>
+        </member>
+        <member name="F:ToolKits.UI.DialogUI.Loading.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:ToolKits.UI.DialogUI.Loading.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:ToolKits.UI.DialogUI.Loading.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:ToolKits.UI.DialogUI.ShowLogo">
+            <summary>
+            显示Logo并检查是否授权
+            </summary>
+        </member>
+        <member name="M:ToolKits.UI.DialogUI.ShowLogo.ShowLogo_Shown(System.Object,System.EventArgs)">
+            <summary>
+            1s后关闭窗口
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="F:ToolKits.UI.DialogUI.ShowLogo.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:ToolKits.UI.DialogUI.ShowLogo.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:ToolKits.UI.DialogUI.ShowLogo.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:ToolKits.FunctionModule.CommonMethod">
+            <summary>
+            公共方法
+            </summary>
+        </member>
+        <member name="M:ToolKits.FunctionModule.CommonMethod.ShowFormInPanel(System.Windows.Forms.Form,System.Windows.Forms.Panel,System.Boolean)">
+            <summary>
+            在控件中显示Form
+            </summary>
+            <param name="frm"></param>
+            <param name="pal"></param>
+            <param name="Disposed"></param>
+        </member>
+        <member name="M:ToolKits.FunctionModule.CommonMethod.ShowFormInPanel(System.Windows.Forms.Form,System.Windows.Forms.Panel,System.Boolean,System.Boolean)">
+            <summary>
+            在控件中显示Form
+            </summary>
+            <param name="frm"></param>
+            <param name="pal"></param>
+            <param name="refresh">是否强制重新载入frm到pal</param>
+            <param name="Disposed">是否需要释放资源</param>
+        </member>
+        <member name="M:ToolKits.FunctionModule.CommonMethod.ShowFormInPanel(System.Windows.Forms.Form,System.Windows.Forms.Panel)">
+            <summary>
+            在控件中显示Form
+            </summary>
+            <param name="frm"></param>
+            <param name="pal"></param>
+        </member>
+        <member name="M:ToolKits.FunctionModule.CommonMethod.ClearPanel(System.Windows.Forms.Panel,System.Boolean)">
+            <summary>
+            移除控件中的子控件
+            </summary>
+            <param name="pal"></param>
+            <param name="Disposed"></param>
+        </member>
+        <member name="M:ToolKits.FunctionModule.CommonMethod.VerticalCenterControl(System.Windows.Forms.Control,System.Windows.Forms.Control)">
+            <summary>
+            将一控件相对于另一个参考控件在垂直方向上居中
+            </summary>
+            <param name="referenceCtrl"></param>
+            <param name="destCtrl"></param>
+        </member>
+        <member name="M:ToolKits.FunctionModule.CommonMethod.HorizonCenterControl(System.Windows.Forms.Control,System.Windows.Forms.Control)">
+            <summary>
+            将一控件相对于另一个参考控件在水平方向上居中
+            </summary>
+            <param name="referenceCtrl"></param>
+            <param name="destCtrl"></param>
+        </member>
+        <member name="M:ToolKits.FunctionModule.CommonMethod.ReleaseImageResource(System.Drawing.Image@)">
+            <summary>
+            释放图像占用的资源
+            </summary>
+            <param name="image"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolKits.FunctionModule.CommonMethod.DisposeControl(System.Windows.Forms.Control)">
+            <summary>
+            控件本身不会释放
+            </summary>
+            <param name="ctrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolKits.FunctionModule.CommonMethod.DisposeControl(System.Windows.Forms.Control,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="ctrl"></param>
+            <param name="DisposeContainer">是否销毁容器（图片及其占用的图片资源会一起释放）</param>
+        </member>
+        <member name="T:ToolKits.FunctionModule.CommonMethod.UpdateEnableDelegate">
+            <summary>
+            更新控件信息用
+            </summary>
+        </member>
+        <member name="M:ToolKits.FunctionModule.CommonMethod.Dis_EnableBtn(System.Windows.Forms.Control,System.Boolean)">
+            <summary>
+            设置控制使能状态
+            </summary>
+            <param name="ctrl"></param>
+            <param name="enable"></param>
+        </member>
+        <member name="M:ToolKits.FunctionModule.CommonMethod.UpdatePicbImg(System.Windows.Forms.PictureBox,System.Drawing.Image)">
+            <summary>
+            设置PictureBox的Image属性
+            </summary>
+            <param name="picb"></param>
+            <param name="img"></param>
+        </member>
+        <member name="M:ToolKits.FunctionModule.CommonMethod.UpdateControlTxt(System.Windows.Forms.Control,System.String)">
+            <summary>
+            设置状态信息
+            </summary>
+        </member>
+        <member name="M:ToolKits.FunctionModule.CommonMethod.GetString``1(System.Collections.Generic.List{``0})">
+            <summary>
+            将列表中的数据通过-号连接，并返回连接后的字符串
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="lst"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ToolKits.FunctionModule.SerializeData`1">
+            <summary>
+            序列化反序列化结果
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:ToolKits.FunctionModule.SerializeData`1.#cctor">
+            <summary>
+            构造器
+            </summary>
+        </member>
+        <member name="M:ToolKits.FunctionModule.SerializeData`1.Clone(`0)">
+            <summary>
+            通过序列化和反序列化的方式实现对象的克隆
+            </summary>
+            <param name="class_object"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolKits.FunctionModule.SerializeData`1.Serialize(System.String,System.String,`0)">
+            <summary>
+            序列化结果
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ToolKits.FunctionModule.SerializeData`1.Deserialize(System.String,System.String)">
+            <summary>
+            反序列结果
+            </summary>
+            <returns>反序列化不成功就返回null</returns>
+        </member>
+        <member name="T:ToolKits.FunctionModule.ObjectCopy">
+            <summary>
+            利用反射实现的深拷贝
+            </summary>
+        </member>
+        <member name="T:ToolKits.FunctionModule.DataTransformer">
+            <summary>
+            数据格式转换
+            </summary>
+        </member>
+        <member name="M:ToolKits.FunctionModule.DataTransformer.Read``1(``0)">
+             <summary>
+            将对象转成流， T类型必须支持序列化
+             </summary>
+             <typeparam name="T"></typeparam>
+             <param name="object_T"></param>
+             <returns></returns>
+        </member>
+        <member name="M:ToolKits.FunctionModule.DataTransformer.Transfer``1(System.Byte[])">
+            <summary>
+            将字节装换成数据，T类型必须支持序列化
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:ToolKits.FunctionModule.DataTransformer.StructToBytes(System.Object)" -->
+        <member name="M:ToolKits.FunctionModule.DataTransformer.BytesToStuct(System.Byte[],System.Type)">
+            <summary>
+            byte数组转结构体
+            </summary>
+            <param name="bytes">byte数组</param>
+            <param name="type">结构体类型</param>
+            <returns>转换后的结构体</returns>
+        </member>
+        <member name="M:ToolKits.FunctionModule.Common.timeSpan(System.DateTime)">
+            <summary>
+            计算耗时
+            </summary>
+            <param name="previousTime">起始时间</param>
+            <returns>返回时间（单位：毫秒）</returns>
+        </member>
+        <member name="M:ToolKits.FunctionModule.Common.CharToString(System.Char[])">
+            <summary>
+            字符数组转字符串
+            </summary>
+            <param name="chars"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolKits.FunctionModule.Common.IntToBinary(System.Int32,System.Int32[]@)">
+            <summary>
+            十进制转二进制，这个主要用于错误码解析，解析出的二进制顺序与正常顺序恰好相反
+            </summary>
+            <param name="value"></param>
+            <param name="binValue"></param>
+        </member>
+        <member name="M:ToolKits.FunctionModule.Common.ControlResize(System.Windows.Forms.Control,System.Windows.Forms.Control,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            根据图像大小等比例缩放图像控件
+            </summary>
+            <param name="parentCtrl">父级控件</param>
+            <param name="imageCtrl">图像控件</param>
+            <param name="imageWidth">图像宽</param>
+            <param name="imageHeight">图像高</param>
+            <param name="widthBlank">父级控件右侧至少保留的宽度</param>
+            <param name="heightBlank">父级控件下侧至少保留的高度</param>
+        </member>
+        <member name="M:ToolKits.FunctionModule.Vision.Points_Coordinate_model(HalconDotNet.HObject,HalconDotNet.HObject,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple@,HalconDotNet.HTuple@)">
+            <summary>
+            2019.05.30新增 用来创建矫正点模板 是精确测量水平线以及垂直线 并输出交点
+            </summary>
+            <param name="ho_ImageR"></param>
+            <param name="ho_inspectReg"></param>
+            <param name="hv_hRows"></param>
+            <param name="hv_hCols"></param>
+            <param name="hv_vRows"></param>
+            <param name="hv_vCols"></param>
+            <param name="hv_cornorRows"></param>
+            <param name="hv_cornorCols"></param>
+        </member>
+        <member name="M:ToolKits.FunctionModule.Vision.MirrorImage(HalconDotNet.HObject,HalconDotNet.HObject@,System.String)">
+            <summary>
+            图像镜像
+            </summary>
+            <param name="sourceImage">原始图像</param>
+            <param name="destImage">镜像后图像</param>
+            <param name="mirrorMode">镜像模式("row"/"column"/"diagonal")</param>
+        </member>
+        <member name="M:ToolKits.FunctionModule.Vision.RotateImage(HalconDotNet.HObject,HalconDotNet.HObject@,System.Double)">
+            <summary>
+            图像旋转
+            </summary>
+            <param name="sourceImage">原始图像</param>
+            <param name="destImage">镜像后图像</param>
+            <param name="angle">旋转角度(degree)</param>
+        </member>
+        <member name="M:ToolKits.FunctionModule.Vision.ReadModel(System.String,System.String,System.String,HalconDotNet.HTuple@,HalconDotNet.HTuple@)">
+            <summary>
+            读取模板类型和模板文件（模板类型必须是存储在一个文件）
+            </summary>
+            <param name="modelPath">模板所在的目录</param>
+            <param name="modelTypePattern">与模板类型文件匹配的字符串</param>
+            <param name="modelPattern">与模板文件匹配的字符串</param>
+            <param name="modelType"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolKits.FunctionModule.Vision.ReadModel(System.String,System.String,HalconDotNet.HTuple,HalconDotNet.HTuple@)">
+            <summary>
+            根据已知模板类型读取模板文件，支持读取多个模板文件
+            </summary>
+            <param name="modelPath">模板路径</param>
+            <param name="modelPattern">与模板文件匹配的字符串信息</param>
+            <param name="modelType">模板类型</param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolKits.FunctionModule.Vision.WriteModel(System.String,HalconDotNet.HTuple,HalconDotNet.HTuple)">
+            <summary>
+            保存一个模板文件
+            </summary>
+            <param name="modelFilePath"></param>
+            <param name="modelType">模板类型长度为1</param>
+            <param name="model">模板长度为1</param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolKits.FunctionModule.Vision.ClearModel(HalconDotNet.HTuple,HalconDotNet.HTuple)">
+            <summary>
+            清除模板信息和模板类型
+            </summary>
+            <param name="modelType"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolKits.FunctionModule.Vision.clear_model(HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple@)">
+            <summary>
+            释放模板资源通用函数
+            </summary>
+            <param name="hv_model_type"></param>
+            <param name="hv_model_id"></param>
+            <param name="hv_iFlag"></param>
+        </member>
+        <member name="M:ToolKits.FunctionModule.Vision.create_model(HalconDotNet.HObject,HalconDotNet.HObject,HalconDotNet.HObject,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple@,HalconDotNet.HTuple@)">
+            <summary>
+            创建模板通用函数
+            </summary>
+            <param name="ho_image"></param>
+            <param name="ho_model_region"></param>
+            <param name="ho_fore_region"></param>
+            <param name="hv_angle_start"></param>
+            <param name="hv_angle_extent"></param>
+            <param name="hv_model_type"></param>
+            <param name="hv_model_id"></param>
+            <param name="hv_iFlag"></param>
+        </member>
+        <member name="M:ToolKits.FunctionModule.Vision.read_model(HalconDotNet.HObject@,HalconDotNet.HTuple,HalconDotNet.HTuple@,HalconDotNet.HTuple@,HalconDotNet.HTuple@,HalconDotNet.HTuple@,HalconDotNet.HTuple@)">
+            <summary>
+            读取模板通用函数
+            </summary>
+            <param name="ho_show_contour"></param>
+            <param name="hv_model_path"></param>
+            <param name="hv_model_type"></param>
+            <param name="hv_model_id"></param>
+            <param name="hv_def_row"></param>
+            <param name="hv_def_col"></param>
+            <param name="hv_iFlag"></param>
+        </member>
+        <member name="M:ToolKits.FunctionModule.Vision.write_model(HalconDotNet.HObject,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple@)">
+            <summary>
+            保存模板通用函数
+            </summary>
+            <param name="ho_show_contour"></param>
+            <param name="hv_model_path"></param>
+            <param name="hv_model_type"></param>
+            <param name="hv_model_id"></param>
+            <param name="hv_def_row"></param>
+            <param name="hv_def_col"></param>
+            <param name="hv_iFlag"></param>
+        </member>
+        <member name="M:ToolKits.FunctionModule.Vision.find_model(HalconDotNet.HObject,HalconDotNet.HObject,HalconDotNet.HObject,HalconDotNet.HObject@,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple@,HalconDotNet.HTuple@,HalconDotNet.HTuple@,HalconDotNet.HTuple@,HalconDotNet.HTuple@,HalconDotNet.HTuple@,HalconDotNet.HTuple@)">
+            <summary>
+            模板匹配通用函数，返回匹配分数
+            </summary>
+            <param name="ho_image"></param>
+            <param name="ho_roi"></param>
+            <param name="ho_show_contour"></param>
+            <param name="ho_update_show_contour"></param>
+            <param name="hv_model_type"></param>
+            <param name="hv_angle_start"></param>
+            <param name="hv_angle_extent"></param>
+            <param name="hv_score_thresh"></param>
+            <param name="hv_match_num"></param>
+            <param name="hv_model_id"></param>
+            <param name="hv_ref_row"></param>
+            <param name="hv_ref_col"></param>
+            <param name="hv_def_row"></param>
+            <param name="hv_def_col"></param>
+            <param name="hv_comparison_type"></param>
+            <param name="hv_comparison_val"></param>
+            <param name="hv_found_row"></param>
+            <param name="hv_found_col"></param>
+            <param name="hv_found_angle"></param>
+            <param name="hv_found_score"></param>
+            <param name="hv_update_def_row"></param>
+            <param name="hv_update_def_col"></param>
+            <param name="hv_iFlag">0匹配成功；-1匹配成功，但区域特征不满足标准，-2匹配失败，-3算法异常</param>
+        </member>
+        <member name="M:ToolKits.FunctionModule.Vision.find_model(HalconDotNet.HObject,HalconDotNet.HObject,HalconDotNet.HObject,HalconDotNet.HObject@,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HTuple@,HalconDotNet.HTuple@,HalconDotNet.HTuple@,HalconDotNet.HTuple@,HalconDotNet.HTuple@,HalconDotNet.HTuple@,HalconDotNet.HTuple@,HalconDotNet.HTuple@)">
+            <summary>
+            模板匹配通用函数，仅匹配
+            </summary>
+            <param name="ho_image">图</param>
+            <param name="ho_roi">匹配区</param>
+            <param name="ho_show_contour">显示区</param>
+            <param name="ho_update_show_contour">更新后的显示区</param>
+            <param name="hv_model_type">模板类型</param>
+            <param name="hv_model_id">模板ID</param>
+            <param name="hv_angle_start">匹配起始角度</param>
+            <param name="hv_angle_extent">匹配终止角度</param>
+            <param name="hv_score_thresh">匹配阈值分数</param>
+            <param name="hv_match_num">匹配数目</param>
+            <param name="hv_def_row">起始r</param>
+            <param name="hv_def_col">起始c</param>
+            <param name="hv_found_row">找到的r</param>
+            <param name="hv_found_col">找到的c</param>
+            <param name="hv_found_angle">找到的角度</param>
+            <param name="hv_found_score">找到的分数</param>
+            <param name="hv_update_def_row"></param>
+            <param name="hv_update_def_col"></param>
+            <param name="hv_model_H_new"></param>
+            <param name="hv_iFlag"></param>
+        </member>
+        <member name="M:ToolKits.FunctionModule.Vision.CopyModel(HalconDotNet.HTuple,HalconDotNet.HTuple)">
+            <summary>
+            0:Ncc;1:Shape
+            </summary>
+            <param name="modelId"></param>
+            <param name="modelType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolKits.FunctionModule.Vision.GenROI(HTHalControl.HTWindowControl,System.String,HalconDotNet.HObject@)">
+            <summary>
+            从HTWindowControl窗口获取交互操作ROI
+            </summary>
+            <param name="htWindow"></param>
+            <param name="mode">获取ROI的类型：contour/region</param>
+            <param name="ROI"></param>
+        </member>
+        <member name="F:ToolKits.RegionModify.RegionModifyForm.RegionMode.region">
+            <summary>
+            区域
+            </summary>
+        </member>
+        <member name="F:ToolKits.RegionModify.RegionModifyForm.RegionMode.contour">
+            <summary>
+            轮廓
+            </summary>
+        </member>
+        <member name="P:ToolKits.RegionModify.RegionModifyForm.ModifyRegion">
+            <summary>
+            优化后的区域
+            </summary>
+        </member>
+        <member name="M:ToolKits.RegionModify.RegionModifyForm.GetSpecRegion(HalconDotNet.HObject,HalconDotNet.HTuple,HalconDotNet.HTuple,HalconDotNet.HObject@)">
+            <summary>
+            找出包含点row,col的区域或轮廓(索引起始为1)
+            </summary>
+            <param name="region"></param>
+            <param name="row"></param>
+            <param name="col"></param>
+            <returns>true表示找到，false表示未找到</returns>
+        </member>
+        <member name="M:ToolKits.RegionModify.RegionModifyForm.UpdateRegion(HalconDotNet.HObject@,HalconDotNet.HObject,System.Int32)">
+            <summary>
+            根据索引值更新区域数组updateRegion
+            </summary>
+            <param name="updateRegion">被更新的区域数组</param>
+            <param name="region">用来更新指定索引处区域的区域</param>
+            <param name="index">需要更新的索引值</param>
+        </member>
+        <member name="M:ToolKits.RegionModify.RegionModifyForm.Dispose">
+            <summary>
+            释放所有资源
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:ToolKits.RegionModify.RegionModifyForm.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:ToolKits.RegionModify.RegionModifyForm.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:ToolKits.RegionModify.RegionModifyForm.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.BaseForm.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.BaseForm.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.BaseForm.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.CheckPosAdd.AddVerticalForm.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.CheckPosAdd.AddVerticalForm.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.CheckPosAdd.AddVerticalForm.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.CheckPosAdd.AddHorizontalForm.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.CheckPosAdd.AddHorizontalForm.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.CheckPosAdd.AddHorizontalForm.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.CheckPosAdd.IntersectionPoints.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.CheckPosAdd.IntersectionPoints.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.CheckPosAdd.IntersectionPoints.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="T:ToolKits.TemplateEdit.MainTemplateForm.TemplateScence">
+            <summary>
+            模板场景枚举
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.TemplateScence.Match">
+            <summary>
+            定位匹配模板
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.TemplateScence.Measure1D">
+            <summary>
+            1D测量模板
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.TemplateScence.Measure2D">
+            <summary>
+            2D测量模板
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.TemplateScence.CheckPosMatch">
+            <summary>
+            2019.05.30 新增矫正点匹配
+            </summary>
+        </member>
+        <member name="T:ToolKits.TemplateEdit.MainTemplateForm.DrawType">
+            <summary>
+            交互操作类型
+            </summary>
+        </member>
+        <member name="T:ToolKits.TemplateEdit.MainTemplateForm.VaryHobject">
+            <summary>
+            声明Hobject类型的类【接受区/拒绝区】
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.VaryHobject.obj">
+            <summary>
+            Hobject
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.VaryHobject.type">
+            <summary>
+            "接受区"/"拒绝区"
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.VaryHobject.contType">
+            <summary>
+            轮廓类型
+            </summary>
+        </member>
+        <member name="T:ToolKits.TemplateEdit.MainTemplateForm.TemplateParam">
+            <summary>
+            定位模板参数类
+            </summary>
+        </member>
+        <member name="P:ToolKits.TemplateEdit.MainTemplateForm.TemplateParam.AngleStart">
+            <summary>
+            模板的起始角度/°
+            </summary>
+        </member>
+        <member name="P:ToolKits.TemplateEdit.MainTemplateForm.TemplateParam.AngleExtent">
+            <summary>
+            模板的角度范围/°
+            </summary>
+        </member>
+        <member name="P:ToolKits.TemplateEdit.MainTemplateForm.TemplateParam.NumLevel">
+            <summary>
+            模板的金字塔层数
+            </summary>
+        </member>
+        <member name="P:ToolKits.TemplateEdit.MainTemplateForm.TemplateParam.Score">
+            <summary>
+            模板的匹配分数
+            </summary>
+        </member>
+        <member name="P:ToolKits.TemplateEdit.MainTemplateForm.TemplateParam.Type">
+            <summary>
+            模板的类型【0表示原图Ncc;1表示原图Shape;2表示Shape Xld;3表示二值图Ncc】
+            </summary>
+        </member>
+        <member name="P:ToolKits.TemplateEdit.MainTemplateForm.TemplateParam.IsCreateTmp">
+            <summary>
+            是否创建模板的标志
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MainTemplateForm.TemplateParam.#ctor">
+            <summary>
+            使用默认参数初始化
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MainTemplateForm.TemplateParam.#ctor(System.Double,System.Double,System.Int32,System.Double,System.Int32,System.Boolean)">
+            <summary>
+            使用指定参数初始化
+            </summary>
+            <param name="angleStart">起始角度，单位角度</param>
+            <param name="angleExtent">终止角度，单位角度</param>
+            <param name="numLevel">金字塔层数</param>
+            <param name="score">匹配分数</param>
+            <param name="type">模板类型</param>
+            <param name="isCreateTmp">是否创建模板</param>
+        </member>
+        <member name="T:ToolKits.TemplateEdit.MainTemplateForm.TemplateResult">
+            <summary>
+            与模板信息相关的类（modelID,modelType,showContour,defRows,defCols）
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.TemplateResult.showContour">
+            <summary>
+            显示区
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.TemplateResult.defRows">
+            <summary>
+            映射点行坐标
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.TemplateResult.defCols">
+            <summary>
+            映射点列坐标
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.TemplateResult.modelID">
+            <summary>
+            模板句柄
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.TemplateResult.modelType">
+            <summary>
+            模板类型
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.TemplateResult.hRow">
+            <summary>
+            水平线 Row
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.TemplateResult.hCol">
+            <summary>
+            水平线 Col
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.TemplateResult.vRow">
+            <summary>
+            垂直线 Row
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.TemplateResult.vCol">
+            <summary>
+            垂直线 Col
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.TemplateResult.cornorRow">
+            <summary>
+            精准测量后交点 Row
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.TemplateResult.cornorCol">
+            <summary>
+            精准测量和交点 Col
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.TemplateResult.createTmpOK">
+            <summary>
+            是否成功创建模板
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MainTemplateForm.TemplateResult.Copy(ToolKits.TemplateEdit.MainTemplateForm.TemplateResult)">
+            <summary>
+            拷贝所有信息
+            </summary>
+            <param name="tmpResult"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MainTemplateForm.TemplateResult.Dispose">
+            <summary>
+            释放模板的所有资源
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam">
+            <summary>
+            2D测量参数
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.instanceNums">
+            <summary>
+            拟合个数
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.measureNums">
+            <summary>
+            测量矩形个数
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.measureSelect">
+            <summary>
+            边缘选择
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.measureTransition">
+            <summary>
+            边缘变化
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.measureSigma">
+            <summary>
+            滤波系数
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.minScore">
+            <summary>
+            匹配分数
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.measureLen1">
+            <summary>
+            2D测量矩形长轴一半
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.measureLen2">
+            <summary>
+            2D测量矩形短轴一半
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.measureThreshold">
+            <summary>
+            边缘梯度阈值
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.startAngle">
+            <summary>
+            圆或椭圆的起始角度
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.endAngle">
+            <summary>
+            圆或椭圆的终止角度
+            </summary>
+        </member>
+        <member name="P:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.InstanceNums">
+            <summary>
+            拟合个数
+            </summary>
+        </member>
+        <member name="P:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.MeasureNums">
+            <summary>
+            测量矩形个数
+            </summary>
+        </member>
+        <member name="P:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.MeausreSelect">
+            <summary>
+            测量点选择
+            </summary>
+        </member>
+        <member name="P:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.MeasureTransition">
+            <summary>
+            测量过渡带变化
+            </summary>
+        </member>
+        <member name="P:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.MeasureSigma">
+            <summary>
+            滤波系数
+            </summary>
+        </member>
+        <member name="P:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.MinScore">
+            <summary>
+            匹配分数
+            </summary>
+        </member>
+        <member name="P:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.MeasureLen1">
+            <summary>
+            2D测量矩形长轴一半
+            </summary>
+        </member>
+        <member name="P:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.MeasureLen2">
+            <summary>
+            2D测量矩形短轴一半
+            </summary>
+        </member>
+        <member name="P:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.MeasureThreshold">
+            <summary>
+            边缘梯度阈值
+            </summary>
+        </member>
+        <member name="P:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.StartAngle">
+            <summary>
+            圆或椭圆的起始角度
+            </summary>
+        </member>
+        <member name="P:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.EndAngle">
+            <summary>
+            圆或椭圆的终止角度
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MainTemplateForm.Measure2DParam.DeepClone">
+            <summary>
+            深拷贝
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ToolKits.TemplateEdit.MainTemplateForm.Measure2DResult">
+            <summary>
+            2D测量结果信息
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.Measure2DResult.msrObjType">
+            <summary>
+            测量区域类型集合【0:直线;1:矩形;2:圆;3:椭圆】
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.Measure2DResult.createMsr2DOK">
+            <summary>
+            2D测量是否完成
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.modelRegion">
+            <summary>
+            模板区域
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.matchRegion">
+            <summary>
+            匹配区
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.rejectRegion">
+            <summary>
+            拒绝区
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.WorkOver">
+            <summary>
+            控件是否完成工作
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_TmpPrmFrm">
+            <summary>
+            模板参数窗口
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_rotateFrm">
+            <summary>
+            图像旋转窗口
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_foreGrdFrm">
+            <summary>
+            画前景区窗口（为二值图Ncc服务）
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_mdlRegFrm">
+            <summary>
+            画模板区窗口
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_shwContFrm">
+            <summary>
+            画模板去窗口
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_defPointFrm">
+            <summary>
+            画映射点窗口
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_mtchRegFrm">
+            <summary>
+            画匹配区窗口
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_rejRegFrm">
+            <summary>
+            画拒绝区窗口
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_Msr2DObjFrm">
+            <summary>
+            画测量区域面板
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_Msr2DDistPtFrm">
+            <summary>
+            设置距离区面板
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_TmpPrmValues">
+            <summary>
+            创建模板的数据
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_fGrdRegValues">
+            <summary>
+            画前景区的数据
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_mdlRegValues">
+            <summary>
+            画模板区的数据
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_shwContValues">
+            <summary>
+            画显示区的数据
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_defPointValues">
+            <summary>
+            画映射点的数据
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_mtchRegValues">
+            <summary>
+            画匹配区的数据
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_rejRegValues">
+            <summary>
+            画拒绝区的数据
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_horizonValues">
+            <summary>
+            画水平线数据
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_verticalValues">
+            <summary>
+            画垂直线数据
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_intersectionValues">
+            <summary>
+            水平线与垂直线（精确测量之后的线）交点
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.tmpResult">
+            <summary>
+            创建模板的结果
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_Msr2DRegValues">
+            <summary>
+            2D测量区域信息
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_Msr2DDistPt1">
+            <summary>
+            测距第一点索引集合
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_Msr2DDistPt2">
+            <summary>
+            测距第二点索引集合
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.mte_Msr2DPrmValues">
+            <summary>
+            2D测量参数
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.msr2DResult">
+            <summary>
+            2D测量结果
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MainTemplateForm.InitResources(ToolKits.TemplateEdit.MainTemplateForm.TemplateScence,System.Object)">
+            <summary>
+            初始化缓存变量与首个窗体资源
+            </summary>
+            <param name="tmpScence"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MainTemplateForm.InitForms(ToolKits.TemplateEdit.MainTemplateForm.TemplateScence,System.Collections.Generic.LinkedListNode{ToolKits.TemplateEdit.BaseForm})">
+            <summary>
+            首次加载窗体
+            </summary>
+            <param name="tmpScence"></param>
+            <param name="nodeFrm"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MainTemplateForm.UpdateForm(ToolKits.TemplateEdit.BaseForm)">
+            <summary>
+            更新窗口
+            </summary>
+            <param name="baseForm"></param>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MainTemplateForm.Dispose">
+            <summary>
+            释放所有占用资源
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MainTemplateForm.AllocAcceptRejRegion(System.Collections.Generic.List{ToolKits.TemplateEdit.MainTemplateForm.VaryHobject},HalconDotNet.HObject@)">
+            <summary>
+            收集接受区与拒绝区的差
+            </summary>
+            <param name="values"></param>
+            <param name="region"></param>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MainTemplateForm.CreateTemplate">
+            <summary>
+            创建模板主函数
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MainTemplateForm.CreateCheckPosTemplate">
+            <summary>
+            创建见矫正点模板函数
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MainTemplateForm.CreateMeasure2DModel">
+            <summary>
+            创建2D测量模板主函数
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MainTemplateForm.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MainTemplateForm.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MainTemplateForm.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MatchTmpEdit.DefPointForm.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MatchTmpEdit.DefPointForm.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MatchTmpEdit.DefPointForm.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MatchTmpEdit.ForeGroundForm.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MatchTmpEdit.ForeGroundForm.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MatchTmpEdit.ForeGroundForm.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MatchTmpEdit.MatchRegionForm.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MatchTmpEdit.MatchRegionForm.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MatchTmpEdit.MatchRegionForm.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MatchTmpEdit.ModelRegionForm.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MatchTmpEdit.ModelRegionForm.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MatchTmpEdit.ModelRegionForm.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MatchTmpEdit.RejectRegionForm.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MatchTmpEdit.RejectRegionForm.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MatchTmpEdit.RejectRegionForm.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MatchTmpEdit.RotateForm.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MatchTmpEdit.RotateForm.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MatchTmpEdit.RotateForm.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MatchTmpEdit.ShowContourForm.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MatchTmpEdit.ShowContourForm.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MatchTmpEdit.ShowContourForm.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.MatchTmpEdit.TmpPrmForm.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MatchTmpEdit.TmpPrmForm.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.MatchTmpEdit.TmpPrmForm.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.Measure2DTmpEdit.Measure2DDistPointForm.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.Measure2DTmpEdit.Measure2DDistPointForm.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.Measure2DTmpEdit.Measure2DDistPointForm.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.Measure2DTmpEdit.Measure2DObjectsForm.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.Measure2DTmpEdit.Measure2DObjectsForm.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.Measure2DTmpEdit.Measure2DObjectsForm.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:ToolKits.TemplateEdit.Measure2DTmpEdit.Measure2DParamForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.Measure2DTmpEdit.Measure2DParamForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:ToolKits.TemplateEdit.Measure2DTmpEdit.Measure2DParamForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:IniDll.IniFiles">
+            <summary>
+            IniFiles的类
+            </summary>
+        </member>
+        <member name="M:IniDll.IniFiles.SaveObj(System.Object)">
+            <summary>
+            保存类内所有int,double,bool,string公共变量
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IniDll.IniFiles.LoadObj(System.Object)">
+            <summary>
+            加载窗体内所有int,double,bool,string公共变量
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IniDll.IniFiles.SaveObj(System.Object,System.String)">
+            <summary>
+            保存类内所有int,double,bool,string公共变量
+            </summary>
+            <param name="obj"></param>
+            <param name="Section"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IniDll.IniFiles.LoadObj(System.Object,System.String)">
+            <summary>
+            加载窗体内所有int,double,bool,string公共变量
+            </summary>
+            <param name="obj"></param>
+            <param name="Section"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:SerialClass.SerialClass.#ctor" -->
+        <!-- Badly formed XML comment ignored for member "M:SerialClass.SerialClass.#ctor(System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SerialClass.SerialClass.#ctor(System.String,System.Int32,System.IO.Ports.Parity,System.Int32,System.IO.Ports.StopBits)" -->
+        <!-- Badly formed XML comment ignored for member "M:SerialClass.SerialClass.Finalize" -->
+        <!-- Badly formed XML comment ignored for member "M:SerialClass.SerialClass.setSerialPort(System.String,System.Int32,System.Int32,System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:SerialClass.SerialClass.setSerialPort" -->
+        <!-- Badly formed XML comment ignored for member "M:SerialClass.SerialClass.openPort" -->
+        <!-- Badly formed XML comment ignored for member "M:SerialClass.SerialClass.closePort" -->
+        <!-- Badly formed XML comment ignored for member "M:SerialClass.SerialClass._serialPort_DataReceived(System.Object,System.IO.Ports.SerialDataReceivedEventArgs)" -->
+        <!-- Badly formed XML comment ignored for member "M:SerialClass.SerialClass._serialPort_ErrorReceived(System.Object,System.IO.Ports.SerialErrorReceivedEventArgs)" -->
+        <!-- Badly formed XML comment ignored for member "M:SerialClass.SerialClass.SendData(System.Byte[],System.Int32,System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:SerialClass.SerialClass.SendCommand(System.Byte[],System.Byte[]@,System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:SerialClass.SerialClass.serialsIsConnected" -->
+        <!-- Badly formed XML comment ignored for member "M:SerialClass.SerialClass.getSerials" -->
+        <!-- Badly formed XML comment ignored for member "M:SerialClass.SerialClass.ByteToString(System.Byte[])" -->
+        <!-- Badly formed XML comment ignored for member "M:SerialClass.SerialClass.StringToByte(System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SerialClass.SerialClass.strToToHexByte(System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SerialClass.SerialClass.byteToHexStr(System.Byte[])" -->
+    </members>
+</doc>

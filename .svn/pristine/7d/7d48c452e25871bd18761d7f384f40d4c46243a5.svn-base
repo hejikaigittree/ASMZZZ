@@ -1,0 +1,113 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using JFHub;
+using JFInterfaceDef;
+
+namespace JFApp
+{
+    /// <summary>
+    /// 视觉调试窗口
+    /// </summary>
+    public partial class FormVision : Form
+    {
+        public FormVision()
+        {
+            InitializeComponent();
+        }
+
+        private void FormVision_Load(object sender, EventArgs e)
+        {
+            AdjustSingleVisionAssistView();
+        }
+
+        private void FormVision_VisibleChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        string _currSingleVisionAssistName = null; //当前所选的单目示教助手名称
+        void AdjustSingleVisionAssistView()
+        {
+            string[] allSVANames = JFHubCenter.Instance.InitorManager.GetIDs(typeof(JFSingleVisionAssist));
+            if (null != allSVANames)
+                foreach (string nm in allSVANames)
+                {
+                    ToolStripMenuItem mi = new ToolStripMenuItem(nm);
+                    mi.Click += OnSelectSingleVisionAssist;
+                    toolStripMenuItemSelectSingleVisionAssist.DropDownItems.Add(mi);
+                }
+
+
+        }
+
+        /// <summary>
+        /// 选择一个蛋视觉示教助手
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void OnSelectSingleVisionAssist(object sender,EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// 添加一个新的单相机示教助手
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemAddSingleVisionAssist_Click(object sender, EventArgs e)
+        {
+            FormCreateInitor fm = new FormCreateInitor();
+            fm.MatchType = typeof(JFSingleVisionAssist);
+            fm.ExistIDs = JFHubCenter.Instance.InitorManager.GetIDs(typeof(IJFInitializable));
+            if(fm.ShowDialog() == DialogResult.OK)
+            {
+                ToolStripMenuItem mi = new ToolStripMenuItem(fm.ID);
+                mi.Click += OnSelectSingleVisionAssist;
+                toolStripMenuItemSelectSingleVisionAssist.DropDownItems.Add(mi);
+
+
+
+                //JFHubCenter.Instance.InitorManager.Add(fm.ID, newDevice);
+                //JFXmlSortedDictionary<string, List<object>> dictInitorParam = JFHubCenter.Instance.SystemCfg.GetItemValue(JFHubCenter.CK_InitDevParams) as JFXmlSortedDictionary<string, List<object>>;
+                //List<object> paramsInCfg = new List<object>();
+                //paramsInCfg.Add(newDevice.GetType().AssemblyQualifiedName);
+                //for (int i = 0; i < newDevice.InitParamNames.Length; i++)
+                //    paramsInCfg.Add(newDevice.GetInitParamValue(newDevice.InitParamNames[i]));
+                //dictInitorParam.Add(devID, paramsInCfg);
+                //JFHubCenter.Instance.SystemCfg.NotifyItemChanged(JFHubCenter.CK_InitDevParams);
+                //JFHubCenter.Instance.SystemCfg.Save();
+
+
+
+            }
+
+        }
+
+        /// <summary>
+        /// 删除一个已有的相机示教助手
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemDelSingleVisionAssist_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        
+        private void tabControlCF1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(0 == tabControlCF1.SelectedIndex) //单相机示教助手界面
+            {
+
+            }
+        }
+    }
+}

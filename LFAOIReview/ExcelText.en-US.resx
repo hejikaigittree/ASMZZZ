@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AIOperator" xml:space="preserve">
+    <value>AI Operator</value>
+    <comment>05</comment>
+  </data>
+  <data name="Continued" xml:space="preserve">
+    <value>Continued</value>
+    <comment>33</comment>
+  </data>
+  <data name="Count" xml:space="preserve">
+    <value>Count</value>
+    <comment>26</comment>
+  </data>
+  <data name="Database" xml:space="preserve">
+    <value>Database</value>
+    <comment>04</comment>
+  </data>
+  <data name="DefectType" xml:space="preserve">
+    <value>Defect Type</value>
+    <comment>25</comment>
+  </data>
+  <data name="DevicesPerHour" xml:space="preserve">
+    <value>Devices Per Hour (UPH)</value>
+    <comment>19</comment>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>EndDate</value>
+    <comment>09</comment>
+  </data>
+  <data name="EndTime" xml:space="preserve">
+    <value>EndTime</value>
+    <comment>10</comment>
+  </data>
+  <data name="Fail" xml:space="preserve">
+    <value>Fail</value>
+    <comment>29</comment>
+  </data>
+  <data name="FalseCall" xml:space="preserve">
+    <value>False Call</value>
+    <comment>30</comment>
+  </data>
+  <data name="FalseCallDevicePercent" xml:space="preserve">
+    <value>False Call Device (%)</value>
+    <comment>16</comment>
+  </data>
+  <data name="Lot" xml:space="preserve">
+    <value>Lot</value>
+    <comment>11</comment>
+  </data>
+  <data name="Machine" xml:space="preserve">
+    <value>Machine</value>
+    <comment>06</comment>
+  </data>
+  <data name="NumberOfDevicesFalseCalled" xml:space="preserve">
+    <value>Number of Devices False Called</value>
+    <comment>17</comment>
+  </data>
+  <data name="NumberOfDevicesInspected" xml:space="preserve">
+    <value>Number Of Devices Inspected</value>
+    <comment>32</comment>
+  </data>
+  <data name="NumberOfDevicesPassed" xml:space="preserve">
+    <value>Number of Devices Passed</value>
+    <comment>21</comment>
+  </data>
+  <data name="NumberOfDevicesRejected" xml:space="preserve">
+    <value>Number of Devices Rejected</value>
+    <comment>22</comment>
+  </data>
+  <data name="NumberOfNoDies" xml:space="preserve">
+    <value>Number of No Dies</value>
+    <comment>24</comment>
+  </data>
+  <data name="NumberOfStartQuantity" xml:space="preserve">
+    <value>Number of Start Quantity in Targa</value>
+    <comment>20</comment>
+  </data>
+  <data name="NumberOfStripsInspected" xml:space="preserve">
+    <value>Number of Strips Inspected</value>
+    <comment>14</comment>
+  </data>
+  <data name="NumberOfStripsNotInspected" xml:space="preserve">
+    <value>Number of Strips Not Inspected</value>
+    <comment>15</comment>
+  </data>
+  <data name="Pass" xml:space="preserve">
+    <value>Pass</value>
+    <comment>28</comment>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>Product Code</value>
+    <comment>12</comment>
+  </data>
+  <data name="QuantityOfDevicesPerStrip" xml:space="preserve">
+    <value>Quantity of Devices Per Strip</value>
+    <comment>18</comment>
+  </data>
+  <data name="SheetName_MapOperator" xml:space="preserve">
+    <value>Map Operator</value>
+    <comment>02</comment>
+  </data>
+  <data name="SheetName_SummaryOperator" xml:space="preserve">
+    <value>Summary Operator</value>
+    <comment>01</comment>
+  </data>
+  <data name="SheetName_UDD" xml:space="preserve">
+    <value>UDD</value>
+    <comment>03</comment>
+  </data>
+  <data name="Skip" xml:space="preserve">
+    <value>Skip</value>
+    <comment>31</comment>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>StartDate</value>
+    <comment>07</comment>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>StartTime</value>
+    <comment>08</comment>
+  </data>
+  <data name="Strip" xml:space="preserve">
+    <value>Strip</value>
+    <comment>27</comment>
+  </data>
+  <data name="TotalNumberOfStrips" xml:space="preserve">
+    <value>Total Number of Strips</value>
+    <comment>13</comment>
+  </data>
+  <data name="YieldByDevice" xml:space="preserve">
+    <value>Yield by Device (%)</value>
+    <comment>23</comment>
+  </data>
+</root>

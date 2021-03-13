@@ -1,0 +1,1378 @@
+[LWCVI Language Resource File]
+Version = 200
+Magic = -1395807027
+CharSet = 0
+
+[AXISCFG]
+Flags = "@f"
+Title = "Axis Config"
+
+[AXISCFG_PIPT]
+Type = 8
+NumItemLabels = 5
+NumItemValues = 0
+Flags = "EfeeEeee00"
+Label = "Pulse input:"
+
+[AXISCFG_POPT]
+Type = 8
+NumItemLabels = 2
+NumItemValues = 0
+Flags = "Efee00"
+Label = "Pulse output:"
+
+[AXISCFG_ENCODER]
+Type = 8
+NumItemLabels = 2
+NumItemValues = 0
+Flags = "Efee00"
+Label = "Encoder dir:"
+
+[AXISCFG_ORG]
+Type = 8
+NumItemLabels = 2
+NumItemValues = 0
+Flags = "Efee00"
+Label = "ORG logic:"
+
+[AXISCFG_EL]
+Type = 8
+NumItemLabels = 2
+NumItemValues = 0
+Flags = "Efee00"
+Label = "EL logic:"
+
+[AXISCFG_SVO]
+Type = 8
+NumItemLabels = 2
+NumItemValues = 0
+Flags = "Efee00"
+Label = "Servo logic:"
+
+[AXISCFG_INP]
+Type = 8
+NumItemLabels = 2
+NumItemValues = 0
+Flags = "Efee00"
+Label = "INP logic:"
+
+[AXISCFG_EZ]
+Type = 8
+NumItemLabels = 2
+NumItemValues = 0
+Flags = "Efee00"
+Label = "EZ logic:"
+
+[AXISCFG_ALM]
+Type = 8
+NumItemLabels = 2
+NumItemValues = 0
+Flags = "Efee00"
+Label = "ALM logic:"
+
+[AXISCFG_AXISTYPE]
+Type = 8
+NumItemLabels = 6
+NumItemValues = 0
+Flags = "EfefEfffDff"
+Label = "Axis type:"
+ItemLabel_0 = "Servo"
+ItemLabel_1 = "Step"
+ItemLabel_2 = "Linear"
+ItemLabel_3 = "Voic"
+ItemLabel_4 = "DD"
+ItemLabel_5 = "DC"
+
+[AXISCFG_CARDTYPE]
+Type = 8
+NumItemLabels = 9
+NumItemValues = 0
+Flags = "EfeeEefeEeee@ff"
+Label = "Drive type:"
+ItemLabel_2 = "HT_DC_Drive"
+ItemLabel_7 = "HoldBond_dispense"
+
+[AXISCFG_HDSTP_CRT]
+Type = 2
+Flags = "Dfe"
+Label = "Hardstop home cur(%)"
+
+[AXISCFG_HDSTP_TIME]
+Type = 2
+Flags = "Dfe"
+Label = "Hardstop home time(ms)"
+
+[AXISCFG_HOMETO]
+Type = 2
+Flags = "Dfe"
+Label = "Home timout[s]:"
+
+[AXISCFG_HOMESHIFT]
+Type = 2
+Flags = "Dfe"
+Label = "Offset[mm(бу)]:"
+
+[AXISCFG_TEXTMSG_13]
+Type = 4
+Flags = "Dfe"
+Default = "Home"
+
+[AXISCFG_STOP_DEC]
+Type = 2
+Flags = "Dfe"
+Label = "Emg dec[mm(бу)/s]:"
+
+[AXISCFG_RUNTOUT]
+Type = 2
+Flags = "Dfe"
+Label = "Timeout[s]:"
+
+[AXISCFG_TEXTMSG_11]
+Type = 4
+Flags = "Dfe"
+Default = "Motion"
+
+[AXISCFG_TEXTMSG_15]
+Type = 4
+Flags = "Dfe"
+Default = "In Postion"
+
+[AXISCFG_TEXTMSG_12]
+Type = 4
+Flags = "Dfe"
+Default = "Limit"
+
+[AXISCFG_HOMEVO]
+Type = 2
+Flags = "Dfe"
+Label = "Home Vo[mm(бу)/s]:"
+
+[AXISCFG_HOMEVM]
+Type = 2
+Flags = "Dfe"
+Label = "Home Vm[mm(бу)/s]:"
+
+[AXISCFG_TEXTMSG_14]
+Type = 4
+Flags = "Dfe"
+Default = "I/O(AMP208C)"
+
+[AXISCFG_TEXTMSG_10]
+Type = 4
+Flags = "Dfe"
+Default = "Basic"
+
+[AXISCFG_SFAC]
+Type = 2
+Flags = "Dfe"
+Label = "S factor(0~1):"
+
+[AXISCFG_DEC]
+Type = 2
+Flags = "Dfe"
+Label = "Dec[mm(бу)/s2]:"
+
+[AXISCFG_VM]
+Type = 2
+Flags = "Dfe"
+Label = "Max vel[mm(бу)/s]:"
+
+[AXISCFG_PETIMEOUT]
+Type = 2
+Flags = "Dfe"
+Label = "F.E. timeout[ms]:"
+
+[AXISCFG_INPINTERVAL]
+Type = 2
+Flags = "Dfe"
+Label = "INP interval(ms):"
+
+[AXISCFG_PE]
+Type = 2
+Flags = "Dfe"
+Label = "Follow error[mm]:"
+
+[AXISCFG_INPVALUE]
+Type = 2
+Flags = "Dfe"
+Label = "INP amplitude[mm]:"
+
+[AXISCFG_ACC]
+Type = 2
+Flags = "Dfe"
+Label = "ACC[mm(бу)/s2]:"
+
+[AXISCFG_MAXCUR]
+Type = 2
+Flags = "Dfe"
+Label = "Max cur(DC)[A]:"
+
+[AXISCFG_SMEL]
+Type = 2
+Flags = "Dfe"
+Label = "Soft NEL[mm(бу)]:"
+
+[AXISCFG_SPEL]
+Type = 2
+Flags = "Dfe"
+Label = "Soft PEL[mm(бу)]:"
+
+[AXISCFG_DECORATION_5]
+Type = 1
+Flags = "@e"
+
+[AXISCFG_HOMEACC]
+Type = 2
+Flags = "Dfe"
+Label = "Home acc[mm(бу)/s2]:"
+
+[AXISCFG_PULSEFACTOR]
+Type = 2
+Flags = "Dfe"
+Label = "Pulse fac[pls/mm]:"
+
+[AXISCFG_SLOTID]
+Type = 2
+Flags = "Dfe"
+Label = "Port(Z/R):"
+
+[AXISCFG_AXISID]
+Type = 2
+Flags = "Dfe"
+Label = "Node(Axis):"
+
+[AXISCFG_CARDID]
+Type = 2
+Flags = "Dfe"
+Label = "Bus(Card):"
+
+[AXISCFG_DECORATION_7]
+Type = 1
+Flags = "@e"
+
+[AXISCFG_DECORATION_2]
+Type = 1
+Flags = "@e"
+
+[AXISCFG_DECORATION_6]
+Type = 1
+Flags = "@e"
+
+[AXISCFG_DECORATION_3]
+Type = 1
+Flags = "@e"
+
+[AXISCFG_DECORATION]
+Type = 1
+Flags = "@e"
+
+[AXISCFG_LABEL]
+Type = 3
+Flags = "Efee"
+Label = "Name:"
+
+[AXISCFG_EXTENCODE]
+Type = 8
+NumItemLabels = 2
+NumItemValues = 0
+Flags = "Efef@f"
+Label = "Encoder exist:"
+ItemLabel_0 = "0 - None"
+ItemLabel_1 = "1 - Exist"
+
+[AXISCFG_SELEN]
+Type = 8
+NumItemLabels = 4
+NumItemValues = 0
+Flags = "EfefEfff"
+Label = "Soft limit enable"
+ItemLabel_0 = "NO"
+ItemLabel_1 = "SP&SN"
+ItemLabel_2 = "SPEL"
+ItemLabel_3 = "SNEL"
+
+[AXISCFG_ELEN]
+Type = 8
+NumItemLabels = 4
+NumItemValues = 0
+Flags = "EfefEfff"
+Label = "Electrical limit enable"
+ItemLabel_0 = "NO"
+ItemLabel_1 = "P&N"
+ItemLabel_2 = "PEL"
+ItemLabel_3 = "NEL"
+
+[AXISCFG_HOMEEZA]
+Type = 8
+NumItemLabels = 2
+NumItemValues = 0
+Flags = "Efef@f"
+Label = "EZ(AMP208C):"
+ItemLabel_0 = "0 - Disable"
+ItemLabel_1 = "1 - Enable"
+
+[AXISCFG_POLARITY]
+Type = 8
+NumItemLabels = 2
+NumItemValues = 0
+Flags = "Efef@f"
+Label = "Porlarity:"
+ItemLabel_0 = "0 - Default"
+ItemLabel_1 = "1 - Inverse"
+
+[AXISCFG_HOMEDIR]
+Type = 8
+NumItemLabels = 2
+NumItemValues = 0
+Flags = "Efef@f"
+Label = "Dir(AMP208C):"
+ItemLabel_0 = "0 - Positive"
+ItemLabel_1 = "1 - Negative"
+
+[AXISCFG_HOMEMODE]
+Type = 8
+NumItemLabels = 18
+NumItemValues = 0
+Flags = "EfeeEfffEfffEfffEfffEfffDff"
+Label = "Home mode:"
+ItemLabel_1 = "(1)EL(208C)"
+ItemLabel_2 = "(2)EZ(208C)"
+ItemLabel_3 = "(-1)NEL/P-EZ"
+ItemLabel_4 = "(-2)PEL/N-EZ"
+ItemLabel_5 = "(-3)NEL/N-EZ"
+ItemLabel_6 = "(-4)PEL/P-EZ"
+ItemLabel_7 = "(-5)NEL"
+ItemLabel_8 = "(-6)PEL"
+ItemLabel_9 = "(-7)N-Hardstop"
+ItemLabel_10 = "(-8)P-Hardstop"
+ItemLabel_11 = "(-9)N-Hardstop/EZ"
+ItemLabel_12 = "(-10)P-Hardstop/EZ"
+ItemLabel_13 = "(-11)P-EZ"
+ItemLabel_14 = "(-12)N-EZ"
+ItemLabel_15 = "(-13)P-ORG"
+ItemLabel_16 = "(-14)N-ORG"
+ItemLabel_17 = "(35)Current Pos"
+
+[AXISCFG_QUITBUTTON]
+Type = 2
+Flags = "Dfe"
+Label = "Cancel"
+
+[AXISCFG_SAVE]
+Type = 2
+Flags = "Dfe"
+Label = "Save"
+
+[AXISTOOL]
+Flags = "@f"
+Title = "Axis/IO debug tool"
+
+[AXISTOOL_QUITBUTTON]
+Type = 2
+Flags = "Dee"
+
+[AXISTOOL_POS]
+Type = 2
+Flags = "Dfe"
+Label = "Pos[mm(бу)]"
+
+[AXISTOOL_TQ_RATIO]
+Type = 2
+Flags = "Dfe"
+Label = "Force(-1~1)"
+
+[AXISTOOL_STEP]
+Type = 2
+Flags = "Dfe"
+Label = "Step[mm(бу)]"
+
+[AXISTOOL_RATIO]
+Type = 2
+Flags = "Dfe"
+Label = "Speed(%)"
+
+[AXISTOOL_TIMER]
+Type = 2
+Flags = "Dee"
+
+[AXISTOOL_SPD_N]
+Type = 2
+Flags = "Dfe"
+Label = "N(-)"
+
+[AXISTOOL_MOVEN]
+Type = 2
+Flags = "Dfe"
+Label = "N(-)"
+
+[AXISTOOL_MSG]
+Type = 4
+Flags = "Dfe"
+Default = "Message:"
+
+[AXISTOOL_TQ]
+Type = 2
+Flags = "Dfe"
+Label = "Set Force"
+
+[AXISTOOL_SPD_P]
+Type = 2
+Flags = "Dfe"
+Label = "P(+)"
+
+[AXISTOOL_HOME]
+Type = 2
+Flags = "Dfe"
+Label = "Home"
+
+[AXISTOOL_CLEAR]
+Type = 2
+Flags = "Dfe"
+Label = "Clear alarm"
+
+[AXISTOOL_STOP]
+Type = 2
+Flags = "Dfe"
+Label = "EMG\nSTOP"
+
+[AXISTOOL_ABSMOVE]
+Type = 2
+Flags = "Dfe"
+Label = "ABS Move"
+
+[AXISTOOL_MOVEP]
+Type = 2
+Flags = "Dfe"
+Label = "P(+)"
+
+[AXISTOOL_PEL]
+Type = 2
+Flags = "Dfe"
+Label = "PEL"
+
+[AXISTOOL_NEL]
+Type = 2
+Flags = "Dfe"
+Label = "NEL"
+
+[AXISTOOL_TEXTMSG_16]
+Type = 4
+Flags = "Dfe"
+Default = "I/O"
+
+[AXISTOOL_TEXTMSG_15]
+Type = 4
+Flags = "Dfe"
+Default = "AXIS"
+
+[AXISTOOL_S_3]
+Type = 2
+Flags = "Dee"
+
+[AXISTOOL_S_2]
+Type = 2
+Flags = "Dee"
+
+[AXISTOOL_S_1]
+Type = 2
+Flags = "Dee"
+
+[AXISTOOL_C_3]
+Type = 2
+Flags = "Dee"
+
+[AXISTOOL_S_0]
+Type = 2
+Flags = "Dee"
+
+[AXISTOOL_C_2]
+Type = 2
+Flags = "Dee"
+
+[AXISTOOL_ALM]
+Type = 2
+Flags = "Dfe"
+Label = "ALM"
+
+[AXISTOOL_O_3]
+Type = 8
+NumItemLabels = 1
+NumItemValues = 0
+Flags = "Eeef"
+ItemLabel_0 = "Select output..."
+
+[AXISTOOL_O_2]
+Type = 8
+NumItemLabels = 1
+NumItemValues = 0
+Flags = "Eeef"
+ItemLabel_0 = "Select output..."
+
+[AXISTOOL_O_1]
+Type = 8
+NumItemLabels = 1
+NumItemValues = 0
+Flags = "Eeef"
+ItemLabel_0 = "Select output..."
+
+[AXISTOOL_O_0]
+Type = 8
+NumItemLabels = 1
+NumItemValues = 0
+Flags = "Eeef"
+ItemLabel_0 = "Select output..."
+
+[AXISTOOL_C_1]
+Type = 2
+Flags = "Dee"
+
+[AXISTOOL_INP]
+Type = 2
+Flags = "Dfe"
+Label = "INP"
+
+[AXISTOOL_C_0]
+Type = 2
+Flags = "Dee"
+
+[AXISTOOL_SVON]
+Type = 2
+Flags = "Dfe"
+Label = "SV"
+
+[AXISTOOL_SETSVON]
+Type = 5
+Flags = "Eeff@e"
+On = "OFF"
+Off = "ON"
+
+[AXISTOOL_SPLITTER]
+Type = 1
+Flags = "@e"
+
+[AXISTOOL_I_3]
+Type = 8
+NumItemLabels = 1
+NumItemValues = 0
+Flags = "Eeef"
+ItemLabel_0 = "Select signal..."
+
+[AXISTOOL_I_2]
+Type = 8
+NumItemLabels = 1
+NumItemValues = 0
+Flags = "Eeef"
+ItemLabel_0 = "Select signal..."
+
+[AXISTOOL_I_1]
+Type = 8
+NumItemLabels = 1
+NumItemValues = 0
+Flags = "Eeef"
+ItemLabel_0 = "Select signal..."
+
+[AXISTOOL_I_0]
+Type = 8
+NumItemLabels = 1
+NumItemValues = 0
+Flags = "Eeef"
+ItemLabel_0 = "Select signal..."
+
+[AXISTOOL_AXISLIST]
+Type = 8
+NumItemLabels = 1
+NumItemValues = 0
+Flags = "Efef"
+Label = "Axis"
+ItemLabel_0 = "Select axis..."
+
+[AXISTOOL_SPLITTER_2]
+Type = 1
+Flags = "@e"
+
+[AXISTOOL_TEXTMSG]
+Type = 4
+Flags = "Dfe"
+Default = "Command[mm(бу)]:"
+
+[AXISTOOL_TEXTMSG_17]
+Type = 4
+Flags = "Dfe"
+Default = "Feedback[mm(бу)]:"
+
+[AXISTOOL_CMDPOS]
+Type = 4
+Flags = "Dee"
+
+[AXISTOOL_FBKPOS]
+Type = 4
+Flags = "Dee"
+
+[BSPCFG]
+Flags = "@f"
+Title = "HTM_BSP Configuration UI"
+
+[BSPCFG_QUITBUTTON]
+Type = 2
+Flags = "Dee"
+
+[BSPCFG_TAB]
+Type = 11
+NumTabLabels = 3
+Flags = "Eeff@f"
+TabLabel_0 = "Axis"
+TabLabel_1 = "I/O"
+TabLabel_2 = "Others"
+
+[BSPCFG_TIMER]
+Type = 2
+Flags = "Dee"
+
+[BSPCFG_ERR]
+Type = 4
+Flags = "Dfe"
+Default = "Error Info"
+
+[BSPCFG_EVENT]
+Type = 2
+Flags = "Dfe"
+Label = "Efficient"
+
+[BSPCFG_SERIAL]
+Type = 2
+Flags = "Dfe"
+Label = "Serial"
+
+[BSPCFG_MINI]
+Type = 2
+Flags = "Dfe"
+Label = "Tool"
+
+[BSPCFG_MODE]
+Type = 4
+Flags = "Dfe"
+Default = "OFFLINE"
+
+[BSPCFG_MSG]
+Type = 4
+Flags = "Dfe"
+Default = "Message:"
+
+[BSPCFG_BIT]
+Type = 4
+Flags = "Dee"
+
+[BSPCFG_ABOUT]
+Type = 4
+Flags = "Dfe"
+Default = "Version"
+
+[ADBGPNL]
+Flags = "@e"
+
+[ADBGPNL_EPOS]
+Type = 2
+Flags = "Dfe"
+Label = "Pos2[mm(бу)]"
+
+[ADBGPNL_SPOS]
+Type = 2
+Flags = "Dfe"
+Label = "Pos1[mm(бу)]"
+
+[ADBGPNL_SPDR]
+Type = 2
+Flags = "Dfe"
+Label = "Speed(%)"
+
+[ADBGPNL_RATIO]
+Type = 2
+Flags = "Dfe"
+Label = "Motion speed(%)"
+
+[ADBGPNL_FORCE]
+Type = 2
+Flags = "Dfe"
+Label = "Force"
+
+[ADBGPNL_STEP]
+Type = 2
+Flags = "Dfe"
+Label = "Step[mm(бу)]"
+
+[ADBGPNL_POS]
+Type = 2
+Flags = "Dfe"
+Label = "Position[mm(бу)]"
+
+[ADBGPNL_INTERVAL]
+Type = 2
+Flags = "Dfe"
+Label = "Interval(ms)"
+
+[ADBGPNL_ENABLE]
+Type = 2
+Flags = "Dee"
+
+[ADBGPNL_SVALL]
+Type = 2
+Flags = "Dfe"
+Label = "Servo All"
+
+[ADBGPNL_EDIT]
+Type = 4
+Flags = "Dfe"
+Default = "Edit"
+
+[ADBGPNL_N_REL]
+Type = 2
+Flags = "Dfe"
+Label = "N(-)"
+
+[ADBGPNL_N_VEL]
+Type = 2
+Flags = "Dfe"
+Label = "N(-)"
+
+[ADBGPNL_HOME]
+Type = 2
+Flags = "Dfe"
+Label = "Home"
+
+[ADBGPNL_MTIME]
+Type = 2
+Flags = "Dfe"
+Label = "Time"
+
+[ADBGPNL_CLEAR]
+Type = 2
+Flags = "Dfe"
+Label = "Clear"
+
+[ADBGPNL_P_REL]
+Type = 2
+Flags = "Dfe"
+Label = "P(+)"
+
+[ADBGPNL_F_MOVE]
+Type = 2
+Flags = "Dfe"
+Label = "SetForce"
+
+[ADBGPNL_P_VEL]
+Type = 2
+Flags = "Dfe"
+Label = "P(+)"
+
+[ADBGPNL_ESTOP]
+Type = 2
+Flags = "Dfe"
+Label = "EStop"
+
+[ADBGPNL_INVERSE]
+Type = 2
+Flags = "Dfe"
+Label = "Inverseб¤"
+
+[ADBGPNL_ABS_MOVE]
+Type = 2
+Flags = "Dfe"
+Label = "ABS"
+
+[ADBGPNL_START]
+Type = 5
+Flags = "Eeff@e"
+On = "Stop"
+Off = "Start"
+
+[ADBGPNL_TEXTMSG_27]
+Type = 4
+Flags = "Dfe"
+Default = "Axis status"
+
+[ADBGPNL_AXESLIST]
+Type = 10
+Cols = 12
+Items = 0
+Flags = "EeefEfffEfffEfffDff"
+NumItemValues = 0
+ColLabel_0 = "No"
+ColLabel_1 = "Axis Name"
+ColLabel_2 = "Command(mm)"
+ColLabel_3 = "Feedback(mm)"
+ColLabel_4 = "PEL"
+ColLabel_5 = "NEL"
+ColLabel_6 = "ORG"
+ColLabel_7 = "ALM"
+ColLabel_8 = "INP"
+ColLabel_9 = "SV"
+ColLabel_10 = "ON"
+ColLabel_11 = "Cfg."
+
+[ADBGPNL_SPLITTER_5]
+Type = 1
+Flags = "@e"
+
+[ADBGPNL_SPLITTER_2]
+Type = 1
+Flags = "@e"
+
+[ADBGPNL_SPLITTER_4]
+Type = 1
+Flags = "@e"
+
+[ADBGPNL_SPLITTER_3]
+Type = 1
+Flags = "@e"
+
+[ADBGPNL_SPLITTER_6]
+Type = 1
+Flags = "@e"
+
+[ADBGPNL_SPLITTER]
+Type = 1
+Flags = "@e"
+
+[ADBGPNL_TEXTMSG_31]
+Type = 4
+Flags = "Dfe"
+Default = "Abs mode"
+
+[ADBGPNL_TEXTMSG_30]
+Type = 4
+Flags = "Dfe"
+Default = "Speed mode"
+
+[ADBGPNL_TEXTMSG_29]
+Type = 4
+Flags = "Dfe"
+Default = "Common"
+
+[ADBGPNL_TEXTMSG]
+Type = 4
+Flags = "Dfe"
+Default = "Rel mode"
+
+[ADBGPNL_TEXTMSG_32]
+Type = 4
+Flags = "Dfe"
+Default = "Back-forward"
+
+[ADBGPNL_TEXTMSG_28]
+Type = 4
+Flags = "Dfe"
+Default = "Force mode"
+
+[ADBGPNL_DECORATION]
+Type = 1
+Flags = "@e"
+
+[ADBGPNL_TEXTMSG_25]
+Type = 4
+Flags = "Dfe"
+Default = "Single Axis"
+
+[ADBGPNL_POS_2]
+Type = 2
+Flags = "Dee"
+
+[ADBGPNL_POS_1]
+Type = 2
+Flags = "Dee"
+
+[IOPNL]
+Flags = "@e"
+
+[IOPNL_IOLIST]
+Type = 10
+Cols = 10
+Items = 0
+Flags = "EeefEfffEfffEfff"
+NumItemValues = 0
+ColLabel_0 = "[EN]NO"
+ColLabel_1 = "Bus"
+ColLabel_2 = "Node"
+ColLabel_3 = "Port"
+ColLabel_4 = "Output"
+ColLabel_5 = "Inverse"
+ColLabel_6 = "Test"
+ColLabel_7 = "State"
+ColLabel_8 = "Remark(31 chars at most)"
+ColLabel_9 = "Save"
+
+[IOPNL_TIMER]
+Type = 2
+Flags = "Dee"
+
+[IOPNL_SAVE]
+Type = 2
+Flags = "Dfe"
+Label = "Save\nAll"
+
+[IOPNL_EDIT]
+Type = 4
+Flags = "Dfe"
+Default = "Edit"
+
+[DEVPNL]
+Flags = "@e"
+
+[DEVPNL_LINEINTERVAL]
+Type = 2
+Flags = "Dfe"
+Label = "Interval[mm(бу)]:"
+
+[DEVPNL_PW]
+Type = 2
+Flags = "Dfe"
+Label = "Output time[us]:"
+
+[DEVPNL_SAVE]
+Type = 2
+Flags = "Dfe"
+Label = "Save"
+
+[DEVPNL_LINEEND]
+Type = 2
+Flags = "Dfe"
+Label = "End pos[mm(бу)]:"
+
+[DEVPNL_POS3]
+Type = 2
+Flags = "Dee"
+
+[DEVPNL_POS2]
+Type = 2
+Flags = "Dee"
+
+[DEVPNL_POS1]
+Type = 2
+Flags = "Dee"
+
+[DEVPNL_A_POS]
+Type = 2
+Flags = "Dfe"
+Label = "Axis pos[mm(бу)]:"
+
+[DEVPNL_PT_POS]
+Type = 2
+Flags = "Dfe"
+Label = "Trig.card[mm(бу)]:"
+
+[DEVPNL_POS0]
+Type = 2
+Flags = "Dfe"
+Label = "TrigPos[mm(бу)]"
+
+[DEVPNL_LINESTR]
+Type = 2
+Flags = "Dfe"
+Label = "Start pos[mm(бу)]:"
+
+[DEVPNL_EDIT]
+Type = 4
+Flags = "Dfe"
+Default = "Edit"
+
+[DEVPNL_DECORATION_11]
+Type = 1
+Flags = "@e"
+
+[DEVPNL_DECORATION_10]
+Type = 1
+Flags = "@e"
+
+[DEVPNL_DECORATION_9]
+Type = 1
+Flags = "@e"
+
+[DEVPNL_DECORATION_8]
+Type = 1
+Flags = "@e"
+
+[DEVPNL_STOPBIT]
+Type = 8
+NumItemLabels = 2
+NumItemValues = 0
+Flags = "Efee00"
+Label = "Stop bit:"
+
+[DEVPNL_PBIT]
+Type = 8
+NumItemLabels = 5
+NumItemValues = 0
+Flags = "EfefEffe00"
+Label = "Parity:"
+ItemLabel_0 = "NONE"
+ItemLabel_1 = "ODD"
+ItemLabel_2 = "EVEN"
+
+[DEVPNL_DATABIT]
+Type = 8
+NumItemLabels = 4
+NumItemValues = 0
+Flags = "EfeeDee0"
+Label = "Data bit:"
+
+[DEVPNL_BAUD]
+Type = 8
+NumItemLabels = 8
+NumItemValues = 0
+Flags = "EfeeEeeeEeee00"
+Label = "Baud rate:"
+
+[DEVPNL_COM]
+Type = 8
+NumItemLabels = 8
+NumItemValues = 0
+Flags = "EfeeEeeeEeee0h"
+Label = "Com No:"
+
+[DEVPNL_DEVTYPE]
+Type = 8
+NumItemLabels = 5
+NumItemValues = 0
+Flags = "EfeeEeef00"
+Label = "Card type:"
+ItemLabel_3 = "Serial"
+
+[DEVPNL_FFTIME]
+Type = 2
+Flags = "Dfe"
+Label = "Trig forward time[us]:"
+
+[DEVPNL_TEXTMSG_22]
+Type = 4
+Flags = "Dfe"
+Default = "Serial"
+
+[DEVPNL_TEXTMSG_21]
+Type = 4
+Flags = "Dfe"
+Default = "Configuration"
+
+[DEVPNL_TEXTMSG_19]
+Type = 4
+Flags = "Dfe"
+Default = "-----------------Linear mode-----------------"
+
+[DEVPNL_TEXTMSG_20]
+Type = 4
+Flags = "Dfe"
+Default = "Light soruce drive"
+
+[DEVPNL_TEXTMSG_18]
+Type = 4
+Flags = "Dfe"
+Default = "-----------------Table mode------------------"
+
+[DEVPNL_TEXTMSG_16]
+Type = 4
+Flags = "Dfe"
+Default = "Position trig drive"
+
+[DEVPNL_POLARITY]
+Type = 8
+NumItemLabels = 2
+NumItemValues = 0
+Flags = "Efef@f"
+Label = "Porlarity:"
+ItemLabel_0 = "0 - Default"
+ItemLabel_1 = "1 - Inverse"
+
+[DEVPNL_TRIGMODE]
+Type = 8
+NumItemLabels = 2
+NumItemValues = 0
+Flags = "Efef@f"
+Label = "Trig mode:"
+ItemLabel_0 = "0 - Table"
+ItemLabel_1 = "1 - Linear"
+
+[DEVPNL_TEXTMSG_9]
+Type = 4
+Flags = "Dfe"
+Default = "Device List"
+
+[DEVPNL_DEVLIST]
+Type = 10
+Cols = 2
+Items = 0
+Flags = "Eeef@f"
+NumItemValues = 0
+ColLabel_0 = "No"
+ColLabel_1 = "Name"
+
+[DEVPNL_SRC3]
+Type = 2
+Flags = "Dfe"
+Label = "Source#3"
+
+[DEVPNL_EN3]
+Type = 2
+Flags = "Dee"
+
+[DEVPNL_SRC2]
+Type = 2
+Flags = "Dfe"
+Label = "Source2"
+
+[DEVPNL_EN2]
+Type = 2
+Flags = "Dee"
+
+[DEVPNL_SRC1]
+Type = 2
+Flags = "Dfe"
+Label = "Source1"
+
+[DEVPNL_EN1]
+Type = 2
+Flags = "Dee"
+
+[DEVPNL_SRC0]
+Type = 2
+Flags = "Dfe"
+Label = "Source0"
+
+[DEVPNL_EN0]
+Type = 2
+Flags = "Dfe"
+Label = "Enable"
+
+[DEVPNL_LIN_EN]
+Type = 2
+Flags = "Dfe"
+Label = "Enable"
+
+[DEVPNL_NAME]
+Type = 3
+Flags = "Efee"
+Label = "Name"
+
+[DEVPNL_PORT]
+Type = 2
+Flags = "Dfe"
+Label = "Port(Chanel):"
+
+[DEVPNL_COUNT]
+Type = 2
+Flags = "Dfe"
+Label = "Trig. Cnt"
+
+[DEVPNL_NODE]
+Type = 2
+Flags = "Dfe"
+Label = "Node:"
+
+[DEVPNL_BUS]
+Type = 2
+Flags = "Dfe"
+Label = "Bus:"
+
+[DEVPNL_DIR3]
+Type = 8
+NumItemLabels = 2
+NumItemValues = 0
+Flags = "Efef@f"
+Label = "Pos#4"
+ItemLabel_0 = "P(+)"
+ItemLabel_1 = "N(-)"
+
+[DEVPNL_DIR2]
+Type = 8
+NumItemLabels = 2
+NumItemValues = 0
+Flags = "Efef@f"
+Label = "Pos#3"
+ItemLabel_0 = "P(+)"
+ItemLabel_1 = "N(-)"
+
+[DEVPNL_DIR1]
+Type = 8
+NumItemLabels = 2
+NumItemValues = 0
+Flags = "Efef@f"
+Label = "Pos#2"
+ItemLabel_0 = "P(+)"
+ItemLabel_1 = "N(-1)"
+
+[DEVPNL_DIR0]
+Type = 8
+NumItemLabels = 2
+NumItemValues = 0
+Flags = "Efef@f"
+Label = "Pos#1"
+ItemLabel_0 = "P(+)"
+ItemLabel_1 = "N(-1)"
+
+[DEVPNL_AXIS]
+Type = 8
+NumItemLabels = 0
+NumItemValues = 0
+Flags = "@ff"
+Label = "Combined axis"
+
+[DEVPNL_RESET_CNT]
+Type = 2
+Flags = "Dfe"
+Label = "Reset"
+
+[DEVPNL_GET_CNT]
+Type = 2
+Flags = "Dfe"
+Label = "Get"
+
+[DEVPNL_SYNC]
+Type = 2
+Flags = "Dfe"
+Label = "Sync"
+
+[DEVPNL_SWTRIG_LT]
+Type = 2
+Flags = "Dfe"
+Label = "SW Trig"
+
+[DEVPNL_SWTRIG_PT]
+Type = 2
+Flags = "Dfe"
+Label = "SW Trig"
+
+[ERRPNL]
+Flags = "@f"
+Title = "Error list(Last20)"
+
+[ERRPNL_TREE]
+Type = 10
+Cols = 4
+Items = 0
+Flags = "EeefEfff"
+NumItemValues = 0
+ColLabel_0 = "No"
+ColLabel_1 = "Time"
+ColLabel_2 = "Code"
+ColLabel_3 = "Infomation"
+
+[ERRPNL_QUITBUTTON]
+Type = 2
+Flags = "Dee"
+
+[SORTPNL]
+Flags = "@f"
+Title = "Sorting"
+
+[SORTPNL_TABLE]
+Type = 9
+Cols = 4
+Rows = 0
+Flags = "EeefEfee"
+ColLabel_1 = "No"
+ColLabel_2 = "Name"
+
+[SORTPNL_COMMANDBUTTON]
+Type = 2
+Flags = "Dee"
+
+[SORTPNL_QUITBUTTON]
+Type = 2
+Flags = "Dee"
+
+[TIMEPNL]
+Flags = "@f"
+Title = "Motion time"
+
+[TIMEPNL_DIS]
+Type = 2
+Flags = "Dfe"
+Label = "Distance"
+
+[TIMEPNL_ACC]
+Type = 2
+Flags = "Dfe"
+Label = "Acc(mm/s2)"
+
+[TIMEPNL_VM]
+Type = 2
+Flags = "Dfe"
+Label = "Vm(mm/s)"
+
+[TIMEPNL_DEC]
+Type = 2
+Flags = "Dfe"
+Label = "Dec(mm/s2)"
+
+[TIMEPNL_HOME]
+Type = 2
+Flags = "Dfe"
+Label = "Calc->"
+
+[TIMEPNL_TIME]
+Type = 2
+Flags = "Dfe"
+Label = "Time(s)"
+
+[TIMEPNL_PICTURE]
+Type = 2
+Flags = "Dee"
+
+[TIMEPNL_TEXTMSG]
+Type = 4
+Flags = "Dee"
+
+[VERPNL]
+Flags = "@f"
+Title = "Version"
+
+[VERPNL_ERROR]
+Type = 3
+Flags = "Effe"
+Label = "Error list"
+Default Line0001 = "0:  NO ERROR\n-10000:  BSP not initialized\n-10001:  File not exists\n-10002:  M"
+Default Line0002 = "emory failed allocating\n-10003:  Failed loading data\n-10004:  Incorrect file t"
+Default Line0003 = "ype\n-10150:  Axis not servo on before motion\n-10151:  Axis emergency stopped\n"
+Default Line0004 = "-10152:  Servo alarmed\n-10153:  PEL stopped\n-10154:  MEL stopped\n-10155:  Com"
+Default Line0005 = "mand out of software PEL position)\n-10156:  Command out of software MEL positio"
+Default Line0006 = "n)\n-10157:  Axis motion time out\n-10158:  Other axis error\n-10200:  Incorrect"
+Default Line0007 = " arguments input into functions\n-10203:  Interpolation axes are not in same con"
+Default Line0008 = "trol unit\n-10205:  Incorrect card type selected\n-10206:  Incorrect mode select"
+Default Line0009 = "ed\n-10207:  Servo on failed"
+
+[VERPNL_HISTORY]
+Type = 3
+Flags = "Effe"
+Label = "History"
+Default Line0001 = "[V3.15 2017/12/18]\n  1. Added utils functions for date&time etc.\n  2. Fixed bu"
+Default Line0002 = "gs about closing panels.\n  3. Added preload motion mode for DxVD.\n  4. Added n"
+Default Line0003 = "ormal motion for dispense head.\n[V3.14 2017/12/13]\n  1. Added I/O debug functi"
+Default Line0004 = "ons in axis tool UI.\n  2. Completed hb_dispense_head drive functions.\n  3. Opt"
+Default Line0005 = "imized UI and language packages.\n  4. Fixed interpolation motion bugs of pulse "
+Default Line0006 = "factor.\n  5. Added DO read functions.\n[V3.13 2017/10/19]\n  1. Start and end v"
+Default Line0007 = "elocities are set deault 0, use MoveEx to set if needed.\n  2. Fixed bugs of sav"
+Default Line0008 = "ing end-limit configurations.\n[V3.12 2017/10/18]\n  1. Remove electric limit de"
+Default Line0009 = "tection in version 3.09.\n  2. Add servo sigal detection during checking motion "
+Default Line0010 = "done.\n  3. Revise APIs about end-limit and soft-end-limit.       \n[V3.11 2017/"
+Default Line0011 = "09/27]\n  1. Fix bugs for line interp motion.\n  2. Add apis for  axes servo  an"
+Default Line0012 = "d check, home and check, motion and check, etc.\n  3. Add functions for sorting "
+Default Line0013 = "axis./IOsdevices.\n[V3.10 2017/09/13]\n  1. Add 4 hard stop homing methods for D"
+Default Line0014 = "HVD\n  2. Add different parameters for electrical and soft limit.\n  3. Add enab"
+Default Line0015 = "le function for single I/O device.\n[V3.09 2017/08/31]\n  1. Add multiple axis m"
+Default Line0016 = "otion opration; Change 'HTM_DoneEx' To 'HTM_DoneN'.\n  2. Add limit signal alarm"
+Default Line0017 = " function for DxVD.\n[V3.08 2017/08/16]\n  1. New interfaces about numeric analy"
+Default Line0018 = "sis.\n  2. Polarity reverse available for all drivers(not include homing operati"
+Default Line0019 = "on).\n[V3.07 2017/08/11]\n  1. New interfaces about calculating motion time\n[V3"
+Default Line0020 = ".06  2017/07/21]\n  1. Fixed DHVD relative line interpolation bug\n  2. New 64-b"
+Default Line0021 = "it DLL files\n[V3.05  2017/07/05]\n  1. New homing method: to find EZ signal dir"
+Default Line0022 = "ectly\n[V3.04  2017/06/07]\n  1. Fixed DxVD comunication timeout bugs\n  2. New "
+Default Line0023 = "event log interfaces\n  3. New English language interfaces\n[V3.03 2017/05/10]\n"
+Default Line0024 = "  1. Combine old version card for HoldBond machine\n  2. New error list function"
+Default Line0025 = "s.\n  3. Combine serial debug tools"
+
+[VERPNL_CUR]
+Type = 3
+Flags = "Efee"
+Label = "Current version"
+
+[VERPNL_QUITBUTTON]
+Type = 2
+Flags = "Dee"
+

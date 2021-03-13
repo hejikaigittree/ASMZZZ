@@ -1,0 +1,109 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using JFHub;
+using JFInterfaceDef;
+using JFToolKits;
+namespace JFMethodCommonLib
+{
+    /// <summary>
+    /// JF common Method Set DO JF架构通用方法 设置DO
+    /// 需要有一个输入参数：DO名称
+    /// </summary>
+
+    [JFCategoryLevels(new string[] { "JF 设备控制", "DIO" })]
+    [JFDisplayName("获取DO状态_D")]
+    public class JFCM_GetDO_D:IJFMethod
+    {
+        #region 输入项
+        string[] _inputNames = new string[] { "DO通道名称" };
+        string _doName = null;
+        public string[] MethodInputNames { get { return _inputNames; } }
+        public Type GetMethodInputType(string name)
+        {
+            if (name == MethodInputNames[0])
+                return typeof(string);
+            throw new ArgumentOutOfRangeException("参数名称不合法:" + name);
+        }
+
+        public object GetMethodInputValue(string name)
+        {
+            if (name == MethodInputNames[0])
+                return _doName;
+            throw new ArgumentOutOfRangeException("参数名称不合法:" + name);
+        }
+
+        public void SetMethodInputValue(string name, object value) //架构中已经检查了参数类型
+        {
+            if (name == MethodInputNames[0])
+            {
+                _doName = value as string;
+                return;
+            }
+            throw new ArgumentOutOfRangeException("参数名称不合法:" + name);
+        }
+        #endregion
+
+        #region 输出项
+        readonly string[] _outputNames = new string[] { "DO Status" };
+        public string[] MethodOutputNames { get { return _outputNames; } }
+        public Type GetMethodOutputType(string name)
+        {
+            if (name == MethodOutputNames[0])
+                return typeof(bool);
+            throw new ArgumentOutOfRangeException("参数名称不合法:" + name);
+        }
+
+        bool _doStatus = false;
+        public object GetMethodOutputValue(string name)
+        {
+            if (name == MethodOutputNames[0])
+                return _doStatus;
+            throw new ArgumentOutOfRangeException("参数名称不合法:" + name);
+        }
+        #endregion
+
+        #region 执行
+        string _errorInfo = "未执行";
+        double _startPfCnt = 0; //动作开始时CPU计数
+        double _endPfCnt = 0;//动作结束时CPU计数
+        long _PfFrequency = JFFunctions.PerformanceFrequency();
+        public bool Action()
+        {
+            _startPfCnt = JFFunctions.PerformanceCounter();
+            IJFInitializable dev = null;
+            JFDevCellInfo cellInfo = null;
+            string errInfo = null;
+            if (!JFCMFunction.CheckDevCellName(JFCMFunction.DO, _doName, out dev, out cellInfo, out errInfo))
+            {
+                _endPfCnt = JFFunctions.PerformanceCounter();
+                _errorInfo = errInfo;
+                return false;
+            }
+            bool isTurnOn = false;
+            int errCode = (dev as IJFDevice_MotionDaq).GetDio(cellInfo.ModuleIndex).GetDO(cellInfo.ChannelIndex, out isTurnOn);
+            if(errCode != 0)
+            {
+                _endPfCnt = JFFunctions.PerformanceCounter();
+                _errorInfo = "获取DO状态失败：" + (dev as IJFDevice_MotionDaq).GetDio(cellInfo.ModuleIndex).GetErrorInfo(errCode);
+                return false;
+            }
+            _doStatus = isTurnOn;
+            _errorInfo = "Success";
+            _endPfCnt = JFFunctions.PerformanceCounter();
+            return true;
+        }
+        public string GetActionErrorInfo()
+        {
+            return _errorInfo;
+        }
+
+        public double GetActionSeconds()
+        {
+            return (_endPfCnt - _startPfCnt) / _PfFrequency;
+        }
+        #endregion
+    }
+}

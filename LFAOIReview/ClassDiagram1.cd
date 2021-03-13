@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="LFAOIReview.BoolInverterConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Converter\BoolInverterConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LFAOIReview.DefectResultDisplayConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Converter\DefectResultDisplayConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LFAOIReview.DataManager" Collapsed="true">
+    <Position X="15.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAACAIAAAAABAAoAAAEUAgAAAAAIAAIAAACEAAAI=</HashCode>
+      <FileName>Data\DataManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.DefectData" Collapsed="true">
+    <Position X="6.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Data\DefectData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.DefectTypeInfo" Collapsed="true">
+    <Position X="0.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Data\DefectTypeInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.InspectionData" Collapsed="true">
+    <Position X="1.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAkAAAAAAAAAAAAAAAAIAAABAAgAAIAAgAAAA=</HashCode>
+      <FileName>Data\InspectionData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.InspectionResultsConverter" Collapsed="true">
+    <Position X="15.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\InspectionResults.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.LotInfo" Collapsed="true">
+    <Position X="3.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAIAAQAAAAAAAAAAAABAAIgA=</HashCode>
+      <FileName>Data\LotInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.DbText" Collapsed="true">
+    <Position X="17.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAgUgAAYAgKCgACCQEAFBACggAQgACCUAKAAEAIAIA=</HashCode>
+      <FileName>DataBase\DbText.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.DefectDataDb" Collapsed="true">
+    <Position X="6.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACQEAAAAAAAAAAAAGQAAAABAAAAgAAABAAAAAQ=</HashCode>
+      <FileName>DataBase\DefectDataDb.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.FrameIndexDb" Collapsed="true">
+    <Position X="10.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAEAAAAAAAA=</HashCode>
+      <FileName>DataBase\FrameIndexDb.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.InspectionDataDb" Collapsed="true">
+    <Position X="1.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAIMAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>DataBase\InspectionDataDb.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.Matrix&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACEABBAACACAgAAAQAAABAAAoAgAAAAAAwg=</HashCode>
+      <FileName>DataBase\InspectionDataDbMatrix.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LFAOIReview.LotInfoDb" Collapsed="true">
+    <Position X="3.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgIAAgAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>DataBase\LotInfoDb.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.SQLiteOperation" Collapsed="true">
+    <Position X="12" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAGAAgEAAAiABAAIAACIAAAAAACBQABAAAAAAAAAA=</HashCode>
+      <FileName>DataBase\SQLiteOperation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.ExcelText" Collapsed="true">
+    <Position X="15.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUIICAAAAFwAAAQkCAWBEAwkoQggIAAAACAAAEBIMIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.HalconOperation" Collapsed="true">
+    <Position X="12" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>HalconOperation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.IniHelper" Collapsed="true">
+    <Position X="13.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAACAAAQAAAAAAQAAAAA=</HashCode>
+      <FileName>Ini\IniHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.LegalFileName" Collapsed="true">
+    <Position X="17.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LegalFileName.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.DoubleToPointConvertert" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mapping\DoubleToPointConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LFAOIReview.ExampleData" Collapsed="true">
+    <Position X="0.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAACAAAIAAEQCAAAAAAAAAAYAAJsAABQ=</HashCode>
+      <FileName>Mapping\ExampleData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.Mapping" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AGAAAABALAFAQAIAIAAAggcAQAAUCAAAIBAAAAAAAkg=</HashCode>
+      <FileName>Mapping\Mapping.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LFAOIReview.MappingData" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAACAAAFAwEEgCgABoAAkAKAACCAAABkAUACpuAABQ=</HashCode>
+      <FileName>Mapping\MappingData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.MappingViewModel" Collapsed="true">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAQAAAAgAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Mapping\MappingViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.DefectDataReport" Collapsed="true">
+    <Position X="5.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Report\DefectDataReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.DefectTypeInfoReport" Collapsed="true">
+    <Position X="0.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Report\DefectTypeInfoReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.ExcelOperation" Collapsed="true">
+    <Position X="13.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAEgAACQAAAAAAAAAAE=</HashCode>
+      <FileName>Report\ExcelOperation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.InspectionDataReport" Collapsed="true">
+    <Position X="0.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAgAAAAAMAAAAAAAAAAAAAAAAiAAAA=</HashCode>
+      <FileName>Report\InspectionDataReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.Report" Collapsed="true">
+    <Position X="13.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgIAAAAAAACAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Report\Report.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.SummaryInfo" Collapsed="true">
+    <Position X="13.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQIIAAAAAFAAAAQECAWAAAAkoAggIAAAACAAAEAIIAA=</HashCode>
+      <FileName>Report\SummaryInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.DefectDataView" Collapsed="true">
+    <Position X="7.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAABAEAAAYAAAAAQAgAAIAQAAAAAgAAMAAAI=</HashCode>
+      <FileName>Review\DefectDataView.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="LFAOIReview.Form_Review">
+    <Position X="17.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAQQCAAAACAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Review\Form_Review.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.InspectionDataView" Collapsed="true">
+    <Position X="2.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAgAAAAAMAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Review\InspectionDataView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.Review" BaseTypeListCollapsed="true">
+    <Position X="17.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQAEkDGoYKItDARoGBiaIah6AAlvBOQAK4mQDAA5yE=</HashCode>
+      <FileName>Review\Review.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LFAOIReview.ComboBoxData" Collapsed="true">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Review\Review.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.CommandBase" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAQAAEAAAAAAAAAAAAAAAACAQAAAAAA=</HashCode>
+      <FileName>ViewModelBase\CommandBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LFAOIReview.ViewModelBase" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModelBase\ViewModelBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="LFAOIReview.Properties.Resources" Collapsed="true">
+    <Position X="15.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAQAAAAgBEAAAAQAACAACYAAAAAAABIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LFAOIReview.Properties.Settings" Collapsed="true">
+    <Position X="10.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="LFAOIReview.InspectionResults" Collapsed="true">
+    <Position X="12" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAQAAAAAAAAAABABAAAAAAA=</HashCode>
+      <FileName>Data\InspectionResults.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LFAOIReview.ExcelColors" Collapsed="true">
+    <Position X="10.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IxgGAIDAAAghIpAAUAAARBAAHABIAAQoCAA4AbABAYE=</HashCode>
+      <FileName>Report\ExcelColor.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,19 @@
+<root>
+  <MethodFlowName>未命名方法流</MethodFlowName>
+  <MethodItems>
+    <MethodItem Name="打开/关闭设备_S_0" Type="JFCM_OpenCloseDev_S">
+      <InitParams>
+        <Param Name="设备ID" Type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;string&gt;JLLight4&lt;/string&gt;" />
+        <Param Name="开关选项" Type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;boolean&gt;true&lt;/boolean&gt;" />
+      </InitParams>
+    </MethodItem>
+    <MethodItem Name="设置光强_0" Type="JFCM_SetLightIntensity_S">
+      <InitParams>
+        <Param Name="光源通道ID" Type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;string /&gt;" />
+        <Param Name="自动切换到开关模式" Type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;boolean&gt;true&lt;/boolean&gt;" />
+        <Param Name="自动使能" Type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;boolean&gt;true&lt;/boolean&gt;" />
+        <Param Name="光照强度" Type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;int&gt;-1&lt;/int&gt;" />
+      </InitParams>
+    </MethodItem>
+  </MethodItems>
+</root>

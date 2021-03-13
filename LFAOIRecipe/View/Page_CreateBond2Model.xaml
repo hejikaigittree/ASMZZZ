@@ -1,0 +1,365 @@
+﻿<UserControl xmlns:HalconDotNet="clr-namespace:HalconDotNet;assembly=halcondotnet"  
+             x:Class="LFAOIRecipe.Page_CreateBond2Model"
+             x:ClassModifier="internal"
+             x:Name="userControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"   
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:local="clr-namespace:LFAOIRecipe"
+             mc:Ignorable="d" 
+             Background="White"
+             MinWidth="400">
+    <!--    MinWidth="400"    -->
+    <UserControl.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel x:Name="dockPanel">
+        <StackPanel DockPanel.Dock="Top" Width="723">
+            <materialDesign:Card Margin="5,5,5,0">
+                <StackPanel>
+                    <TextBlock Text="{Binding DisplayName}"
+                               FontSize="16"
+                               Margin="10"
+                               Foreground="DarkBlue"/>
+                    <TextBlock Margin="10,0,10,10"
+                               Text="【从全局加载数据，选择焊点所在位置，设置模板匹配参数，对焊点创建匹配模板(支持精炼）】"
+                    TextWrapping="Wrap"/>
+                </StackPanel>
+            </materialDesign:Card>
+        </StackPanel>
+        <StackPanel
+            Margin="0,20,0,0" Orientation="Horizontal" DockPanel.Dock="Top">
+            <Button x:Name="button_load" Content="加载全局数据"
+                    Margin="5,0,0,0"
+                    Command="{Binding LoadReferenceCommand}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="{Binding ReferenceDirectory}" 
+                       Margin="10,0,0,0"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Center" Width="570" FontSize="12"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Center" DockPanel.Dock="Top">
+            <TextBlock Text="焊点在" Margin="5,0,0,0"/>
+            <ComboBox Margin="5,0,0,0"  materialDesign:ComboBoxAssist.ClassicMode="true" MinWidth="100"
+                        x:Name="EpoxyOnWhat" 
+                        ItemsSource="{Binding Bond2ModelParameter.OnRecipesIndexs,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                        SelectedIndex="{Binding Bond2ModelParameter.OnRecipesIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+        <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+            <!-- materialDesign:HintAssist.Hint="模板匹配方式"  
+                 Text="{Binding CreateModelType}" Width="194" HorizontalAlignment="Left" Opacity="0.5"
+-->
+            <Label Content="选择图像通道" Width="120" HorizontalContentAlignment="Right"/>
+            <ComboBox 
+                ItemsSource="{Binding ChannelNames}"
+                DisplayMemberPath="Name"
+                Margin="10,0,0,0"
+                materialDesign:ComboBoxAssist.ClassicMode="true"
+                SelectedIndex="{Binding Bond2ModelParameter.ImageChannelIndex, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Foreground="#FF555555" HorizontalAlignment="Center" Width="120" FontSize="14" >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectedChangedImageCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
+            <materialDesign:Chip  Content="{Binding Bond2ModelParameter.UserRegionForCutOutIndex}"  Icon="Die" Margin="20,0,0,0" Width="60" FontSize="14" />
+        </StackPanel>
+        <StackPanel x:Name="stackPanelMain" Margin="5">
+            <StackPanel DockPanel.Dock="Top" MinWidth="600"
+                    Margin="0,19,0,0" Panel.ZIndex="400">
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,20">
+                    <Button Width="25"
+                                Height="25"
+                                Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                DockPanel.Dock="Right"
+                                ToolTip="添加新的第二焊点模板配置"
+                                Margin="0,0,5,0"
+                                Command="{Binding AddModelCommand}">
+                        <materialDesign:PackIcon Kind="Plus" />
+                    </Button>
+                    <TextBlock Text="添加焊点模板"
+                                   VerticalAlignment="Center" />
+
+                    <Button Width="25"
+                                Height="25"
+                                Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                DockPanel.Dock="Right"
+                                ToolTip="删除当前焊点模板配置"
+                                Margin="20,0,5,0"
+                                Command="{Binding RemoveModelCommand}">
+                        <materialDesign:PackIcon Kind="Minus" />
+                    </Button>
+                    <TextBlock Text="删除焊点模板"
+                                   VerticalAlignment="Center" />
+                    <TextBlock Text="选择套"
+                           Margin="20,0,0,0"
+                           VerticalAlignment="Center" />
+                    <ComboBox Width="50"
+                                  ItemsSource="{Binding Models}"
+                                  DisplayMemberPath="Index"
+                                  SelectedItem="{Binding CurrentModel, Mode=TwoWay}"
+                                  materialDesign:ComboBoxAssist.ClassicMode="true"/>
+                    <TextBlock Text="共" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                    <TextBlock Text="{Binding ModelsCount}" 
+                                   VerticalAlignment="Center"
+                                   Margin="5,0"/>
+                    <TextBlock Text="套" VerticalAlignment="Center"/>
+                </StackPanel>
+                <!--
+                <StackPanel Name="stackPanel_channelDisplay"  Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                    <TextBlock Text="显示通道图" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <ComboBox Width="100"
+                          Margin="10,0,0,0"
+                          materialDesign:ComboBoxAssist.ClassicMode="true"
+                          SelectedItem="{Binding SwitchImageIndex, Mode=TwoWay}" HorizontalAlignment="Center">
+                        <ComboBoxItem Content="原图"/>
+                        <ComboBoxItem Content="R通道"/>
+                        <ComboBoxItem Content="G通道"/>
+                        <ComboBoxItem Content="B通道"/>
+                    </ComboBox>
+                </StackPanel>
+                -->
+                <GroupBox Header="分套配置焊点模板"  Margin="20,10,20,0" Padding="9" >
+                    <StackPanel Margin="10">
+                        <StackPanel Orientation="Horizontal"
+                        Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="第"
+                       Width="140"
+                       HorizontalContentAlignment="Right" 
+                       FontSize="16"/>
+                            <TextBlock Text="{Binding CurrentModel.Index}" 
+                                   VerticalAlignment="Center" 
+                                   Margin="20,0,0,0"/>
+                            <Label Content="套模板"
+                       Width="140"
+                       HorizontalContentAlignment="Left" 
+                       FontSize="16" 
+                       Margin="20,0,0,0" />
+                        </StackPanel>
+                        <GroupBox Header="参数设置"  Background="{x:Null}" Margin="0,5,0,0" HorizontalAlignment="Center" Width="332" >
+
+                            <StackPanel Margin="0,10"  HorizontalAlignment="Center" Width="281">
+                                <DockPanel
+                       Margin="0,5,0,0" HorizontalAlignment="Center">
+                                    <Label Content="选择模板类型"
+                       Width="100"
+                       HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                    <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                          SelectedIndex="{Binding Bond2ModelParameter.ModelType, Mode=TwoWay}" Width="100" HorizontalAlignment="Left">
+                                        <ComboBoxItem Content="ncc"/>
+                                        <ComboBoxItem Content="shape"/>
+                                    </ComboBox>
+                                </DockPanel>
+                                <DockPanel
+                       ToolTip="创建模板之前图像是否需要预处理"
+                       Margin="0,5,0,0" HorizontalAlignment="Center">
+                                    <Label Content="是否预处理"
+                       Width="100"
+                       HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                    <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                        SelectedIndex="{Binding Bond2ModelParameter.IsPreProcess,Mode=TwoWay,Converter={StaticResource BooleanToComboBoxIndexConverter}}" Width="100" HorizontalAlignment="Left">
+                                        <ComboBoxItem Content="是"/>
+                                        <ComboBoxItem Content="否"/>
+                                    </ComboBox>
+                                </DockPanel>
+                                <DockPanel
+                       ToolTip="预处理时使用的Gamma变换系数"
+                       Margin="0,5,0,0" HorizontalAlignment="Center">
+                                    <Label Content="Gamma指数"
+                       Width="100"
+                       HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                    <TextBox Text="{Binding Bond2ModelParameter.Gamma}"
+                           Width="100"
+                           HorizontalAlignment="Left"/>
+                                </DockPanel>
+                                <!--
+                                <DockPanel Margin="0,5" HorizontalAlignment="Center">
+                                    <Label Content="图像索引"  Width="100" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                    <ComboBox x:Name="combobox" materialDesign:ComboBoxAssist.ClassicMode="true"
+                                        SelectedIndex="{Binding CurrentModel.ImageIndex, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" >
+                                        <ComboBoxItem Content="原图"/>
+                                        <ComboBoxItem Content="R通道"/>
+                                        <ComboBoxItem Content="G通道"/>
+                                        <ComboBoxItem Content="B通道"/>
+                                    </ComboBox>
+                                </DockPanel>
+                                -->
+                                <!--
+                            <DockPanel Width="350"
+                                ToolTip="图像最小旋转角度"
+                                Margin="0,5,0,0">
+                                <Label Content="匹配起始角"
+                                    Width="140"
+                                    HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                <TextBox Text="{Binding Bond2ModelParameter.AngleStart}"
+                           Width="194"
+                           HorizontalAlignment="Left"/>
+                            </DockPanel>
+                            <DockPanel Width="350"
+                       ToolTip="图像旋转角度范围 大于等于0"
+                       Margin="0,5,0,0">
+                                <Label Content="匹配角度范围"
+                       Width="140"
+                       HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                <TextBox Text="{Binding Bond2ModelParameter.AngleExt}"
+                           Width="194"
+                           HorizontalAlignment="Left"/>
+                            </DockPanel>
+                            -->
+                            </StackPanel>
+                        </GroupBox>
+                        <materialDesign:Card Margin="5,20">
+                            <StackPanel Margin="10,5">
+                                <StackPanel Orientation="Horizontal" Margin="5,20,0,0" HorizontalAlignment="Center">
+                                    <TextBlock Text="选择原图像或转正图像"
+                                   VerticalAlignment="Center" FontSize="14"  />
+                                    <ComboBox Width="119"
+                                  Margin="10,0,0,0"
+                                  materialDesign:ComboBoxAssist.ClassicMode="true"
+                                  SelectedIndex="{Binding SwitchImageComboBoxIndex, Mode=TwoWay}">
+                                        <ComboBoxItem Content="原图"/>
+                                        <ComboBoxItem Content="转正图"/>
+                                    </ComboBox>
+                                    <StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Left"
+                                Margin="0,20,0,0">
+                                    <TextBlock Text="在原图像上 画转正直线"
+                                   VerticalAlignment="Center"  />
+                                    <Button Content="转正焊点"
+                                Margin="10,0,0,0"
+                                Command="{Binding RotateCommand}"
+                                ToolTip=" "/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                                Margin="0,10,0,0">
+                                    <TextBlock Text="类型：" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding CurrentModel.RegionTypeLine}"/>
+                                    <TextBlock Text="参数：" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20,0,0,0"  />
+                                    <TextBlock Text="{Binding  CurrentModel.RotateLineUserRegion}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Left"
+                                Margin="0,30,0,0">
+                                    <TextBlock Text="在转正图像上"
+                                   VerticalAlignment="Center"  />
+                                    <Button Content="添加焊点模板区域"
+                                Margin="10,0,0,0"
+                                Command="{Binding AddBond2UserRegionCommand}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                                Margin="0,10,0,0">
+                                    <TextBlock Text="类型：" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding CurrentModel.Bond2UserRegion.RegionType}" VerticalAlignment="Center"/>
+                                    <TextBlock Text="参数：" VerticalAlignment="Center" Margin="20,0,0,0"  />
+                                    <TextBlock Text="{Binding CurrentModel.Bond2UserRegion}" VerticalAlignment="Center"/>
+                                    <Button Content="修改区域"  Margin="20,0,0,0" Height="Auto" ToolTip="区域修改完，鼠标右键确认！"
+                        Command="{Binding ModifyBond2ModelRegionCommand}" Padding="10,4" HorizontalContentAlignment="Center" FontSize="12"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Left"
+                                Margin="0,30,0,0">
+                                    <TextBlock Text="在转正图像上"
+                                   VerticalAlignment="Center"  />
+                                    <Button Content="添加焊点模板拒绝区域"
+                                Margin="10,0,0,0"
+                                Command="{Binding AddBond2UserRegionDiffCommand}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"   Margin="0,10">
+                                    <TextBlock Text="类型：" VerticalAlignment="Center"  />
+                                    <TextBlock Text="{Binding CurrentModel.Bond2UserRegionDiff.RegionType}" VerticalAlignment="Center"/>
+                                    <TextBlock Text="参数：" VerticalAlignment="Center" Margin="20,0,0,0"  />
+                                    <TextBlock Text="{Binding CurrentModel.Bond2UserRegionDiff}" VerticalAlignment="Center"/>
+                                    <Button Content="修改区域"  Margin="20,0,0,0" Height="Auto" ToolTip="区域修改完，鼠标右键确认！"
+                        Command="{Binding ModifyBond2ModelRegionDiffCommand}" Padding="10,4" HorizontalContentAlignment="Center" FontSize="12"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </materialDesign:Card>
+
+
+                        <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Left"
+                                Margin="5,30,0,0">
+                            <TextBlock Text="在原图像上"
+                                   VerticalAlignment="Center"/>
+                            <ComboBox Width="61"
+                                  Margin="10,0,0,0"
+                                  materialDesign:ComboBoxAssist.ClassicMode="true"
+                                  SelectedIndex="{Binding SwitchImageComboBoxIndex, Mode=TwoWay}">
+                                <ComboBoxItem Content="原图"/>
+                                <ComboBoxItem Content="转正图"/>
+                            </ComboBox>
+
+                            <Button Content="添加精炼区域"
+                                Margin="20,0,0,0"
+                                Command="{Binding AddRefineUserRegionCommand}" Padding="10,4"/>
+                            <Button Content="删除精炼区域"
+                                Margin="20,0,0,0"
+                                Command="{Binding RemoveRefineUserRegionCommand}" Padding="10,4"/>
+                            <Button Content="修改区域"  Margin="20,0,0,0" Height="Auto" ToolTip="区域修改完，鼠标右键确认！"
+                        Command="{Binding ModifyRegionCommand}" Padding="10,4"/>
+                        </StackPanel>
+                        <materialDesign:Card Margin="5,10,5,5">
+                            <StackPanel>
+                                <DataGrid Margin="0,5,0,0" 
+                              IsReadOnly="False"
+                              ItemsSource="{Binding CurrentModel.RefineUserRegions}"
+                              AlternatingRowBackground="#D1DFE7" Background="White">
+                                    <DataGrid.Columns>
+                                        <DataGridCheckBoxColumn Binding="{Binding IsSelected}" 
+                                                    ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"/>
+                                        <materialDesign:MaterialDataGridTextColumn Header="序号" 
+                                                                       Binding="{Binding Index}" 
+                                                                       IsReadOnly="True"/>
+                                        <DataGridTemplateColumn  Header="启用">
+                                            <DataGridTemplateColumn.CellTemplate >
+                                                <DataTemplate >
+                                                    <CheckBox IsChecked="{Binding IsEnable,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"     
+                                                  Command="{Binding DataContext.UserRegionEnableChangedCommand, ElementName=userControl}"
+                                                  CommandParameter="{Binding}"
+                                                  Style="{StaticResource MaterialDesignCheckBox}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <materialDesign:MaterialDataGridTextColumn Header="形状" 
+                                                                       Binding="{Binding RegionType}" 
+                                                                       IsReadOnly="True"/>
+                                        <materialDesign:MaterialDataGridTextColumn Header="参数" 
+                                                                       Binding="{Binding}" 
+                                                                       IsReadOnly="True"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+                        </materialDesign:Card>
+
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20">
+                <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                    <Button Content="创建焊点模板"
+                    Margin="0"
+                    Command="{Binding CreateBond2ModelCommand}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Button Content="保存模板"
+                    Margin="20,0,0,0"
+                    Command="{Binding SaveBond2ModelCommand}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </DockPanel>
+</UserControl>

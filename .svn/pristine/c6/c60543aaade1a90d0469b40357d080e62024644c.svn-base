@@ -1,0 +1,125 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using JFInterfaceDef;
+using JFHub;
+
+namespace JFMethodCommonLib
+{
+    [JFCategoryLevels(new string[] { "JF 设备控制", "Axis" })]
+    [JFDisplayName("设置轴运动参数")]
+    public class JFCM_SetMotionParam:JFMethodInitParamBase
+    {
+        public JFCM_SetMotionParam()
+        {
+            string[] allAxisIDs = JFHubCenter.Instance.MDCellNameMgr.AllAxisNames();
+            DeclearInitParam(JFParamDescribe.Create("轴ID", typeof(string), JFValueLimit.Options, allAxisIDs), "");
+            DeclearInitParam(JFParamDescribe.Create("运动参数", typeof(JFMotionParam), JFValueLimit.Options, allAxisIDs), new JFMotionParam());
+        }
+
+        protected override bool ActionGenuine()
+        {
+            if(!IsInitOK)
+            {
+                ActionErrorInfo = "初始化未完成:" + InitErrorInfo;
+                return false;
+            }
+
+            IJFInitializable dev = null;
+            JFDevCellInfo ci = null;
+            string errInfo = null;
+            string axisID = GetInitParamValue("轴ID") as string;
+            if (!JFCMFunction.CheckDevCellName(JFCMFunction.Axis, axisID, out dev, out ci, out errInfo))
+            {
+                ActionErrorInfo = errInfo;
+                return false;
+            }
+            JFMotionParam mp = (JFMotionParam)GetInitParamValue("运动参数");
+            /*
+             public double vs { get; set; }
+        /// <summary>最大速度</summary>
+        public double vm { get; set; }
+        /// <summary>结束速度</summary>
+        public double ve { get; set; }
+        /// <summary>加速度</summary>
+        public double acc { get; set; }
+        /// <summary>减速度</summary>
+        public double dec { get; set; }
+        /// <summary>s曲线因子(0~1.0)</summary>
+        public double curve { get; set; }
+        /// <summary>加加速</summary>
+        public double jerk { get; set; }
+        */
+            if(mp.vs < 0)
+            {
+                ActionErrorInfo = "起始速度参数vs < 0";
+                return false;
+            }
+
+            if (mp.vm <= 0)
+            {
+                ActionErrorInfo = "运行速度参数vm <= 0";
+                return false;
+            }
+
+            if (mp.ve < 0)
+            {
+                ActionErrorInfo = "终点速度参数ve < 0";
+                return false;
+            }
+
+            if (mp.acc <= 0)
+            {
+                ActionErrorInfo = "加速度参数acc <= 0";
+                return false;
+            }
+
+            if (mp.dec <= 0)
+            {
+                ActionErrorInfo = "减速度参数dec <= 0";
+                return false;
+            }
+
+            if(mp.curve <0 || mp.curve > 1)
+            {
+                ActionErrorInfo = "加速度曲线段系数不在允许范围0~1";
+                return false;
+            }
+
+
+
+
+            IJFModule_Motion md = (dev as IJFDevice_MotionDaq).GetMc(ci.ModuleIndex);
+            int errCode = md.SetMotionParam(ci.ChannelIndex, mp);
+            if(errCode < 0)
+            {
+                ActionErrorInfo = "SDK调用出错:" + md.GetErrorInfo(errCode);
+                return false;
+            }
+            ActionErrorInfo = "Success";
+            return true;
+        }
+
+        public override bool Initialize()
+        {
+            string axisID = GetInitParamValue("轴ID") as string;
+            if(string.IsNullOrEmpty(axisID))
+            {
+                InitErrorInfo = "参数项:\"轴ID\"未设置/为空值";
+                IsInitOK = false;
+                return false;
+            }
+            if(!JFHubCenter.Instance.MDCellNameMgr.ContainAxisName(axisID))
+            {
+                InitErrorInfo = "参数项:\"轴ID\" = " + axisID + " 在设备名称表中不存在";
+                IsInitOK = false;
+                return false;
+            }
+            InitErrorInfo = "Success";
+            IsInitOK = true;
+            return true;
+        }
+    }
+}

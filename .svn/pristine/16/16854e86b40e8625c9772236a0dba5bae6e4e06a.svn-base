@@ -1,0 +1,109 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using JFInterfaceDef;
+using JFToolKits;
+using JFHub;
+namespace JFMethodCommonLib
+{
+    [JFCategoryLevels(new string[] { "JF 设备控制", "Axis" })]
+    [JFDisplayName("轴位置移动_S")]
+    public class JFCM_P2P_S : JFMethodInitParamBase
+    {
+        public JFCM_P2P_S()
+        {
+            string[] allAxisIDs = JFHubCenter.Instance.MDCellNameMgr.AllAxisNames();
+            DeclearInitParam(JFParamDescribe.Create("轴ID", typeof(string), JFValueLimit.Options, allAxisIDs),"");
+            DeclearInitParam(JFParamDescribe.Create("目标位置", typeof(double), JFValueLimit.NonLimit, null), 0f);
+            DeclearInitParam(JFParamDescribe.Create("绝对位置模式", typeof(bool), JFValueLimit.NonLimit, null), true);
+        }
+
+        public override bool Initialize()
+        {
+            string axisID = GetInitParamValue("轴ID") as string;
+            if(string.IsNullOrEmpty(axisID))
+            {
+                IsInitOK = false;
+                InitErrorInfo = "参数:\"轴ID\"未设置/空值";
+                return false;
+            }
+            if(!JFHubCenter.Instance.MDCellNameMgr.ContainAxisName(axisID))
+            {
+                IsInitOK = false;
+                InitErrorInfo = "参数:\"轴ID\" = " + axisID + " 在设备名称表中不存在";
+                return false;
+            }
+            InitErrorInfo = "Success";
+            IsInitOK = true;
+            return true;
+
+        }
+
+        protected override bool ActionGenuine()
+        {
+            if (!IsInitOK)
+            {
+                ActionErrorInfo = "未初始化:" + InitErrorInfo;
+                return false;
+            }
+
+            IJFInitializable dev = null;
+            JFDevCellInfo ci = null;
+            string errInfo = null;
+            string axisID = GetInitParamValue("轴ID") as string;
+            if (!JFCMFunction.CheckDevCellName(JFCMFunction.Axis, axisID, out dev, out ci, out errInfo))
+            {
+                ActionErrorInfo = errInfo;
+                return false;
+            }
+
+            IJFModule_Motion md = (dev as IJFDevice_MotionDaq).GetMc(ci.ModuleIndex);
+
+            bool[] AxisStatus = null;
+            int err = md.GetMotionStatus(ci.ChannelIndex, out AxisStatus);
+            if (err != 0)
+            {
+                ActionErrorInfo = "开始运动前检测轴状态失败:" + md.GetErrorInfo(err);
+                return false;
+            }
+
+            //if(md.IsSVO)
+            if (!AxisStatus[md.MSID_SVO])
+            {
+                ActionErrorInfo = "轴伺服未上电";
+                return false;
+            }
+
+            if (AxisStatus[md.MSID_ALM])
+            {
+                ActionErrorInfo = "轴伺服已报警";
+                return false;
+            }
+
+            if (!AxisStatus[md.MSID_MDN])
+            {
+                ActionErrorInfo = "轴当前运动未完成";
+                return false;
+            }
+
+            double dPos = Convert.ToDouble(GetInitParamValue("目标位置"));
+            bool IsAbsMove = Convert.ToBoolean(GetInitParamValue("绝对位置模式"));
+            if(IsAbsMove)
+                err = md.AbsMove(ci.ChannelIndex, dPos);
+            else
+                err = md.RelMove(ci.ChannelIndex, dPos);
+            if (err != 0)
+            {
+                ActionErrorInfo = (IsAbsMove?"绝对":"相对") + "位置运动失败:" + md.GetErrorInfo(err);
+                return false;
+            }
+
+            ActionErrorInfo = "Success";
+            return true;
+        }
+
+
+    }
+}

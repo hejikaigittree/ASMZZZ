@@ -1,0 +1,501 @@
+﻿<Window x:Class="LFAOIRecipe.Window_AddNewRecipe"
+        x:ClassModifier="internal"
+        x:Name="window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:LFAOIRecipe"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight" WindowStyle="ThreeDBorderWindow" Loaded="Window_Loaded">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+                <Setter Property="IsReadOnly" Value="True"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <ScrollViewer CanContentScroll="True">
+        <StackPanel Margin="20,10,20,20">
+        <!--
+        <StackPanel>
+            <TextBlock Text="模板保存路径选择：" FontSize="14"/>            
+        </StackPanel>
+        -->
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0"
+                    ToolTip="只在本次创建模板时生效，不勾选则使用默认产品目录">
+            <Button HorizontalAlignment="Center" VerticalAlignment="Center"
+                                  Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" Width="Auto" Height="Auto" Margin="5,0" Click="Button_Click">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <materialDesign:PackIcon Kind="InformationVariant"  VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <CheckBox Content="新建 [ 产品目录 ] ，保存模板数据："
+                      HorizontalAlignment="Center"      
+                      VerticalAlignment="Center"
+                      x:Name="ckb_ChangeProductDirectory" FontSize="15" FontWeight="Bold" Margin="5,0,0,0"/>
+            <TextBox Width="300"
+                     HorizontalContentAlignment="Center"
+                     Margin="10,0,5,0"
+                     x:Name="tb_ProductDirectory"/>
+            <Button Width="30"
+                    Height="30"                    
+                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                    Margin="0,0,5,0"
+                    x:Name="btn_SelectProductDirectory"
+                    Click="Btn_SelectProductDirectory_Click">
+                <materialDesign:PackIcon Kind="FolderOpen" />
+            </Button>
+        </StackPanel>
+        <materialDesign:Card  Background="{DynamicResource MaterialDesignBackground}"
+                              Margin="10,20,10,0" Foreground="#FF555555">
+            <Expander Header="创建全局参数">
+                <StackPanel Margin="10">
+                    <Button Content="创建新模板" 
+                        x:Name="btn_AddIniRecipe"
+                        Click="Btn_AddIniRecipe_Click"
+                        Width="200"/>
+                    <TextBlock Text="或者"
+                           Margin="0,10"
+                           HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="加载现有参数"
+                            x:Name="btn_LoadIniXML"
+                            Click="Btn_LoadIniXML_Click"/>
+                        <TextBox
+                             Margin="20,0,5,0"
+                             HorizontalContentAlignment="Center"
+                             x:Name="tb_IniXmlPath" Width="400"/>
+                        <Button Width="30"
+                            Height="30"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                            Margin="0,0,5,0"
+                            x:Name="btn_SelectIniXML"
+                            Click="Btn_SelectIniXML_Click">
+                            <materialDesign:PackIcon Kind="File" />
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Expander>
+        </materialDesign:Card>
+        <materialDesign:Card  Background="{DynamicResource MaterialDesignBackground}" Foreground="#FF555555"
+                              Margin="10,20,10,0">            
+            <Expander Header="添加框架模板">
+                <StackPanel Margin="10">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="选择框架序号    Frame"
+                                   VerticalAlignment="Center"/>
+                        <ComboBox ItemsSource="{Binding FrameIndexs, ElementName=window}"
+                                  x:Name="cb_FrameIndex"
+                                  SelectedIndex="0"
+                                  Width="50"
+                                  materialDesign:ComboBoxAssist.ClassicMode="true"/>
+                    </StackPanel>
+                    <Button Content="创建新模板" 
+                        x:Name="btn_AddNewFrameRecipe"
+                        Click="Btn_AddNewFrameRecipe_Click"
+                        Width="200" Margin="0,20,0,0"/>
+                    <TextBlock Text="或者"
+                           Margin="0,10"
+                           HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="加载现有参数"
+                            x:Name="btn_LoadFrameXML"
+                            Click="Btn_LoadFrameXML_Click"/>
+                        <TextBox
+                             Margin="20,0,5,0"
+                             HorizontalContentAlignment="Center"
+                             x:Name="tb_FrameXmlPath" Width="400"/>
+                        <Button Width="30"
+                            Height="30"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                            Margin="0,0,5,0"
+                            x:Name="btn_SelectFrameXML"
+                            Click="Btn_SelectFrameXML_Click">
+                            <materialDesign:PackIcon Kind="File" />
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Expander>
+        </materialDesign:Card>
+        <materialDesign:Card  Background="{DynamicResource MaterialDesignBackground}" Foreground="#FF555555"
+                              Margin="10,20,10,0">
+            <Expander Header="添加芯片模板">
+                <StackPanel Margin="10">
+                    <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+                        <TextBlock Text="选择IC序号    IC"
+                                   VerticalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBox x:Name="tbNumber" x:FieldModifier="private" Margin="5,0" Width="45"  TextChanged="txtNum_TextChanged" VerticalAlignment="Center" />
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Button x:Name="cmdUp" x:FieldModifier="private"  Click="cmdUp_Click" Padding="0" Height="14" Width="22" FontSize="12" Margin="0,0,0,3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Button.Content>
+                                            <materialDesign:PackIcon Kind="ArrowUp"  Height="12"  Width="12" VerticalAlignment="Center"/>
+                                        </Button.Content>
+                                    </Button>
+                                    <Button x:Name="cmdDown" x:FieldModifier="private" Click="cmdDown_Click" Padding="0" Height="14" Width="22" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                        <Button.Content>
+                                            <materialDesign:PackIcon Kind="ArrowDown"  Height="12"  Width="12" VerticalAlignment="Center"/>
+                                        </Button.Content>
+                                    </Button>
+                                </StackPanel>
+                            </StackPanel>
+                            <!--<ComboBox ItemsSource="{Binding ICIndexs, ElementName=window}"
+                                  x:Name="cb_ICIndex"
+                                  SelectedIndex="0"
+                                  Width="50"
+                                  materialDesign:ComboBoxAssist.ClassicMode="true"/>-->
+                    </StackPanel>
+                    <Button Content="创建新模板" 
+                        x:Name="btn_AddNewICRecipe"
+                        Click="Btn_AddNewICRecipe_Click"
+                        Width="200"
+                        Margin="0,20,0,0"/>
+                    <TextBlock Text="或者"
+                           Margin="0,10"
+                           HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="加载现有参数"
+                            x:Name="btn_LoadICXML"
+                            Click="Btn_LoadICXML_Click"/>
+                        <TextBox Width="400"
+                             Margin="20,0,5,0"
+                             HorizontalContentAlignment="Center"   
+                             x:Name="tb_ICXmlPath"/>
+                        <Button Width="30"
+                            Height="30"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                            DockPanel.Dock="Right"
+                            Margin="0,0,5,0"
+                            x:Name="btn_SelectICXML"
+                            Click="Btn_SelectICXML_Click">
+                            <materialDesign:PackIcon Kind="File" />
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Expander>
+        </materialDesign:Card>
+        <materialDesign:Card  Background="{DynamicResource MaterialDesignBackground}" Foreground="#FF555555"
+                              Margin="10,20,10,0">
+            <Expander Header="添加银胶模板">
+                <StackPanel Margin="10">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="选择银胶序号    Epoxy"
+                                   VerticalAlignment="Center"/>
+                        <ComboBox ItemsSource="{Binding EpoxyIndexs, ElementName=window}"
+                                  x:Name="cb_EpoxyIndex"
+                                  SelectedIndex="0"
+                                  Width="50"
+                                  materialDesign:ComboBoxAssist.ClassicMode="true"/>
+                    </StackPanel>
+
+                    <Button Content="创建新模板" 
+                        x:Name="btn_AddEpoxyRecipe"
+                        Click="Btn_AddEpoxyRecipe_Click"
+                        Width="200" Margin="0,20,0,0"/>
+                    <TextBlock Text="或者"
+                           Margin="0,10"
+                           HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="加载现有参数"
+                            x:Name="btn_LoadEpoxyXML"
+                            Click="Btn_LoadEpoxyXML_Click"/>
+                        <TextBox Width="400"
+                             Margin="20,0,5,0"
+                             HorizontalContentAlignment="Center"   
+                             x:Name="tb_EpoxyXmlPath"/>
+                        <Button Width="30"
+                            Height="30"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                            DockPanel.Dock="Right"
+                            Margin="0,0,5,0"
+                            x:Name="btn_SelectEpoxyXML"
+                            Click="Btn_SelectEpoxyXML_Click">
+                            <materialDesign:PackIcon Kind="File" />
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Expander>
+        </materialDesign:Card>
+        <materialDesign:Card  Background="{DynamicResource MaterialDesignBackground}" Foreground="#FF555555"
+                              Margin="10,20,10,0">
+            <Expander Header="添加Match焊点模板">
+                <StackPanel Margin="10">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="选择焊点序号    Bond"
+                                   VerticalAlignment="Center"/>
+                        <ComboBox ItemsSource="{Binding BondMatchIndexs, ElementName=window}"
+                                  x:Name="cb_BondMatchIndex"
+                                  SelectedIndex="0"
+                                  Width="50"
+                                  materialDesign:ComboBoxAssist.ClassicMode="true"/>
+                    </StackPanel>
+                    <Button Content="创建新模板" 
+                        x:Name="btn_AddBondRecipe"
+                        Click="Btn_AddBondRecipe_Click"
+                        Width="200" Margin="0,20,0,0"/>
+                    <TextBlock Text="或者"
+                           Margin="0,10"
+                           HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="加载现有参数"
+                            x:Name="btn_LoadBondXML"
+                            Click="Btn_LoadBondXML_Click"/>
+                        <TextBox Width="400"
+                             Margin="20,0,5,0"
+                             HorizontalContentAlignment="Center"   
+                             x:Name="tb_BondXmlPath"/>
+                        <Button Width="30"
+                            Height="30"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                            DockPanel.Dock="Right"
+                            Margin="0,0,5,0"
+                            x:Name="btn_SelectBondXML"
+                            Click="Btn_SelectBondXML_Click">
+                            <materialDesign:PackIcon Kind="File" />
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Expander>
+        </materialDesign:Card>
+        <materialDesign:Card  Background="{DynamicResource MaterialDesignBackground}" Foreground="#FF555555"
+                              Margin="10,20,10,0">
+            <Expander Header="添加Measure焊点模板">
+                <StackPanel Margin="10">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="选择焊点序号    Bond"
+                                   VerticalAlignment="Center"/>
+                        <ComboBox ItemsSource="{Binding BondMeasureIndexs, ElementName=window}"
+                                  x:Name="cb_BondMeasureIndex"
+                                  SelectedIndex="0"
+                                  Width="50"
+                                  materialDesign:ComboBoxAssist.ClassicMode="true"/>
+                    </StackPanel>
+                    <Button Content="创建新模板" 
+                        x:Name="btn_AddBondMeasureRecipe"
+                        Click="Btn_AddBondMeasureRecipe_Click"
+                        Width="200" Margin="0,20,0,0"/>
+                    <TextBlock Text="或者"
+                           Margin="0,10"
+                           HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="加载现有参数"
+                            x:Name="btn_LoadBondMeasureXML"
+                            Click="Btn_LoadBondMeasureXML_Click"/>
+                        <TextBox Width="400"
+                             Margin="20,0,5,0"
+                             HorizontalContentAlignment="Center"   
+                             x:Name="tb_BondMeasureXmlPath"/>
+                        <Button Width="30"
+                            Height="30"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                            DockPanel.Dock="Right"
+                            Margin="0,0,5,0"
+                            x:Name="btn_SelectBondMeasureXML"
+                            Click="Btn_SelectBondMeasureXML_Click">
+                            <materialDesign:PackIcon Kind="File" />
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Expander>
+        </materialDesign:Card>
+        <materialDesign:Card  Background="{DynamicResource MaterialDesignBackground}" Foreground="#FF555555"
+                              Margin="10,20,10,0">
+            <Expander Header="添加金线模板" >
+                <StackPanel Margin="10">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="选择金线序号    Wire"
+                                   VerticalAlignment="Center"/>
+                        <ComboBox ItemsSource="{Binding WireIndexs, ElementName=window}"
+                                  x:Name="cb_WireIndex"
+                                  SelectedIndex="0"
+                                  Width="50"
+                                  materialDesign:ComboBoxAssist.ClassicMode="true" VerticalContentAlignment="Center" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <Button Content="创建新模板" 
+                        x:Name="btn_AddWireRecipe"
+                        Click="Btn_AddWireRecipe_Click"
+                        Width="200" Margin="0,20,0,0"/>
+                    <TextBlock Text="或者"
+                           Margin="0,10"
+                           HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="加载现有参数"
+                            x:Name="btn_LoadWireXML"
+                            Click="Btn_LoadWireXML_Click"/>
+                        <TextBox Width="400"
+                             Margin="20,0,5,0"
+                             HorizontalContentAlignment="Center"   
+                             x:Name="tb_WireXmlPath"/>
+                        <Button Width="30"
+                            Height="30"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                            DockPanel.Dock="Right"
+                            Margin="0,0,5,0"
+                            x:Name="btn_SelectWireXML"
+                            Click="Btn_SelectWireXML_Click">
+                            <materialDesign:PackIcon Kind="File" />
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Expander>
+        </materialDesign:Card>
+
+        <materialDesign:Card  Background="{DynamicResource MaterialDesignBackground}" Foreground="#FF555555"
+                              Margin="10,20,10,0">
+            <Expander Header="制作FreeRegion" >
+                <StackPanel Margin="10">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="选择FreeRegion序号    "
+                                   VerticalAlignment="Center"/>
+                        <ComboBox ItemsSource="{Binding WireIndexs, ElementName=window}"
+                                  x:Name="cb_FreeRegionIndex"
+                                  SelectedIndex="0"
+                                  Width="50"
+                                  materialDesign:ComboBoxAssist.ClassicMode="true" VerticalContentAlignment="Center" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <Button Content="制作FreeRegion" 
+                        x:Name="btn_AddRegionRecipe"
+                        Click="Btn_AddRegionRecipe_Click"
+                        Width="200" Margin="0,20,0,0"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="加载现有参数"
+                            x:Name="btn_LoadRegionXML"
+                            Click="Btn_LoadRegionXML_Click"/>
+                        <TextBox Width="400"
+                             Margin="20,0,5,0"
+                             HorizontalContentAlignment="Center"   
+                             x:Name="tb_RegionXmlPath"/>
+                        <Button Width="30"
+                            Height="30"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                            DockPanel.Dock="Right"
+                            Margin="0,0,5,0"
+                            x:Name="btn_SelectRegionXML"
+                            Click="Btn_SelectRegionXML_Click">
+                            <materialDesign:PackIcon Kind="FileXml"/>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Expander>
+        </materialDesign:Card>
+        
+        <materialDesign:Card  Background="{DynamicResource MaterialDesignBackground}" Foreground="#FF555555"
+                              Margin="10,20,10,0">
+            <Expander Header="制作CutRegion" >
+                <StackPanel Margin="10">
+                    <Button Content="制作CutRegion" 
+                        x:Name="btn_AddCutRegionRecipe"
+                        Click="Btn_AddCutRegionRecipe_Click"
+                        Width="200" Margin="0,20,0,0"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="加载现有参数"
+                            x:Name="btn_LoadCutRegionXML"
+                            Click="Btn_LoadCutRegionXML_Click"/>
+                        <TextBox Width="400"
+                             Margin="20,0,5,0"
+                             HorizontalContentAlignment="Center"   
+                             x:Name="tb_CutRegionXmlPath"/>
+                        <Button Width="30"
+                            Height="30"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                            DockPanel.Dock="Right"
+                            Margin="0,0,5,0"
+                            x:Name="btn_SelectCutRegionXML"
+                            Click="Btn_SelectCutRegionXML_Click">
+                            <materialDesign:PackIcon Kind="FileXml"/>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Expander>
+        </materialDesign:Card>
+        <materialDesign:Card  Background="{DynamicResource MaterialDesignBackground}" Foreground="#FF555555"
+                              Margin="10,20,10,0">
+            <Expander Header="表面检测" >
+                <StackPanel Margin="10">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="选择表面检测序号    "
+                                   VerticalAlignment="Center"/>
+                        <ComboBox ItemsSource="{Binding SurfaceDetectionIndexs, ElementName=window}"
+                                  x:Name="cb_SurfaceDetectionIndex"
+                                  SelectedIndex="0"
+                                  Width="50"
+                                  materialDesign:ComboBoxAssist.ClassicMode="true" VerticalContentAlignment="Center" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <Button Content="表面检测" 
+                        x:Name="btn_AddSurfaceDetectionRecipe"
+                        Click="Btn_AddSurfaceDetectionRecipe_Click"
+                        Width="200" Margin="0,20,0,0"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="加载现有参数"
+                            x:Name="btn_LoadSurfaceDetectionXML"
+                            Click="Btn_LoadSurfaceDetectionXML_Click"/>
+                        <TextBox Width="400"
+                             Margin="20,0,5,0"
+                             HorizontalContentAlignment="Center"   
+                             x:Name="tb_SurfaceDetectionXmlPath"/>
+                        <Button Width="30"
+                            Height="30"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                            DockPanel.Dock="Right"
+                            Margin="0,0,5,0"
+                            x:Name="btn_SelectSurfaceDetectionXML"
+                            Click="Btn_SelectSurfaceDetectionXML_Click">
+                            <materialDesign:PackIcon Kind="FileXml"/>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Expander>
+        </materialDesign:Card>
+        <materialDesign:Card  Background="{DynamicResource MaterialDesignBackground}" Foreground="#FF555555"
+                              Margin="10,20,10,0">
+            <Expander Header="Bond周围检测" >
+                <StackPanel Margin="10">
+                    <Button Content="添加Bond周围检测" 
+                        x:Name="btn_AddAroundBondRegionDetectionRecipe"
+                        Click="Btn_AddAroundBondRegionDetectionRecipe_Click"
+                        Width="200" Margin="0,20,0,0"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="加载现有参数"
+                            x:Name="btn_LoadAroundBondRegionDetectionXML"
+                            Click="Btn_LoadAroundBondRegionDetectionXML_Click"/>
+                        <TextBox Width="400"
+                             Margin="20,0,5,0"
+                             HorizontalContentAlignment="Center"   
+                             x:Name="tb_AroundBondRegionDetectionXmlPath"/>
+                        <Button Width="30"
+                            Height="30"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                            DockPanel.Dock="Right"
+                            Margin="0,0,5,0"
+                            x:Name="btn_SelectAroundBondRegionDetectionXML"
+                            Click="Btn_SelectAroundBondRegionDetectionXML_Click">
+                            <materialDesign:PackIcon Kind="FileXml"/>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Expander>
+        </materialDesign:Card>
+
+        <Button Content="返  回"
+                DockPanel.Dock="Bottom"
+                HorizontalAlignment="Center"
+                Width="110"
+                Margin="0,10"
+                x:Name="btn_Cancel"
+                Click="Btn_Cancel_Click"/>
+    </StackPanel>
+    </ScrollViewer>
+</Window>

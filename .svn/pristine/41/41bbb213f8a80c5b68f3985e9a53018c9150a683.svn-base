@@ -1,0 +1,233 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using JFInterfaceDef;
+using JFToolKits;
+using JFHub;
+namespace JFMethodCommonLib
+{
+    /// <summary>
+    /// JFCM_ServoSwitch_S 轴伺服上电/断电方法
+    /// </summary>
+    [JFCategoryLevels(new string[] { "JF 设备控制", "Axis" })]
+    [JFDisplayName("轴伺服开关_S")]
+    public class JFCM_ServoSwitch_S:IJFInitializable,IJFMethod
+    {
+        public JFCM_ServoSwitch_S()
+        {
+            IsInitOK = false;
+        }
+
+
+        readonly string[] _initParamNames = new string[] { "轴名称", "伺服使能" };
+        /// <summary>获取初始化需要的所有参数的名称 </summary>
+        public string[] InitParamNames { get { return _initParamNames; } }
+
+
+        /// <summary>
+        /// 获取指定名称的初始化参数的信息
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public JFParamDescribe GetInitParamDescribe(string name)
+        {
+            if(name == InitParamNames[0])
+            {
+                string[] allAxisNames = JFHubCenter.Instance.MDCellNameMgr.AllAxisNames();
+                return JFParamDescribe.Create(name, typeof(string), JFValueLimit.Options, allAxisNames);
+            }
+            else if(name == InitParamNames[1])
+            {
+                return JFParamDescribe.Create(name, typeof(bool), JFValueLimit.NonLimit, null);
+            }
+            throw new ArgumentException("非法的初始化参数名称:" + name);
+        }
+
+
+        string _axisName = null;
+        bool _isServoOn = true;
+        /// <summary>
+        /// 获取指定名称的初始化参数的当前值
+        /// </summary>
+        /// <param name="name">参数名称，如果参数名称不在InitParamNames中，将会抛出一个ArgumentException异常</param>
+        /// <returns>参数值</returns>
+        public object GetInitParamValue(string name)
+        {
+            if (name == InitParamNames[0])
+                return _axisName;
+            else if (name == InitParamNames[1])
+                return _isServoOn;
+            throw new ArgumentException("非法的初始化参数名称:" + name);
+        }
+
+        /// <summary>
+        ///设置指定名称的初始化参数的当前值
+        /// </summary>
+        /// <param name="name">参数名称，如果参数名称不在InitParamNames中，将会抛出一个ArgumentException异常</param>
+        /// <param name="value">参数值</param>
+        /// <returns>操作成功返回True，失败返回false，可通过GetInitErrorInfo()获取错误信息</returns>
+        public bool SetInitParamValue(string name, object value)
+        {
+            if (name == InitParamNames[0])
+            {
+                string axisName = value as string;
+                if(string.IsNullOrEmpty(axisName))
+                {
+                    _initErrorInfo = "参数项：\"" + name + "\"为空字串";
+                    return false;
+                }
+                if(!JFHubCenter.Instance.MDCellNameMgr.ContainAxisName(axisName))
+                {
+                    _initErrorInfo = "参数项：\"" + name + "\"的值：\"" + axisName + "\"在设备名称表中不存在";
+                    return false;
+                }
+                _initErrorInfo = "参数项:\"" + name + "\"设置OK";
+                _axisName = axisName;
+                return true;
+            }
+            else if (name == InitParamNames[1])
+            {
+                _isServoOn = (bool)value;
+                _initErrorInfo = "参数项:\"" + name + "\"设置OK";
+                return true;
+            }
+            _initErrorInfo = ("非法的初始化参数名称:" + name);
+            return false;
+        }
+
+
+        string _initErrorInfo = "None-Opt";
+        /// <summary>
+        /// 对象初始化
+        /// </summary>
+        /// <returns>操作成功返回True，失败返回false，可通过GetInitErrorInfo()获取错误信息</returns>
+        public bool Initialize()
+        {
+            if(string.IsNullOrEmpty(_axisName))
+            {
+                _initErrorInfo = "初始化参数项:\"" + InitParamNames[0] + "\" 未设置/空值";
+                return false;
+            }
+            if(!JFHubCenter.Instance.MDCellNameMgr.ContainAxisName(_axisName))
+            {
+                _initErrorInfo = "\"" + InitParamNames[0] + "\" 的值：\"" + _axisName + "\"在设备命名表中不存在";
+                return false;
+            }
+            _initErrorInfo = "Success";
+            IsInitOK = true;
+            return true;
+        }
+
+
+        /// <summary>获取初始化状态，如果对象已初始化成功，返回True</summary>
+        public bool IsInitOK { get; private set; }
+
+        /// <summary>获取初始化错误的描述信息</summary>
+        public string GetInitErrorInfo() { return _initErrorInfo; }
+
+
+        #region 输入项
+        public string[] MethodInputNames { get { return new string[] { }; } }
+        public Type GetMethodInputType(string name) { throw new NotImplementedException(); }
+        public object GetMethodInputValue(string name) { throw new NotImplementedException(); }
+        public void SetMethodInputValue(string name, object value) { throw new NotImplementedException(); }
+        #endregion
+
+        #region 输出项
+        public string[] MethodOutputNames { get { return new string[] { }; } }
+        public Type GetMethodOutputType(string name) { throw new NotImplementedException(); }
+        public object GetMethodOutputValue(string name) { throw new NotImplementedException(); }
+        #endregion
+
+        string _actionErrorInfo = "未执行";
+        double _startPfCnt = 0; //动作开始时CPU计数
+        double _endPfCnt = 0;//动作结束时CPU计数
+        double _PfFrequency = JFFunctions.PerformanceFrequency();
+        #region 执行
+        public bool Action()
+        {
+            _startPfCnt = JFFunctions.PerformanceCounter();
+            if(!IsInitOK)
+            {
+                _actionErrorInfo = "初始化未完成";
+                _endPfCnt = JFFunctions.PerformanceCounter();
+                return false;
+            }
+
+            IJFInitializable dev = null;
+            JFDevCellInfo ci = null;
+            string errInfo = null;
+            if(!JFCMFunction.CheckDevCellName(JFCMFunction.Axis,_axisName,out dev,out ci,out errInfo))
+            {
+                _endPfCnt = JFFunctions.PerformanceCounter();
+                _actionErrorInfo = errInfo;
+                return false;
+            }
+            int errCode = 0;
+            if (_isServoOn)
+                errCode = (dev as IJFDevice_MotionDaq).GetMc(ci.ModuleIndex).ServoOn(ci.ChannelIndex);
+            else
+                errCode = (dev as IJFDevice_MotionDaq).GetMc(ci.ModuleIndex).ServoOff(ci.ChannelIndex);
+            _endPfCnt = JFFunctions.PerformanceCounter();
+            if(0!= errCode)
+            {
+                _actionErrorInfo = (_isServoOn ? "伺服使能" : "伺服断电") + "操作失败：" + (dev as IJFDevice_MotionDaq).GetMc(ci.ModuleIndex).GetErrorInfo(errCode);
+                return false;
+            }
+            
+            _actionErrorInfo = "Success";
+            return true;
+
+
+        }
+        public string GetActionErrorInfo()
+        {
+            return _actionErrorInfo;
+        }
+
+        public double GetActionSeconds()
+        {
+            return (_endPfCnt - _startPfCnt) / _PfFrequency;
+        }
+
+        #endregion
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects).
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // TODO: set large fields to null.
+
+                disposedValue = true;
+            }
+        }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        // ~JFCM_OpenCloseDev_S()
+        // {
+        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        //   Dispose(false);
+        // }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
+    }
+}

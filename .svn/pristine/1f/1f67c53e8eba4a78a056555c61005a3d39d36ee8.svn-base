@@ -1,0 +1,233 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using JFInterfaceDef;
+
+namespace JFHub
+{
+    /// <summary>
+    /// 为StationBase基类提供一个RealtimeUI
+    /// </summary>
+    public partial class UcStationBaseRealtimeUI : JFRealtimeUI/*UserControl*/
+    {
+        public UcStationBaseRealtimeUI()
+        {
+            InitializeComponent();
+        }
+
+        bool _isFormLoaded = false;
+        IJFStation _station = null;
+        private void UcStationBaseRealtimeUI_Load(object sender, EventArgs e)
+        {
+            _isFormLoaded = true;
+            tbPFCount.Text = "0";
+            tbPassCount.Text = "0";
+            tbNGCount.Text = "0";
+            tbStartTime.Text = "未开始";
+            tbRunTime.Text = "00:00:00";
+            AdjustStationView();
+        }
+
+
+        /// <summary>
+        /// 接收一条Log，
+        /// </summary>
+        /// <param name="info"></param>
+        public void ShowLog(string info)
+        {
+            ShowTips(info);
+        }
+
+
+        delegate void dgWorkStatusChanged(JFWorkStatus currWorkStatus, string info);
+        /// <summary>
+        /// 处理工站状态改变
+        /// </summary>
+        /// <param name="station"></param>
+        /// <param name="currWorkStatus"></param>
+        public void WorkStatusChanged(JFWorkStatus currWorkStatus, string info)
+        {
+            if(InvokeRequired)
+            {
+                BeginInvoke(new dgWorkStatusChanged(WorkStatusChanged), new object[] { currWorkStatus, info });
+                return;
+            }
+            switch(currWorkStatus)
+            {
+                case JFWorkStatus.UnStart:// = 0,    //线程未开始运行
+                    lampWorkStatus.LampColor = JFUI.LampButton.LColor.Gray;
+                    lampWorkStatus.Text = "未运行";
+                    break;
+                case JFWorkStatus.Running://,        //线程正在运行，未退出
+                    lampWorkStatus.LampColor = JFUI.LampButton.LColor.Green;
+                    lampWorkStatus.Text = "运行中";
+                    break;
+                case JFWorkStatus.Pausing://,        //线程暂停中
+                    lampWorkStatus.LampColor = JFUI.LampButton.LColor.Yellow;
+                    lampWorkStatus.Text = "暂停中";
+                    break;
+                case JFWorkStatus.Interactiving: //人机交互 ，需要人工干预的情况
+                    lampWorkStatus.LampColor = JFUI.LampButton.LColor.Yellow;
+                    lampWorkStatus.Text = "人工干预";
+                    break;
+                case JFWorkStatus.NormalEnd://,     //线程正常完成后退出
+                    lampWorkStatus.LampColor = JFUI.LampButton.LColor.Gray;
+                    lampWorkStatus.Text = "正常结束";
+                    break;
+                case JFWorkStatus.CommandExit://,    //收到退出指令
+                    lampWorkStatus.LampColor = JFUI.LampButton.LColor.Gray;
+                    lampWorkStatus.Text = "命令结束";
+                    break;
+                case JFWorkStatus.ErrorExit://,      //发生错误退出
+                    lampWorkStatus.LampColor = JFUI.LampButton.LColor.Red;
+                    lampWorkStatus.Text = "错误退出";
+                    break;
+                case JFWorkStatus.ExceptionExit://,  //发生异常退出
+                    lampWorkStatus.LampColor = JFUI.LampButton.LColor.Red;
+                    lampWorkStatus.Text = "异常退出";
+                    break;
+                case JFWorkStatus.AbortExit:      //由调用者强制退出
+                    lampWorkStatus.LampColor = JFUI.LampButton.LColor.Red;
+                    lampWorkStatus.Text = "强制退出";
+                    break;
+                default:
+                    lampWorkStatus.LampColor = JFUI.LampButton.LColor.Red;
+                    lampWorkStatus.Text = "未知状态";
+                    break;
+            }
+            ShowTips("WorkStatus:" + info);
+        }
+        //void HandleStationMsg(IJFStation station,object msg )
+
+
+        delegate void dgCustomStatusChanged(int currCustomStatus, string info, object param);
+        /// <summary>
+        ///  处理工站的业务状态发生改变
+        /// </summary>
+        /// <param name="station"></param>
+        /// <param name="currCustomStatus"></param>
+        public void CustomStatusChanged( int currCustomStatus, string info, object param)
+        {
+            if(InvokeRequired)
+            {
+                BeginInvoke(new dgCustomStatusChanged(CustomStatusChanged), new object[] { currCustomStatus, info, param });
+                return;
+            }
+            int[] allStatusIDs = _station.AllCustomStatus;
+            for(int i = 0; i < allStatusIDs.Length;i++)
+                if(currCustomStatus == allStatusIDs[i])
+                {
+                    lstBoxCustomStatus.SelectedIndex = i;
+                    if (i == 0)
+                        lstBoxCustomStatus.TopIndex = 0;
+                    else
+                        lstBoxCustomStatus.TopIndex = i - 1;
+                }
+            ShowTips("CustomStatus:" + info + "  Param:" + param.ToString());
+        }
+
+        int _passTotal = 0; //Pass总数
+        int _ngTotal = 0; //NG总数
+        int _productFinishedIndex = 0; //批次
+        delegate void dgProductFinished(int passCount, string[] passIDs, int ngCount, string[] ngIDs, string[] ngInfo);
+        /// <summary>
+        /// 产品加工完成消息
+        /// </summary>
+        /// <param name="station">消息发送者</param>
+        /// <param name="PassCount">本次生产完成的成品数量</param>
+        /// <param name="NGCount">本次生产的次品数量</param>
+        /// <param name="NGInfo">次品信息</param>
+        public void ProductFinished(int passCount, string[] passIDs, int ngCount, string[] ngIDs, string[] ngInfo)
+        {
+            if(InvokeRequired)
+            {
+                BeginInvoke(new dgProductFinished(ProductFinished), new object[] { passCount, passIDs, ngCount, ngIDs, ngInfo });
+                return;
+            }
+            _productFinishedIndex++;
+            _passTotal += passCount;
+            _ngTotal += ngCount;
+        }
+
+        /// <summary>
+        /// 处理工站发来的其他定制化的消息
+        /// </summary>
+        /// <param name="station"></param>
+        /// <param name="msg"></param>
+        public virtual void CustomizeMsg( string msgCategory, object[] msgParams)
+        {
+
+        }
+
+
+        public void SetStation(IJFStation station)
+        {
+            _station = station;
+            if (_isFormLoaded)
+                AdjustStationView();
+        }
+
+        void AdjustStationView()
+        {
+
+        }
+
+        int _maxTips = 2000; //最多显示2000条信息
+        delegate void dgShowTips(string info);
+        public void ShowTips(string info)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new dgShowTips(ShowTips), new object[] { info });
+                return;
+            }
+            rchTips.AppendText(info + "\n");
+            string[] lines = rchTips.Text.Split('\n');
+            if (lines.Length >= _maxTips)
+            {
+                int rmvChars = 0;
+                for (int i = 0; i < lines.Length - _maxTips; i++)
+                    rmvChars += lines[i].Length + 1;
+                rchTips.Text = rchTips.Text.Substring(rmvChars);
+            }
+            rchTips.Select(rchTips.TextLength, 0); //滚到最后一行
+            rchTips.ScrollToCaret();//滚动到控件光标处 
+        }
+
+        private void btResetProductInfo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// 向工站发送一条指令（包含 开始/停止/暂停/恢复/结批 和用户自定义指令）
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btSendCmd_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btClearTips_Click(object sender, EventArgs e)
+        {
+            rchTips.Text = "";
+        }
+
+        /// <summary>
+        /// 显示日志窗口
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btShowLog_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+}

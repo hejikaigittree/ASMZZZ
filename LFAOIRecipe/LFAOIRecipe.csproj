@@ -1,0 +1,553 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{630EED92-05DE-488A-B7C8-55FBF7B83884}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>LFAOIRecipe</RootNamespace>
+    <AssemblyName>LFAOIRecipe</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\bin\x64\Debug\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="halcondotnet">
+      <HintPath>..\Dll\halcondotnet.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.0.0.14576, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.1.1\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.5.0.1205, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.5.0.1205\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\Dll\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Algorithm\Model_RegionAlg.cs" />
+    <Compile Include="Algorithm\File.cs" />
+    <Compile Include="Algorithm\Parameter.cs" />
+    <Compile Include="Algorithm\Region.cs" />
+    <Compile Include="Converter\BooleanToComboBoxIndexConverterUpdate.cs" />
+    <Compile Include="Converter\RadToAngleConverter.cs" />
+    <Compile Include="Converter\BooleanToComboBoxIndexConverter.cs" />
+    <Compile Include="Converter\TwiceValueConverter.cs" />
+    <Compile Include="HalconDisp.cs" />
+    <Compile Include="Help\Form_VInf.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Help\Form_VInf.designer.cs">
+      <DependentUpon>Form_VInf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ObjectCloneHelper.cs" />
+    <Compile Include="Procedure\AddMatchRegionFrame.cs" />
+    <Compile Include="Procedure\BondMatchAutoRegions.cs" />
+    <Compile Include="Procedure\AddBondMatchRegions.cs" />
+    <Compile Include="Procedure\CreateAroundBondRegionModel.cs" />
+    <Compile Include="Procedure\CreateAutoBondMeasureModel.cs" />
+    <Compile Include="Procedure\CreateCutRegionModel.cs" />
+    <Compile Include="Procedure\CreateRegionModel.cs" />
+    <Compile Include="Procedure\CreatePositionModel.cs" />
+    <Compile Include="Procedure\CutOutDieFrame.cs" />
+    <Compile Include="Procedure\SurfaceDetection.cs" />
+    <Compile Include="Procedure\InspectNode.cs" />
+    <Compile Include="Procedure\WireAddAutoRegion.cs" />
+    <Compile Include="Procedure\WireInspectVerify.cs" />
+    <Compile Include="Procedure\WireAddRegion.cs" />
+    <Compile Include="Procedure\BondMeasureVerify.cs" />
+    <Compile Include="Procedure\BondMatchVerify.cs" />
+    <Compile Include="Procedure\BondWireInspectVerify.cs" />
+    <Compile Include="Procedure\CreateBondMeasureModel.cs" />
+    <Compile Include="Procedure\CreateBond2Model.cs" />
+    <Compile Include="Procedure\CreateReference.cs" />
+    <Compile Include="Procedure\AddPoxyRegions.cs" />
+    <Compile Include="Procedure\FrameLocateInspectVerify.cs" />
+    <Compile Include="Recipe\AroundBallMeasureAlgoPara.cs" />
+    <Compile Include="Recipe\AroundBallRegionRecipe.cs" />
+    <Compile Include="Recipe\AroundBondAdativeAlgoPara.cs" />
+    <Compile Include="Recipe\AroundBondGlobalAlgoPara.cs" />
+    <Compile Include="Recipe\AroundBondLineGaussAlgoPara.cs" />
+    <Compile Include="Recipe\AroundBondRegionModelInspectParameter.cs" />
+    <Compile Include="Recipe\AroundBondRegionWithPara.cs" />
+    <Compile Include="Recipe\Bond2Model.cs" />
+    <Compile Include="Recipe\Bond1AutoRegionsParameter.cs" />
+    <Compile Include="Recipe\BondAutoRegionsParameter.cs" />
+    <Compile Include="Recipe\BondMatchAlgoPara.cs" />
+    <Compile Include="Recipe\BondMatchAutoRegionGroup.cs" />
+    <Compile Include="Recipe\BondMeasureAlgoPara.cs" />
+    <Compile Include="Recipe\BondMeasureVerifyParameterSet.cs" />
+    <Compile Include="Recipe\BondThresAlgoPara.cs" />
+    <Compile Include="Recipe\BondVerifyModelPara.cs" />
+    <Compile Include="Recipe\BondVerifyRegionWithPara.cs" />
+    <Compile Include="Recipe\CutRegionParameter.cs" />
+    <Compile Include="Recipe\BridgeModelInspectParameter.cs" />
+    <Compile Include="Recipe\EpoxyModelVerifyParameterSet.cs" />
+    <Compile Include="Recipe\FrameLocateInspectParameter.cs" />
+    <Compile Include="Recipe\MatchRegionsGroup.cs" />
+    <Compile Include="Recipe\RegionOperatType.cs" />
+    <Compile Include="Recipe\SurfaceDetectionRecipe.cs" />
+    <Compile Include="Recipe\CutRegionRecipe.cs" />
+    <Compile Include="Recipe\RegionRecipe.cs" />
+    <Compile Include="Recipe\WireAutoRegionGroup.cs" />
+    <Compile Include="Recipe\WireLineGauseAlgoPara.cs" />
+    <Compile Include="Recipe\WireLineGauseAlgoParaAll.cs" />
+    <Compile Include="Recipe\WireThresAlgoPara.cs" />
+    <Compile Include="Recipe\BondMeasureVerifyParameter.cs" />
+    <Compile Include="Recipe\BondMeasureParameter.cs" />
+    <Compile Include="Recipe\BondMeasureModelParameter.cs" />
+    <Compile Include="Recipe\BondMeasureModelObject.cs" />
+    <Compile Include="Recipe\Bond2ModelObject.cs" />
+    <Compile Include="Recipe\BondMeasureRecipe.cs" />
+    <Compile Include="Recipe\WireRegionWithPara.cs" />
+    <Compile Include="Recipe\WireRegionsGroup.cs" />
+    <Compile Include="Recipe\WireParameter.cs" />
+    <Compile Include="Recipe\WireObject.cs" />
+    <Compile Include="Recipe\EpoxyParameter.cs" />
+    <Compile Include="Recipe\Bond2ModelParameter.cs" />
+    <Compile Include="Recipe\EpoxyModelObject.cs" />
+    <Compile Include="Recipe\WireRecipe.cs" />
+    <Compile Include="Recipe\EpoxyRecipe.cs" />
+    <Compile Include="Recipe\EpoxyModelVerifyParameter.cs" />
+    <Compile Include="Recipe\PegRackModelInspectParameter.cs" />
+    <Compile Include="Recipe\FrameModelInspectParameter.cs" />
+    <Compile Include="Recipe\IniObjects.cs" />
+    <Compile Include="Recipe\IniParameters.cs" />
+    <Compile Include="Recipe\IniRecipe.cs" />
+    <Compile Include="Recipe\BondWireParameter.cs" />
+    <Compile Include="Recipe\BondWireRegionGroup.cs" />
+    <Compile Include="View\Page_AddBondMatchAutoRegions.xaml.cs">
+      <DependentUpon>Page_AddBondMatchAutoRegions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_AddBondMatchRegions.xaml.cs">
+      <DependentUpon>Page_AddBondMatchRegions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_AddMatchRegionFrame.xaml.cs">
+      <DependentUpon>Page_AddMatchRegionFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_AroundBondRegionModel.xaml.cs">
+      <DependentUpon>Page_AroundBondRegionModel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_CreateAutoBondMeasureModel.xaml.cs">
+      <DependentUpon>Page_CreateAutoBondMeasureModel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_CutRegionModel.xaml.cs">
+      <DependentUpon>Page_CutRegionModel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_SurfaceDetection.xaml.cs">
+      <DependentUpon>Page_SurfaceDetection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_RegionModel.xaml.cs">
+      <DependentUpon>Page_RegionModel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_CreateGoldenModel.xaml.cs">
+      <DependentUpon>Page_CreateGoldenModel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_CutOutDieFrame.xaml.cs">
+      <DependentUpon>Page_CutOutDieFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_InspectNode.xaml.cs">
+      <DependentUpon>Page_InspectNode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_WireAddAutoRegion.xaml.cs">
+      <DependentUpon>Page_WireAddAutoRegion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_WireInspectVerify.xaml.cs">
+      <DependentUpon>Page_WireInspectVerify.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_BondMeasureVerify.xaml.cs">
+      <DependentUpon>Page_BondMeasureVerify.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_BondMatchVerify.xaml.cs">
+      <DependentUpon>Page_BondMatchVerify.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_BondWireInspectVerify.xaml.cs">
+      <DependentUpon>Page_BondWireInspectVerify.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_WireAddRegion.xaml.cs">
+      <DependentUpon>Page_WireAddRegion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_CreateBondMeasureModel.xaml.cs">
+      <DependentUpon>Page_CreateBondMeasureModel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_CreateBond2Model.xaml.cs">
+      <DependentUpon>Page_CreateBond2Model.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HTWindowControlWPF.xaml.cs">
+      <DependentUpon>HTWindowControlWPF.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Procedure\AddInspectRegion.cs" />
+    <Compile Include="Procedure\AddMatchRegion.cs" />
+    <Compile Include="Procedure\AddRejectRegion.cs" />
+    <Compile Include="Procedure\AddSubRegion.cs" />
+    <Compile Include="Procedure\CutOutDie.cs" />
+    <Compile Include="Procedure\GoldenModelInspectVerify.cs" />
+    <Compile Include="Procedure\ProcedureControl.cs" />
+    <Compile Include="ProductDirectory.cs" />
+    <Compile Include="Procedure\CreateGoldenModel.cs" />
+    <Compile Include="Recipe\BondRecipe.cs" />
+    <Compile Include="Recipe\FilePath.cs" />
+    <Compile Include="Recipe\FrameRecipe.cs" />
+    <Compile Include="Recipe\GoldenModelInspectParameter.cs" />
+    <Compile Include="Recipe\IRecipe.cs" />
+    <Compile Include="Recipe\GoldenModelParameter.cs" />
+    <Compile Include="Recipe\GoldenModelObject.cs" />
+    <Compile Include="Recipe\GoldenModelRecipe.cs" />
+    <Compile Include="Recipe\IParameter.cs" />
+    <Compile Include="Recipe\RegionShape.cs" />
+    <Compile Include="Recipe\UserRegion.cs" />
+    <Compile Include="View\Page_CreatePositionModel.xaml.cs">
+      <DependentUpon>Page_CreatePositionModel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_AddEpoxyRegion.xaml.cs">
+      <DependentUpon>Page_AddEpoxyRegion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_FrameModelInspectVerify.xaml.cs">
+      <DependentUpon>Page_FrameModelInspectVerify.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_IniRecipe.xaml.cs">
+      <DependentUpon>Page_IniRecipe.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_CutOutDie.xaml.cs">
+      <DependentUpon>Page_CutOutDie.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Recipe\ICRecipe.cs" />
+    <Compile Include="Procedure\IProcedure.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainUI.xaml.cs">
+      <DependentUpon>MainUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainUIViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="ViewModelBase\CommandBase.cs" />
+    <Compile Include="ViewModelBase\ViewModelBase.cs" />
+    <Compile Include="View\Page_CreateRecipe.xaml.cs">
+      <DependentUpon>Page_CreateRecipe.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_AddInspectRegion.xaml.cs">
+      <DependentUpon>Page_AddInspectRegion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_AddMatchRegion.xaml.cs">
+      <DependentUpon>Page_AddMatchRegion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_AddRejectRegion.xaml.cs">
+      <DependentUpon>Page_AddRejectRegion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_AddSubRegion.xaml.cs">
+      <DependentUpon>Page_AddSubRegion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page_GoldenModelInspectVerify.xaml.cs">
+      <DependentUpon>Page_GoldenModelInspectVerify.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Window_AddNewRecipe.xaml.cs">
+      <DependentUpon>Window_AddNewRecipe.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Window_Loading.xaml.cs">
+      <DependentUpon>Window_Loading.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="XML\SaveHelper.cs" />
+    <Compile Include="XML\XMLHelper.cs" />
+    <EmbeddedResource Include="Help\Form_VInf.resx">
+      <DependentUpon>Form_VInf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Style.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page_AddBondMatchAutoRegions.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page_AddBondMatchRegions.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page_AddMatchRegionFrame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page_AroundBondRegionModel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Page_CreateAutoBondMeasureModel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page_CutRegionModel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page_SurfaceDetection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page_RegionModel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page_CreateGoldenModel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page_CutOutDieFrame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page_InspectNode.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page_WireAddAutoRegion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Page_WireInspectVerify.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page_BondMeasureVerify.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page_BondMatchVerify.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Page_BondWireInspectVerify.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Page_WireAddRegion.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page_CreateBondMeasureModel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page_CreateBond2Model.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HTWindowControlWPF.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Page_CreatePositionModel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Page_AddEpoxyRegion.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page_FrameModelInspectVerify.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page_IniRecipe.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page_CutOutDie.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Page_CreateRecipe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Page_AddInspectRegion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Page_AddMatchRegion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Page_AddRejectRegion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Page_AddSubRegion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Page_GoldenModelInspectVerify.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Window_AddNewRecipe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Window_Loading.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\circle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ellipse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\parallelogram.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\point.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\rectangle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\show.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\polygon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\measure.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\move.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Delete_all.jpg" />
+    <Resource Include="Resources\Delete_alls.jpg" />
+    <Resource Include="Resources\Delete_one.jpg" />
+    <Resource Include="Resources\Delete_sels.jpg" />
+    <Resource Include="Resources\Draw_mul_1.png" />
+    <Resource Include="Resources\Draw_single.png" />
+    <Resource Include="Resources\Select_n1.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

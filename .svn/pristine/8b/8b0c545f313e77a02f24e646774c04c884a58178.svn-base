@@ -1,0 +1,289 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using JFInterfaceDef;
+using JFToolKits;
+using JFUI;
+using JFHub;
+
+namespace DLAF_DS
+{
+
+    /// <summary>
+    /// 直线AOI设备的视觉检测工站
+    /// </summary>
+    [JFDisplayName("AOI检测工站")]
+    [JFVersion("1.0.0.0")]
+    public class DLAFDetectStation : JFStationBase
+    {
+        #region 工站自定义变量名称
+        static string[] DetectStationCustomStatus = new string[]{
+        "未运行/已停止",          //customID = 0
+        "开始前Z轴移动到避位",    //1
+        "等待轨道工站避位完成",   //2
+        "复位",                   //3
+        "移动到初始位置",         //4
+        "等待进料",               //5
+        "检测中",                 //6
+        "等待出料"                //7
+        };
+
+        
+        ////////////////// 工站声明的方法流名称 MFN = Method FlowName
+        static string MFN_EnableAllDev = "使能所有设备";
+        static string MFN_MoveZAside0 = "开始时移动Z轴到避位";
+        static string MFN_ResetStation = "工站复位";
+
+
+        ///////////////工站声明的系统变量替身名 SPAN = System Pool-Data Item's Alias Name
+        
+        static string SPAN_TrackStationInAside0 = "开始时轨道工站避位完成"; //由轨道工站
+        static string SPAN_TrackDeliveryOK = "轨道工站送料完成";
+
+
+        ///////////////////系统变量名称（非替身） SPAN = System Pool-Data Item's Name
+        static string SPN_AxisZInAside0 = "开始运行时Z轴避位完成";
+        static string SPN_WaitProductIn = "等待进料";
+        static string SPN_ProductReadyOut = "出料准备好";
+        static string SPN_ProductOutCount = "出料个数";
+
+
+        /////工站自定义点位名称
+        static string PosN_Standby = "待机位置";
+        static string PosN_MarkSnap1 = "Mark1拍照位置";
+        static string PosN_MarkSnap2 = "Mark2拍照位置";
+
+        ////////////设备名称 Device Alias Name 
+        static string DevAN_Cmr = "相机";
+        static string DevAN_CoAxialLight = "同轴光";
+        static string DevAN_RingLight = "环形光";
+        static string DevAN_AxisX = "X轴";
+        static string DevAN_AxisY = "Y轴";
+        static string DevAN_AxisZ = "Z轴";
+        #endregion
+        public DLAFDetectStation()
+        {
+            _allCustomStatus = new int[DetectStationCustomStatus.Length];
+            for (int i = 0; i < DetectStationCustomStatus.Length; i++)
+                _allCustomStatus[i] = i;
+            
+            DeclearMethodFlow(MFN_EnableAllDev);
+            DeclearMethodFlow(MFN_MoveZAside0);
+            DeclearMethodFlow(MFN_ResetStation);
+
+
+            DeclearWorkPosition(PosN_Standby);
+            DeclearWorkPosition(PosN_MarkSnap1);//Mark1拍照的位置
+            DeclearWorkPosition(PosN_MarkSnap2);//Mark2拍照的位置
+            DeclearDevChn(NamedChnType.Camera, DevAN_Cmr);//添加一个本地相机（替身名称）
+            DeclearDevChn(NamedChnType.Light, DevAN_CoAxialLight);//添加一个本地光源（替身名称）
+            DeclearDevChn(NamedChnType.Light, DevAN_RingLight);//添加一个本地光源（替身名称）
+            DeclearDevChn(NamedChnType.Axis, DevAN_AxisX);//添加一个本地设备（替身名称）
+            DeclearDevChn(NamedChnType.Axis, DevAN_AxisY);//添加一个本地设备（替身名称）
+            DeclearDevChn(NamedChnType.Axis, DevAN_AxisZ);//添加一个本地设备（替身名称）
+
+
+
+
+            DeclearSPItemAlias(SPN_AxisZInAside0, typeof(bool), false);
+            DeclearSPItemAlias(SPAN_TrackStationInAside0, typeof(bool), false); 
+            DeclearSPItemAlias(SPN_WaitProductIn, typeof(bool), false);
+            DeclearSPItemAlias(SPN_ProductReadyOut, typeof(bool), false);
+            DeclearSPItemAlias(SPAN_TrackDeliveryOK, typeof(bool), false);
+
+            DeclearSPItemAlias(SPN_ProductOutCount, typeof(int), 0); 
+
+
+        }
+
+
+        
+        /// <summary>
+        /// 所有可接收的自定义指令ID
+        /// </summary>
+        public override int[] AllCmds 
+        {
+            get { return null; }
+        }
+
+        /// <summary>
+        /// 获取自定义指令名称
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        public override string GetCmdName(int cmd)
+        {
+            return "Undefined";
+        }
+
+
+
+        int[] _allCustomStatus = null;
+        /// <summary>
+        /// 所有自定义状态ID
+        /// </summary>
+        public override int[] AllCustomStatus
+        {
+            get { return _allCustomStatus; }
+        }
+
+        /// <summary>
+        /// 获取自定义状态名称
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public override string GetCustomStatusName(int status)
+        {
+            if(status < 0 || status >= DetectStationCustomStatus.Length)
+                return "Undefined";
+            return DetectStationCustomStatus[status];
+        }
+
+
+        /// <summary>
+        /// 工站主逻辑开始前的准备工作，只是在主流程开始前执行一次
+        /// </summary>
+        protected override void PrepareWhenWorkStart()
+        {
+            CalcTaskParam();
+            //先重置所有系统信号（防止误触发）
+            SetSPAliasValue(SPN_WaitProductIn, true);
+            SetSPAliasValue(SPN_ProductReadyOut, false);
+
+            ChangeCustomStatus(1);
+            string errorInfo = "Unknown-Error";
+            if(!SynchRunWorkFlow(MFN_EnableAllDev,out errorInfo))//所有设备使能
+            {
+                ChangeCustomStatus(0);
+                ExitWork(WorkExitCode.Error, errorInfo);
+            }
+            if(!SynchRunWorkFlow(MFN_MoveZAside0,out errorInfo)) //将Z轴移动到初始避位
+            {
+                ChangeCustomStatus(0);
+                ExitWork(WorkExitCode.Error, errorInfo);
+            }
+            ChangeCustomStatus(2);//等待轨道工站避位完成()
+            
+            if(!WaitSPBoolByAliasName(SPAN_TrackStationInAside0,true,out errorInfo))
+            {
+                ChangeCustomStatus(0);
+                ExitWork(WorkExitCode.Error, errorInfo);
+            }
+            // 此时工站已移动到避位位置
+            //归零动作在ExcuteReset（）中
+            
+            return;
+        }
+
+
+        List<JFMultiAxisPosition> _lstICCenterPos = new List<JFMultiAxisPosition>(); //通过计算获得的所有IC中心坐标
+        List<double[]> _lstFovOffset = new List<double[]>(); //各FOV中心相对于ICCenter的偏移距离
+        List<JFSingleVisionCfgParam> _lstICVisionCfg = new List<JFSingleVisionCfgParam>(); //各FOV的拍照参数 
+
+        /// <summary>
+        /// 确定运行参数
+        /// </summary>
+        void CalcTaskParam()
+        {
+            //待添加代码 ... 
+        }
+
+
+        /// <summary>
+        /// 工站主流程 ，将会在内部循环中不断被调用，直到收到暂停/退出指令，或在RunLoopInWork函数内部调用退出函数时结束
+        /// </summary>
+        protected override void RunLoopInWork()
+        {
+            //运行到初始位置并等待
+            ChangeCustomStatus(4); //移动到初始位置
+            string errInfo = "Unknown";
+            if(!MoveToWorkPosition(PosN_Standby,out errInfo))
+            {
+                ExitWork(WorkExitCode.Error, "移动到:\"" + PosN_Standby + "\" 失败,错误信息:" + errInfo);
+            }
+            SetSPAliasValue(SPN_WaitProductIn, true); //通知上个工站准备进料
+            ChangeCustomStatus(5);
+            if(!WaitSPBoolByAliasName(SPAN_TrackDeliveryOK,true,out errInfo))
+            {
+                ChangeCustomStatus(0);
+                ExitWork(WorkExitCode.Error, errInfo);
+            }
+            ChangeCustomStatus(6);
+            //for()
+
+
+
+
+
+            return;
+        }
+
+
+        /// <summary>
+        /// 工站在退出主流程后会执行一次，然后工作线程关闭
+        /// </summary>
+        protected override void CleanupWhenWorkExit()
+        {
+            //置工站信号为默认状态
+            SetSPAliasValue(SPN_WaitProductIn, false);
+            SetSPAliasValue(SPN_ProductReadyOut, false);
+            ///停止所有轴
+            StopAxisAlias(DevAN_AxisX);
+            StopAxisAlias(DevAN_AxisY);
+            StopAxisAlias(DevAN_AxisZ);
+            //string axisXGlobName = GetDecChnGlobName(NamedChnType.Axis, DevAN_AxisX);
+
+
+            return;
+        }
+
+        /// <summary>
+        /// 执行结批动作
+        /// </summary>
+        protected override void ExecuteEndBatch()
+        {
+            return;
+        }
+
+        /// <summary>
+        /// 当工站线程运行时，受到暂停指令会执行OnPause(),然后进入暂停状态
+        /// </summary>
+        protected override void OnPause()
+        {
+            return;
+        }
+
+        /// <summary>
+        /// 当工站线程运行并且当前状态处于暂停时，受到恢复运行指令会执行OnResume()
+        /// </summary>
+        protected override void OnResume()
+        {
+            return;
+        }
+
+        /// <summary>
+        /// 当前工站正在运行（包括暂停状态）收到退出指令会执行OnStop()
+        /// </summary>
+        protected override void OnStop()
+        {
+            return;
+        }
+
+        protected override void ExecuteReset()
+        {
+            ChangeCustomStatus(3); //置当前工站为复位状态
+            string errorInfo;
+            if(!SynchRunWorkFlow(MFN_ResetStation,out errorInfo))
+            {
+                ChangeCustomStatus(0);
+                ExitWork(WorkExitCode.Error, errorInfo);
+            }
+
+            ChangeCustomStatus(4); //移动到初始位置
+
+            
+        }
+    }
+}

@@ -1,0 +1,353 @@
+﻿<UserControl xmlns:HalconDotNet="clr-namespace:HalconDotNet;assembly=halcondotnet"  
+             x:Class="LFAOIRecipe.Page_CreateBondMeasureModel"
+             x:ClassModifier="internal"
+             x:Name="userControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"   
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:local="clr-namespace:LFAOIRecipe"
+             mc:Ignorable="d" 
+             Background="White"
+             MinWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel x:Name="dockPanel">
+        <StackPanel DockPanel.Dock="Top">
+            <materialDesign:Card Margin="5,5,5,0">
+                <StackPanel>
+                    <TextBlock Text="{Binding DisplayName}"
+                               FontSize="16"
+                               Margin="10"
+                               Foreground="DarkBlue" HorizontalAlignment="Left"/>
+                    <TextBlock Margin="10,0,10,10"  
+                       Text="【从全局加载参数，可以选择手动或自动生成焊点区域。创建焊点测量模板,查看创建的测量模板应用效果】"
+                       TextWrapping="Wrap" HorizontalAlignment="Left">
+                    </TextBlock>
+                </StackPanel>
+            </materialDesign:Card>
+        </StackPanel>
+        <StackPanel
+            Margin="0,20,0,0" Orientation="Horizontal" DockPanel.Dock="Top">
+            <Button x:Name="button_load" Content="加载全局数据"
+                    Margin="5,0,0,0"
+                    Command="{Binding LoadReferenceCommand}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="{Binding ReferenceDirectory}" 
+                       Margin="10,0,0,0"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Center" Width="570" FontSize="12"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Center" DockPanel.Dock="Top" 
+                    ToolTip="选择焊点所在位置，即在哪个框架或芯片上！">
+            <TextBlock Text="焊点在" Margin="5,0,0,0"/>
+            <ComboBox Margin="5,0,0,0"  materialDesign:ComboBoxAssist.ClassicMode="true" MinWidth="100"
+                        x:Name="EpoxyOnWhat" 
+                        ItemsSource="{Binding BondMeasureParameter.OnRecipesIndexs,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                        SelectedIndex="{Binding BondMeasureParameter.OnRecipesIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,20,0,5" Orientation="Horizontal" DockPanel.Dock="Top">
+            <Button Content="加载自动生成焊点区域" ToolTip="从自动生成的焊点加载到当前页面！"
+                                            Command="{Binding LoadAutoMeasureBondCommand}"
+                                            HorizontalAlignment="Left" Background="#FF607D8B"/>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Top" VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center">
+            <!-- materialDesign:HintAssist.Hint="模板匹配方式"  
+                 Text="{Binding CreateModelType}" Width="194" HorizontalAlignment="Left" Opacity="0.5"
+-->
+
+            <DockPanel Margin="0,5,0,0" HorizontalAlignment="Center">
+                <Label Content="选择图像通道" Width="120" HorizontalContentAlignment="Right"/>
+                <ComboBox 
+                ItemsSource="{Binding ChannelNames}"
+                DisplayMemberPath="Name"
+                Margin="10,0,0,0"
+                materialDesign:ComboBoxAssist.ClassicMode="true"
+                SelectedIndex="{Binding BondMeasureParameter.ImageChannelIndex, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Padding="4,5" HorizontalAlignment="Center" Width="120" Foreground="#FF555555" FontSize="14" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectedChangedImageCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </DockPanel>
+            <materialDesign:Chip  Content="{Binding BondMeasureParameter.UserRegionForCutOutIndex}"  Icon="Die" Margin="20,0,0,0" Width="60" FontSize="14" />
+        </StackPanel>
+        <StackPanel x:Name="stackPanelMain">
+            <StackPanel DockPanel.Dock="Top" MinWidth="600"
+                    Margin="0,20,0,0" Panel.ZIndex="400" Width="600">
+                <StackPanel Margin="5">
+                    <DockPanel Margin="0,10,0,0">
+                        <TextBlock
+                                   VerticalAlignment="Center"  Margin="5,0,0,0" Padding="5,0,0,0"><Run Text="画测量"/><Run Text="区域"/></TextBlock>
+                        <Button Content="添加区域"
+                                Margin="20,0,0,0"
+                                Command="{Binding AddUserRegionCommand}" Padding="10,4"/>
+                        <Button Content="删除区域"
+                                Margin="20,0,0,0"
+                                Command="{Binding RemoveUserRegionCommand}" Padding="10,4"/>
+                        <Button Content="修改区域"  Margin="20,0,0,0" Height="Auto" ToolTip="区域修改完，鼠标右键确认！"
+                        Command="{Binding ModifyRegionCommand}" Padding="10,4"/>
+                        <Button Height="32" Command="{Binding DisplayBondMeasureRegionsCommand}" 
+                                Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Width="32" HorizontalAlignment="Right" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Right" Margin="20,0,0,0">
+                            <materialDesign:PackIcon  Kind="Eye"  Height="21"  Width="21" />
+                        </Button>
+                        <ToggleButton Content="框选"
+                                        Style="{StaticResource MaterialDesignRaisedButton}" Height="32" 
+                                                  Command="{Binding Rectangle1SelectCommand}" Width="63" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                        <!--<TextBlock Text="拾取" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
+                        <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                     IsChecked="{Binding BondMeasureParameter.IsPickUp}" Margin="13,0,5,0" Height="32" HorizontalAlignment="Right" DockPanel.Dock="Right" />-->
+                    </DockPanel>
+
+                    <materialDesign:Card Margin="0,10" >
+                        <StackPanel>
+                            <DataGrid Margin="0,5,0,0" 
+                                        IsReadOnly="False"
+                                        AlternatingRowBackground="#D1DFE7"
+                                        ItemsSource="{Binding BondModelUserRegions}"  Background="{x:Null}" 
+                                        SelectedItem="{Binding SelectedUserRegion}" Height="316" >
+                                <DataGrid.Columns>
+                                    <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="选择"  FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                    <CheckBox  IsChecked="{Binding DataContext.IsCheckAll,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,ElementName=userControl}" 
+                                                Command="{Binding DataContext.IsCheckAllCommand,  ElementName=userControl}" IsThreeState="True"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                        <DataGridTemplateColumn.CellTemplate >
+                                            <DataTemplate >
+                                                <CheckBox IsChecked="{Binding IsSelected,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                                  Command="{Binding DataContext.IsCheckCommand,ElementName=userControl}"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <materialDesign:MaterialDataGridTextColumn Header="序号" 
+                                                                       Binding="{Binding Index}" 
+                                                                       IsReadOnly="True"/>
+                                    <DataGridTemplateColumn  Header="启用">
+                                        <DataGridTemplateColumn.CellTemplate >
+                                            <DataTemplate >
+                                                <CheckBox IsChecked="{Binding IsEnable,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"     
+                                                  Command="{Binding DataContext.UserRegionEnableChangedCommand, ElementName=userControl}"
+                                                  CommandParameter="{Binding}"
+                                                  Style="{StaticResource MaterialDesignCheckBox}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <materialDesign:MaterialDataGridTextColumn Header="形状" 
+                                                                       Binding="{Binding RegionType}" 
+                                                                       IsReadOnly="True"/>
+                                    <materialDesign:MaterialDataGridTextColumn Header="参数" 
+                                                                       Binding="{Binding}" 
+                                                                       IsReadOnly="True"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </materialDesign:Card>
+                    <GroupBox Header="设置测量区域参数" materialDesign:ShadowAssist.ShadowEdges="All"   BorderThickness="2" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Center" Padding="11" Margin="0,20,0,0">
+                        <StackPanel>
+
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <materialDesign:Card  materialDesign:ShadowAssist.ShadowDepth="Depth2" 
+                                  UniformCornerRadius="6" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" Margin="5" Padding="32">
+                                    <UniformGrid >
+                                        <Grid >
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition Height="3*"/>
+                                            </Grid.RowDefinitions>
+                                            <!--
+                                        <materialDesign:Card  UniformCornerRadius="6" Background="White" VerticalAlignment="Center" Margin="5" Padding="10,0"  >
+                                            <StackPanel Orientation="Horizontal"   VerticalAlignment="Center" HorizontalAlignment="Center" >
+                                                <TextBlock Text="每个修改" VerticalAlignment="Center" FontSize="14"/>
+                                                <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                              IsChecked="{Binding IsSetAllParas}" Margin="5,0" Height="32" />
+                                                <TextBlock Text="批量修改" FontSize="14"/>
+                                            </StackPanel>
+                                        </materialDesign:Card>
+                                        -->
+                                            <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+
+                                                <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Button Content="多个区域 修改参数" 
+                                                        Command="{Binding ModifyParametersBatchCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10"/>
+                                                    </StackPanel>
+                                                </Grid>
+
+                                                <!--
+                            <Grid Grid.Row="1">
+                                <StackPanel Orientation="Horizontal" IsEnabled="False">
+                                    <TextBlock Text="1" HorizontalAlignment="Center" Width="60"/>
+                                    <TextBlock Text="腐蚀" HorizontalAlignment="Center" Width="100"/>
+                                    <TextBox Text="{Binding ErosionRadius}"  HorizontalAlignment="Center" Width="100"/>
+                                </StackPanel>
+                            </Grid>
+                            -->
+                                                <Grid Grid.Row="1" Margin="0,18,0,0">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Label Content="测量对比度" HorizontalAlignment="Center"/>
+                                                        <TextBox Text="{Binding MeasureContrast}"  HorizontalAlignment="Center" Width="93"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                                <Grid Grid.Row="2" Margin="0,5,0,0">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Label Content="测量长" HorizontalAlignment="Center" Width="70" HorizontalContentAlignment="Right"/>
+                                                        <TextBox Text="{Binding MearsureLength}"  HorizontalAlignment="Center" Width="93"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                                <Grid Grid.Row="3" Margin="0,5,0,0">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Label Content="测量宽" HorizontalAlignment="Center" Width="70" HorizontalContentAlignment="Right"/>
+                                                        <TextBox Text="{Binding MearsureWideth}"  HorizontalAlignment="Center" Width="93"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                                <Grid Grid.Row="4" Margin="0,5,0,0">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Label Content="测量变换" HorizontalAlignment="Center" Width="70" HorizontalContentAlignment="Right"/>
+                                                        <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                             SelectedValuePath="Content"
+                                                             Text="{Binding MearsureTransition}" Width="100" HorizontalAlignment="Left">
+                                                            <ComboBoxItem Content="positive"/>
+                                                            <ComboBoxItem Content="negative"/>
+                                                        </ComboBox>
+                                                    </StackPanel>
+                                            	</Grid>
+                                            	<Grid Grid.Row="5" Margin="0,5,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label Content="边缘点距离" HorizontalAlignment="Center" Width="70" HorizontalContentAlignment="Right"/>
+                                                        <TextBox Text="{Binding DistanceThreshold}"  HorizontalAlignment="Center" Width="93"/>
+                                                </StackPanel>
+                                            	</Grid>
+                                            	<Grid Grid.Row="6" Margin="0,5,0,0">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Label Content="边缘点选择" HorizontalAlignment="Center" Width="70" HorizontalContentAlignment="Right"/>
+                                                        <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                            SelectedValuePath="Content"
+                                                            Text="{Binding MearsureSelect}" Width="100" HorizontalAlignment="Left">
+                                                        <ComboBoxItem Content="all"/>
+                                                        <ComboBoxItem Content="first"/>
+                                                        <ComboBoxItem Content="last"/>
+                                                        </ComboBox>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </UniformGrid>
+                                </materialDesign:Card>
+                                <materialDesign:Card  UniformCornerRadius="6" Background="White" VerticalAlignment="Center" Margin="25,5,5,5" Padding="10,2"  >
+                                    <StackPanel HorizontalAlignment="Center" Margin="10,20" >
+                                        <materialDesign:Card  UniformCornerRadius="6" Background="#FF607D8B" VerticalAlignment="Center" Margin="5" Padding="10,2" Height="35"  >
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0">
+                                                <TextBlock Text="选择区域 修改参数"
+                           Margin="10,0,0,0"
+                           VerticalAlignment="Center" Foreground="#FFFBFBFB"/>
+                                                <ComboBox Width="88"
+                                  ItemsSource="{Binding BondModelUserRegions}"
+                                  DisplayMemberPath="Index"
+                                  SelectedItem="{Binding SelectedUserRegion, Mode=TwoWay}"
+                                  materialDesign:ComboBoxAssist.ClassicMode="true" Foreground="White" BorderBrush="#89FFFFFF" HorizontalAlignment="Center"/>
+                                            </StackPanel>
+                                        </materialDesign:Card>
+
+                                        <DockPanel Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Label Content="画区域工具"
+                                    HorizontalContentAlignment="Right" Foreground="#DD7E7E7E"/>
+                                            <TextBox Text="{Binding SelectedUserRegion.RegionType }"  IsReadOnly="True" Width="100"  HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Foreground="#DD7E7E7E"/>
+                                        </DockPanel>
+                                        <DockPanel ToolTip="测量边界处的对比度，大于该值时才能测量出边界位置" HorizontalAlignment="Center" Margin="0,5,0,0">
+                                            <Label Content="测量对比度"  Width="70"  HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                            <TextBox Text="{Binding SelectedUserRegion.BondMeasureModelParameter.MeasureContrast}"  Width="100"  HorizontalAlignment="Left"/>
+                                        </DockPanel>
+                                        <DockPanel ToolTip="测量长"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                            <Label Content="测量长" Width="70" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                            <TextBox Text="{Binding SelectedUserRegion.BondMeasureModelParameter.MearsureLength}"  Width="100"  HorizontalAlignment="Left"/>
+                                        </DockPanel>
+                                        <DockPanel ToolTip="测量宽"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                            <Label Content="测量宽" Width="70" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                            <TextBox Text="{Binding SelectedUserRegion.BondMeasureModelParameter.MearsureWideth}"  Width="100"  HorizontalAlignment="Left"/>
+                                        </DockPanel>
+                                        <DockPanel ToolTip="测量变换"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                            <Label Content="测量变换" Width="70"  HorizontalContentAlignment="Right"/>
+                                            <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                    SelectedValuePath="Content"
+                                                    Text="{Binding SelectedUserRegion.BondMeasureModelParameter.MearsureTransition}" Width="100" HorizontalAlignment="Left">
+                                                <ComboBoxItem Content="positive"/>
+                                                <ComboBoxItem Content="negative"/>
+                                            </ComboBox>
+                                        </DockPanel>
+                                    	<DockPanel ToolTip="边缘点距离"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                            <Label Content="边缘点距离" Width="70" HorizontalContentAlignment="Right" Foreground="#DD000000"/>
+                                            <TextBox Text="{Binding SelectedUserRegion.BondMeasureModelParameter.DistanceThreshold}"  Width="100"  HorizontalAlignment="Left"/>
+                                    	</DockPanel>
+                                        <DockPanel ToolTip="边缘点选择"  Margin="0,5,0,0" HorizontalAlignment="Center">
+                                        <Label Content="边缘点选择" Width="70"  HorizontalContentAlignment="Right"/>
+                                        <ComboBox materialDesign:ComboBoxAssist.ClassicMode="true"
+                                        SelectedValuePath="Content"
+                                Text="{Binding SelectedUserRegion.BondMeasureModelParameter.MearsureSelect}" Width="100" HorizontalAlignment="Left">
+                                            <ComboBoxItem Content="all"/>
+                                            <ComboBoxItem Content="first"/>
+                                            <ComboBoxItem Content="last"/>
+                                        </ComboBox>
+                                    	</DockPanel>
+
+                                    </StackPanel>
+                                </materialDesign:Card>
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+
+
+
+            </StackPanel>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20">
+                <!--
+                <HalconDotNet:HWindowControlWPF x:Name="hTWindow5" Height="60" Width="60" Background="#FFFBFBFB" Foreground="White" 
+                                            BorderBrush="#FF060E5B" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0">
+                </HalconDotNet:HWindowControlWPF>
+                -->
+                <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                    <Button Content="创建焊点模板"   Margin="0"
+                    Command="{Binding CreateBondMeasureModelCommand}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Button Content="显示结果"  
+                            Command="{Binding BondMeasureInspectCommand}"
+                            HorizontalAlignment="Center" Margin="50,0,0,0" VerticalAlignment="Center"/>
+                    <Button Content="保存模板"  Margin="50,0,0,0"
+                    Command="{Binding SaveBondModelCommand}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+            <!--
+                    <Button Content="添加验证区域"
+                            materialDesign:HintAssist.Hint="用矩形工具画焊点检测区域"
+                            Command="{Binding AddBondMeasureTestUserRegionCommand}"
+                            HorizontalAlignment="Left" Margin="0"/>
+                    <TextBlock Text="{Binding BondModelMeasureTestUserRegions.RegionType,StringFormat=类型：{0}   参数：}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    <TextBlock Text="{Binding BondModelMeasureTestUserRegions,StringFormat={}{0}}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            -->
+        </StackPanel>
+    </DockPanel>
+</UserControl>
